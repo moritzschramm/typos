@@ -1,0 +1,5 @@
+#!/bin/bash
+# usage: ./remote-artisan <whatever>
+# example: ./remote-artisan migrate
+
+docker run -it --rm -v $(pwd):/opt -w /opt --network=${PWD##*/}_appnet moritzschramm/php-laravel php artisan "$@"

@@ -1,0 +1,5 @@
+#!/bin/bash
+# shell script for starting a test in the php docker container on correct docker network
+# usage: ./start-test <any valid phpunit option>
+
+docker run -it --rm -v $(pwd):/opt -w /opt --network=${PWD##*/}_appnet moritzschramm/php-laravel ./vendor/bin/phpunit "$@"

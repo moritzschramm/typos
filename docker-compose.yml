@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  nginx:
+    image: moritzschramm/nginx-laravel:1.0
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - appnet
+  php:
+    image: moritzschramm/php-laravel:1.0
+    volumes:
+      - .:/var/www/html
+    networks:
+      - appnet
+  redis:
+    image: redis:alpine
+    networks:
+      - appnet
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: homestead
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+    volumes:
+      - ./data:/var/lib/mysql
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: "bridge"
+
+volumes:
+  data:
+    driver: "local"
