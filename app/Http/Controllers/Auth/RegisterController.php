@@ -2,70 +2,100 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
+
+use App\Models\User;
+use App\Traits\CreateUserToken, App\Traits\PasswordCheck;
+use Validator, Mail;
+use App\Mail\VerifyAccountMail;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
+  use CreateUserToken, PasswordCheck;
+
+  /**
+    * Middlewares:
+    * - guest
     */
+  public function __construct()
+  {
+    $this->middleware('guest');
+  }
 
-    use RegistersUsers;
+  /**
+    * shows registration form
+    *
+    * @return view
+    */
+  public function showRegister()
+  {
+    return view('auth.register');
+  }
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
+  /**
+    * shows register success view
+    *
+    * @return view
+    */
+  public function showSuccess()
+  {
+    return view('auth.registerSuccess');
+  }
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
+  /**
+    * registers a user after validating his email and password
+    * NOTE: user will be unverified after registration (needs to confirm email first)
+    *
+    * @return redirect
+    */
+  public function register(Request $request)
+  {
+    $validator = Validator::make($request->all(), [
+      'email'     => 'required|email|unique:users,email|max:' . config('database.stringLength'),
+      'password'  => 'required|max:'       . config('database.stringLength'),
+      'confirm'   => 'required|max:'       . config('database.stringLength'),
+    ], [
+      'required' => 'req',
+      'email' => 'em',
+      'max' => 'max',
+    ]);
+
+    $validator->after(function ($validator) use ($request) {
+
+      $password = $request->input('password');
+      $confirm  = $request->input('confirm');
+
+      if($password !== $confirm) {
+
+        $validator->errors()->add('confirm', 'password dont match');
+
+      } else if($this->is_weak_password($password)) {
+
+        $validator->errors()->add('password', 'password too weak');
+      }
+    });
+
+    if($validator->fails()) {
+
+      return back()->withErrors($validator);
+
+    } else {
+
+      $user = new User;
+      $user->email = $request->input('email');
+      $user->uuid = uuidv4();
+      $user->password = bcrypt($request->input('password'));
+      $user->verified = 0;
+      $user->save();
+
+      $token = $this->createUserToken($user);
+
+      $verifyUrl = url('/user/verify/' . $user->uuid . '/' . $token);
+
+      Mail::to($user->email)->send(new VerifyAccountMail($verifyUrl));
+
+      return redirect('/register/success');
     }
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-    }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-    }
+  }
 }
