@@ -1,6 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
+/public/imgs/splash_index.jpg
 /storage/*.key
 /vendor
 /.idea
