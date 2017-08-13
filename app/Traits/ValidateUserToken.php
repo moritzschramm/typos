@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use App\Models\User;
+
 trait ValidateUserToken {
 
   /**
@@ -13,7 +15,7 @@ trait ValidateUserToken {
     */
   public function validateUserToken($uuid, $token)
   {
-    $user = User::where('uuid', $user)->first();
+    $user = User::where('uuid', $uuid)->first();
 
     if($user) {
 
