@@ -20,12 +20,12 @@ $factory->state(App\Models\User::class, 'testEmail', function($faker) {
 
 $factory->state(App\Models\User::class, 'verified', function($faker) {
   return [
-    'verified' => 1,
+    'verified' => date('Y-m-d H:i:s'),
   ];
 });
 
 $factory->state(App\Models\User::class, 'unverified', function($faker) {
   return [
-    'verified' => 0,
+    'verified' => NULL,
   ];
 });
