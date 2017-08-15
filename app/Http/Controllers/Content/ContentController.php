@@ -25,4 +25,14 @@ class ContentController extends Controller
   {
     return view('public.index');
   }
+
+  /**
+    * return privacy policy
+    *
+    * @return view
+    */
+  public function privacy()
+  {
+    return view('public.privacy');
+  }
 }
