@@ -20,7 +20,7 @@ class LoginController extends Controller
   public function __construct()
   {
     $this->middleware('guest')->except('logout', 'login');
-    $this->middleware('throttle:5,1')->only('login');
+    $this->middleware('throttle:5,2')->only('login');
   }
 
   /**
@@ -47,9 +47,9 @@ class LoginController extends Controller
       'email'     => 'required|email|max:'  . config('database.stringLength'),
       'password'  => 'required|max:'        . config('database.stringLength'),
     ], [
-      'required'  => 'req',
-      'email'     => 'email',
-      'max'       => 'max',
+      'required'  => 'errors.required',
+      'email'     => 'errors.email',
+      'max'       => 'errors.max',
     ]);
 
     $validator->after(function ($validator) use ($request) {
@@ -59,32 +59,38 @@ class LoginController extends Controller
       $with_remember_me = $request->input('remember_me') == 'on';
       $user = User::where('email', $email)->first();
 
-      if($user->verified) { # has user verified his email?
+      if($user) {
 
-        if(Auth::validate(['email' => $email, 'password' => $password])) {  # check email and password
+        if( ! is_null($user->verified)) { # has user verified his email?
 
-          session()->regenerate();  # prevent session fixation attacks
+          if(Auth::validate(['email' => $email, 'password' => $password])) {  # check email and password
 
-          Auth::login($user, $with_remember_me);
+            session()->regenerate();  # prevent session fixation attacks
 
-        } else {  # wrong creds
+            Auth::login($user, $with_remember_me);
+            return;
 
-          $validator->errors()->add('credentials', 'wrong creds'); # TODO: use translation keys instead of error txt
+          } # else: wrong creds
+
+        } else {  # unverified user
+
+          $validator->errors()->add('unverified', 'errors.unverified');
+          return;
         }
 
-      } else {  # unverified user
+      } # else: wrong creds
 
-        $validator->errors()->add('unverified', 'unverified'); # TODO use translation keys
-      }
+      $validator->errors()->add('credentials', 'errors.credentials');
+
     });
 
     if($validator->fails()) {
 
-      return back()->withErrors($validator);
+      return back()->withInput()->withErrors($validator);
 
     } else {
 
-      return redirect()->intended(self::$redirectTo);
+      return redirect(self::$redirectTo); #->intended(self::$redirectTo);
     }
   }
 
