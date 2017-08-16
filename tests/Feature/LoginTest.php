@@ -39,7 +39,7 @@ class LoginTest extends TestCase
   /**
     * tests login, uses wrong credentials
     *
-    * asserts redirect and Auth::check()
+    * asserts redirect, session errors and Auth::check()
     */
   public function testLoginWithWrongCredentials()
   {
@@ -56,6 +56,73 @@ class LoginTest extends TestCase
 
     $response->assertStatus(302);
     $response->assertRedirect(self::URI);
+    $response->assertSessionHasErrors(['credentials']);
+
+    $this->assertFalse(Auth::check());
+  }
+
+  /**
+    * test if validation works
+    *
+    * asserts redirect, session errors and Auth::check()
+    */
+  public function testLoginNoInput()
+  {
+    session()->start();
+
+    $response = $this->call('GET', self::URI);
+    $response->assertStatus(200);
+
+    $response = $this->call('POST', self::URI, [
+      'email'     => '',
+      'password'  => '',
+      '_token'    => csrf_token(),
+    ]);
+
+    $response->assertStatus(302);
+    $response->assertRedirect(self::URI);
+    $response->assertSessionHasErrors(['email', 'password']);
+
+    $this->assertFalse(Auth::check());
+  }
+
+  /**
+    * tests if the throttle middleware works properly
+    *
+    * asserts redirect, session errors and Auth::check()
+    */
+  public function testLoginThrottle()
+  {
+    session()->start();
+
+    $response = $this->call('GET', self::URI);
+    $response->assertStatus(200);
+
+    # simulate 5 failed login attempts (after that, login should be limited)
+    for($i = 0; $i < 5; $i++) {
+
+      $response = $this->call('POST', self::URI, [
+        'email'     => self::EMAIL,
+        'password'  => 'definitelyTheWrongPass',
+        '_token'    => csrf_token(),
+      ]);
+
+      $response->assertStatus(302);
+      $response->assertRedirect(self::URI);
+      $response->assertSessionHasErrors(['credentials']);
+
+      $this->assertFalse(Auth::check());
+    }
+
+    $response = $this->call('POST', self::URI, [
+      'email'     => self::EMAIL,
+      'password'  => 'definitelyTheWrongPass',
+      '_token'    => csrf_token(),
+    ]);
+
+    $response->assertStatus(302);
+    $response->assertRedirect(self::URI);
+    $response->assertSessionHasErrors(['tooManyAttempts']);
 
     $this->assertFalse(Auth::check());
   }
