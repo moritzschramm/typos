@@ -21,6 +21,11 @@ class VerifyController extends Controller
     $this->middleware('throttle:5,10');
   }
 
+  /**
+    * verifies the email address of a user
+    *
+    * @return redirect | abort(403)
+    */
   public function verifyUser(Request $request, $uuid, $token)
   {
     if($user = $this->validateUserToken($uuid, $token)) {
@@ -29,10 +34,10 @@ class VerifyController extends Controller
       $this->deleteUserToken($user);
 
       // verify user
-      $user->verified = 1;
+      $user->verified = date('Y-m-d H:i:s');
       $user->update();
 
-      return redirect('/login')->with('notification-success', 'verified');
+      return redirect('/login')->with('notification-success', 'notifications.verify.success');
 
     } else {
 
