@@ -3,10 +3,19 @@
 /**
   * Static sites (public sites)
   */
-Route::group(['namespace' => 'Static'], function() {
+Route::group(['namespace' => 'Content'], function() {
 
-  Route::get('/', 'StaticContentController@index');
+  Route::get('/',           'ContentController@index');
+  Route::get('/privacy',    'ContentController@privacy');
 
+});
+
+/**
+  * Locale controller
+  */
+Route::group(['namespace' => 'Locale'], function() {
+
+  Route::get('/locale/{locale}',      'LocaleController@setLocale');
 });
 
 /**
@@ -15,17 +24,22 @@ Route::group(['namespace' => 'Static'], function() {
   */
 Route::group(['namespace' => 'Auth'], function() {
 
-  Route::get('/login',              'LoginController@showLogin');
-  Route::post('/login',             'LoginController@login');
+  Route::get('/login',                      'LoginController@showLogin');
+  Route::post('/login',                     'LoginController@login');
 
-  Route::get('/register',           'RegisterController@showRegister');
-  Route::post('/register',          'RegisterController@register');
+  Route::get('/register',                   'RegisterController@showRegister');
+  Route::get('/register/success',           'RegisterController@showSuccess');
+  Route::post('/register',                  'RegisterController@register');
 
-  Route::get('/password/forgot',    'PasswordController@showForgotPassword');
-  Route::post('/password/forgot',   'PasswordController@requestPasswordReset');
+  Route::get('/password/forgot',            'PasswordController@showForgotPassword');
+  Route::post('/password/forgot',           'PasswordController@requestPasswordReset');
 
-  Route::get('/password/reset',     'PasswordController@showResetPassword');
-  Route::post('/password/reset',    'PasswordController@resetPassword');
+  Route::get('/password/reset',             'PasswordController@showResetPassword');
+  Route::post('/password/reset',            'PasswordController@resetPassword');
+
+  Route::get('/verify/{uuid}/{token}',      'VerifyController@verifyUser');
+
+  Route::get('/logout',                     'LoginController@logout');
 
 });
 
