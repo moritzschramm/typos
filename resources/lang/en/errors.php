@@ -1,0 +1,20 @@
+<?php
+
+/***
+  ** EN - ENGLISH
+  **/
+
+return [
+
+  'required'        => 'This field is required.',
+  'email'           => 'Please enter a valid email address.',
+  'max'             => 'Please enter not more than :max characters.',
+  'max'             => 'Please enter at least :min characters.',
+  'unverified'      => 'Your account is not verified yet. Please verify your email address',
+  'credentials'     => 'Invalid password or email address.',
+  'uniqueEmail'     => 'This email address is already registered',
+  'weak_password'   => 'Password is too weak. Please choose a different one.',
+  'differs'         => 'Passwords do not match, please enter your password again.',
+  'throttle'        => 'Too many attempts. Please try again in :sec seconds',
+
+];

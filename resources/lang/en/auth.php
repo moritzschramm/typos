@@ -1,19 +1,39 @@
 <?php
 
+/***
+  ** EN - ENGLISH
+  **/
+
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
+  'login' => [
+    'title' => 'Login',
+    'register_link' => 'Need an account? Create one here',
+    'password_link' => 'Forgot password?',
+    'remember_me' => 'remember me',
+  ],
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+  'register' => [
+    'title' => 'Register',
+    'statement' => 'I have read and agree to the <a target="_blank" href=":url">privacy policy <span class="glyphicon glyphicon-new-window"></span></a>',
 
+    'success' => [
+      'title' => 'Registration successful',
+      'message' => '<p>Registration completed successfully. You will now receive a verification mail to verify your account <strong>:email</strong>.</p><p>After verification, you can <a href=":url">login</a> here.</p>',
+    ],
+  ],
+
+  'password' => [
+
+    'forgot' => [
+      'title' => 'Forgot password',
+      'instructions' => 'Enter your email and send the request. You will receive an email with further instructions.',
+    ],
+
+    'reset' => [
+      'title' => 'Reset password',
+      'instructions' => 'Enter your new password. After that, you can login as usual with your new password.',
+      'action' => 'Reset',
+    ],
+  ],
 ];
