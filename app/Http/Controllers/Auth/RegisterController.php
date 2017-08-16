@@ -40,7 +40,14 @@ class RegisterController extends Controller
     */
   public function showSuccess()
   {
-    return view('auth.registerSuccess');
+    session()->reflash();
+    $email = session('register-email');
+
+    if($email === '') {
+      return redirect('/register');
+    }
+
+    return view('auth.registerSuccess', ['email' => $email]);
   }
 
   /**
@@ -56,9 +63,10 @@ class RegisterController extends Controller
       'password'  => 'required|max:'       . config('database.stringLength'),
       'confirm'   => 'required|max:'       . config('database.stringLength'),
     ], [
-      'required' => 'req',
-      'email' => 'em',
-      'max' => 'max',
+      'required'  => 'errors.required',
+      'email'     => 'errors.email',
+      'max'       => 'errors.max',
+      'unique'    => 'errors.uniqueEmail',
     ]);
 
     $validator->after(function ($validator) use ($request) {
@@ -68,17 +76,17 @@ class RegisterController extends Controller
 
       if($password !== $confirm) {
 
-        $validator->errors()->add('confirm', 'password dont match');
+        $validator->errors()->add('confirm', 'errors.differs');
 
       } else if($this->is_weak_password($password)) {
 
-        $validator->errors()->add('password', 'password too weak');
+        $validator->errors()->add('password', 'errors.weak_password');
       }
     });
 
     if($validator->fails()) {
 
-      return back()->withErrors($validator);
+      return back()->withInput()->withErrors($validator);
 
     } else {
 
@@ -86,16 +94,16 @@ class RegisterController extends Controller
       $user->email = $request->input('email');
       $user->uuid = uuidv4();
       $user->password = bcrypt($request->input('password'));
-      $user->verified = 0;
+      $user->verified = NULL;
       $user->save();
 
       $token = $this->createUserToken($user);
 
-      $verifyUrl = url('/user/verify/' . $user->uuid . '/' . $token);
+      $verifyUrl = url('/verify/' . $user->uuid . '/' . $token);
 
       Mail::to($user->email)->send(new VerifyAccountMail($verifyUrl));
 
-      return redirect('/register/success');
+      return redirect('/register/success')->with('register-email', $user->email);
     }
   }
 }
