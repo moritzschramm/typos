@@ -14,7 +14,7 @@ class VerifyController extends Controller
 
   /**
     * Middlewares:
-    * - throttle
+    * - throttle, max 5 requests, 10 min cooldown
     */
   public function __construct()
   {
