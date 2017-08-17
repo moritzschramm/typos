@@ -17,7 +17,7 @@ class PasswordController extends Controller
 
   /**
     * Middleware:
-    * - throttle (only requestPasswordReset())
+    * - throttle, max 5 requests, 10 min cooldown (only requestPasswordReset())
     */
   public function __construct()
   {
@@ -96,6 +96,10 @@ class PasswordController extends Controller
   public function resetPassword(Request $request)
   {
     session()->reflash();
+
+    if( ! session()->has('uuid', 'token')) {
+      abort(403);
+    }
 
     $validator = Validator::make($request->all(), [
       'password'  => 'required|min:8|max:' . config('database.stringLength'),
