@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "locale": "e.g. de or en, required",
+    "ratio": 3, (the keyboard's width / height ratio, required)
+},
+  "keys": [
+    {
+      "label": "label (what is printed on the physical key), required",
+      "id": "id in html, required",
+      "left": 0.0, (position in percent, required)
+      "right": 0.0, (position in percent, required)
+      "parentKeyId": "parent key of w is s and parent key of n is j (from which key the finger has to move), required, note: parentKeyId of space is space",
+      "highlightClass": "the css class which gets added when the key is in an active state, required",
+      "classes": ["optional", "css classes will be added to element", "NOTE: class 'key' will always be added to element"],
+      "style": "optional; will get added to style property of element",
+      "map": {
+        "default": "default string returned by KeyEvent.key when pressed, required (for normal keys)",
+        "shift": "string returned by KeyEvent.key when pressed with shift, required (for normal keys)",
+        "altGr": "string returned by KeyEvent.key when pressed with altGr, required (for normal keys)",
+        "special": "string returned by KeyEvent.key when presseed, required (for special keys, like backspace)",
+        "location": "optional, indicates the location of the key (e.g. left or right shift key)"
+      }
+    },
+    ...
+  ]
+}
