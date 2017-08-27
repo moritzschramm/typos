@@ -124,6 +124,8 @@ all wordlists from the wordlist directory.";
 
         while (($word = fgets($handle)) !== false) {  // read file line for line
 
+          $word = str_replace("\n", '', $word);
+
           if($word !== '')                          // dont insert empty words
             $words[] = ['id' => $id, 'word' => $word];  // prepare table row
 
