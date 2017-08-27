@@ -2981,7 +2981,6 @@ betrieben
 Freiburg
 Steigerung
 durchschnittlich
-INSERT INTO `words` (`position`, `word`) VALUES
 Schwerpunkt
 baut
 elektronischen
@@ -5721,7 +5720,6 @@ Sterne
 Jahrzehnt
 Wiese
 jegliche
-INSERT INTO `words` (`position`, `word`) VALUES
 Block
 Grab
 entnehmen
@@ -8384,7 +8382,6 @@ Einflüsse
 Satire
 Akte
 enthaltenen
-INSERT INTO `words` (`position`, `word`) VALUES
 Geldpolitik
 durchsucht
 brav
