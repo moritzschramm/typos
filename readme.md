@@ -9,12 +9,12 @@ Web app to learn touch typing build with the Laravel PHP Framework
 
 ### Setup
 
-Start by copying the <code>.env.example</code> file to <code>.env</code> in the projects root directory.
+Start by copying the <code>.env.example</code> file to <code>.env</code> in the project's root directory.
 After that, update composer by running <code>composer update</code> and
 generate an application key with <code>php artisan key:generate</code>
 If you want to use docker for development, there is a prepared docker-compose.yml file.
-However, if you haven't installed docker and docker-compose, it's propably easier to use
-a VM like Homestead, you just have to change some settings in your .env file
+However, if you haven't installed docker and docker-compose, it's probably easier to use
+a VM like Homestead, you just have to change some settings in your <code>.env</code> file
 (to be specific, <code>DB_HOST</code> and <code>REDIS_HOST</code>).
 A guide for using homestead: https://laravel.com/docs/5.5/homestead
 
@@ -28,6 +28,7 @@ docker-compose up -d
 </code>
 <br>
 To access the application now, go to http://localhost via your browser
+<br>
 <br>
 Stop docker containers
 <br>
