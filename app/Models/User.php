@@ -20,4 +20,14 @@ class User extends Authenticatable
   protected $hidden = [
       'password', 'remember_token', 'token',
   ];
+
+  public function lectionNonces()
+  {
+    return $this->hasMany(LectionNonce::class, 'id_user', 'id_user');
+  }
+
+  public function lectionResults()
+  {
+    return $this->hasMany(LectionResult::class, 'id_user', 'id_user');
+  }
 }
