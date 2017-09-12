@@ -13,7 +13,8 @@
   * @param $length: the length of the string
   * @return string: the generated string
   */
-function generateSecureString($length = 16) {
+function generateSecureString($length = 16)
+{
 
   $sec = bin2hex(random_bytes(ceil($length / 2)));
 
