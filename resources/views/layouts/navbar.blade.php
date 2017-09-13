@@ -12,9 +12,9 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
   			<ul class="nav navbar-nav navbar-left">
-  				<li @yield('nav1')><a href="{{ url('/dashboard') }}">Übersicht</a></li>
-  				<li @yield('nav2')><a href="{{ url('/stats') }}">Statistiken</a></li>
-  				<li @yield('nav3')><a href="{{ url('/support') }}">Support</a></li>
+  				<li @yield('nav1')><a href="{{ url('/dashboard') }}">@lang('layout.dashboard')</a></li>
+  				<li @yield('nav2')><a href="{{ url('/stats') }}">@lang('layout.stats')</a></li>
+  				<li @yield('nav3')><a href="{{ url('/support') }}">@lang('layout.support')</a></li>
   			</ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
@@ -22,11 +22,11 @@
               <ul class="dropdown-menu">
                 <li style="color: #333; padding: 3px 20px;">{{ Auth::user()->email }}</li>
                   <li class="divider"></li>
-                  <li><a href="{{ url('/settings') }}">Einstellungen</a></li>
-                  <li><a href="{{ url('/support') }}">Hilfe</a></li>
+                  <li><a href="{{ url('/settings') }}">@lang('layout.settings')</a></li>
+                  <li><a href="{{ url('/support') }}">@lang('layout.help')</a></li>
                  <li class="divider"></li>
                 <li>
-                  <a href="{{ url('/logout') }}">Abmelden</a>
+                  <a href="{{ url('/logout') }}">@lang('layout.logout')</a>
                 </li>
               </ul>
             </li>
@@ -49,12 +49,12 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-left">
-          <li @yield('nav1')><a href="{{ url('/') }}">Startseite</a></li>
-          <li @yield('nav2')><a href="{{ url('/support') }}">Support</a></li>
+          <li @yield('nav1')><a href="{{ url('/') }}">@lang('layout.home')</a></li>
+          <li @yield('nav2')><a href="{{ url('/support') }}">@lang('layout.support')</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="{{ url('/register') }}">Registrieren</a></li>
-          <li><a href="{{ url('/login') }}" id="item-login">Login <span class="glyphicon glyphicon-log-in"></span></a></li>
+          <li><a href="{{ url('/register') }}">@lang('layout.register')</a></li>
+          <li><a href="{{ url('/login') }}" id="item-login">@lang('layout.login') <span class="glyphicon glyphicon-log-in"></span></a></li>
         </ul>
       </div>
     </div>
