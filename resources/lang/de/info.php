@@ -10,4 +10,6 @@ return [
   'password'  => 'Passwort',
   'confirm'   => 'Passwort bestätigen',
   'send'      => 'Senden',
+  'back'      => 'Zurück',
+  'continue'  => 'Weiter',
 ];

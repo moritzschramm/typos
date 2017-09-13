@@ -11,5 +11,6 @@ return [
   'password'  => 'Password',
   'confirm'   => 'Confirm password',
   'send'      => 'Send',
-
+  'back'      => 'Back',
+  'continue'  => 'Continue',
 ];
