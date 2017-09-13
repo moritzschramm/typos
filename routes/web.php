@@ -69,9 +69,12 @@ Route::group(['namespace' => 'Support'], function() {
 
 /**
   * Training:
-  * Training, Lections, Exercises
+  * Training, Lections, Exercises, Results
   */
 Route::group(['namespace' => 'Training'], function() {
+
+  Route::post('/results/upload',        'ResultController@upload');
+  Route::get('/results/show',           'ResultController@show');
 
   Route::get('/training',               'TrainingController@showTraining');
   Route::post('/training',              'TrainingController@getWords');
