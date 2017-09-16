@@ -8,7 +8,7 @@ return [
 
   'dashboard' => 'Dashboard',
   'stats'     => 'Statistics',
-  'suport'    => 'Support',
+  'support'    => 'Support',
   'settings'  => 'Settings',
   'help'      => 'Help',
   'logout'    => 'Logout',
