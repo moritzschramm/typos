@@ -7,11 +7,11 @@ use App\Http\Controllers\Controller;
 
 use DB, Auth;
 
-use App\Traits\GenerateLectionNonce;
+use App\Traits\CreateLectionNonce;
 
 class TrainingController extends Controller
 {
-  use GenerateLectionNonce;
+  use CreateLectionNonce;
 
   /**
     * Middlewares:
@@ -45,13 +45,14 @@ class TrainingController extends Controller
     // create a list of 10 random positions
     $position_list = [];
 
-    for($i = 0; $i < 10; $i++) {
+    $word_amount = 10;
+    for($i = 0; $i < $word_amount; $i++) {
 
       $position_list[] = rand(1, $number_of_rows);
     }
 
     // get 10 random words from database
-    $query = 'SELECT word FROM words_de WHERE id IN (' . implode(',', $position_list) . ') LIMIT 10';
+    $query = 'SELECT word FROM words_de WHERE id IN (' . implode(',', $position_list) . ') LIMIT ' . $word_amount;
     $words_raw = DB::select($query);
     $words = [];
 
@@ -60,15 +61,15 @@ class TrainingController extends Controller
       $words[] = $word_raw->word;
     }
 
-    // generate a lection nonce
-    $nonce = $this->generateLectionNonce(Auth::user()->id_user, count(implode($words, ' ')));
+    // store Lection nonce in session
+    $characterAmount = strlen(implode($words, ''));
+    $this->createLectionNonce(Auth::user()->id_user, $characterAmount);
 
     // return array (laravel will automatically encode it to JSON)
     return
     [
       'meta' => [
           'mode' => 'expand', // valid modes: expand, prepared and block (@see resources/assets/js/app/sequence.js)
-          'nonce' => $nonce,
         ],
       'lines' => $words,
     ];
