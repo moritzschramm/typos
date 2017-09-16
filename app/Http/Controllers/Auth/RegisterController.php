@@ -90,9 +90,9 @@ class RegisterController extends Controller
 
     } else {
 
-      $user = new User;
-      $user->email = $request->input('email');
-      $user->uuid = uuidv4();
+      $user           = new User;
+      $user->email    = $request->input('email');
+      $user->uuid     = User::uuid();
       $user->password = bcrypt($request->input('password'));
       $user->verified = NULL;
       $user->save();
