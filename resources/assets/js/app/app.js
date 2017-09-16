@@ -18,7 +18,7 @@ var STATE_FINISHED    = 3;    // user has finished typing all lines
 var app_state       = STATE_LOADING;    // current app state
 var app_inError     = false;            // if the there is currently some wrong input which has to be deleted before the user can type again
 var app_errorCount  = 0;                // amount of errors made by user
-var app_nonce       = "";               // retrieved via sequence, should be submitted when uploading results
+var app_nonce       = "";               // retrieved when lection starts, should be submitted when uploading results
 
 var app_silentKeys = ["Shift", "AltGraph", "Alt", "Control"];    // keys that should not be printed to display
 
@@ -247,7 +247,19 @@ function app_startLection() {
   var nextKeyId = kb_getKeyIdFromKey(line.charAt(0));
   kb_highlightKey(nextKeyId);
 
-  app_changeState(STATE_RUNNING);
+  $.post("/training/nonce", function(data, status) {
+
+    if(status == "success") {
+
+      app_nonce = data;
+      app_changeState(STATE_RUNNING);
+
+    } else {
+
+      console.log("Error while retrieving nonce for lection. Status: " + status);
+    }
+  });
+
 }
 
 /**

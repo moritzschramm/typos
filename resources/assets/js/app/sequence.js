@@ -24,8 +24,6 @@ function sq_init(loaded) {
 
     if(status == "success") {
 
-      app_nonce = data.meta.nonce;
-
       switch(data.meta.mode) {
 
         case "expand":            // adapt line content to fit display width (lines too short, use for single words)
