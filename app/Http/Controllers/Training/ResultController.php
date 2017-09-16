@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 use Auth;
 
-use App\Models\LectionNonce, App\Models\LectionResult;
+use App\Models\LectionResult;
 
 use App\Traits\CalculateXP;
 
@@ -36,7 +36,7 @@ class ResultController extends Controller
     session()->reflash();
 
     return view('training.results', [
-      'xp'          => 10,
+      'xp'          => session('xp'),
       'velocity'    => session('velocity'),
       'errors'      => session('errors'),
       'keystrokes'  => session('keystrokes'),
@@ -53,7 +53,7 @@ class ResultController extends Controller
   public function upload(Request $request)
   {
     $user       = Auth::user();
-    $nonce      = LectionNonce::where('nonce', $request->input('nonce'))->first();
+    $nonce      = session('nonce');
     $velocity   = $request->input('velocity');
     $errors     = $request->input('errors');
     $keystrokes = $request->input('keystrokes');
@@ -84,7 +84,7 @@ class ResultController extends Controller
     }
 
     // nonce has been validated and isn't needed anymore
-    $nonce->delete();
+    session()->forget('nonce');
 
     return response('', 200);
   }
@@ -107,7 +107,7 @@ class ResultController extends Controller
       if($nonce->id_user === $userId) {
 
         // calculate total time needed for lection
-        $timeDiff = time() - $nonce->created_at->timestamp;
+        $timeDiff = time() - $nonce->timestamp;
 
         // velocity of over 600 is not possible for humans (proof?)
         if($velocity > 600) return false;
@@ -120,7 +120,8 @@ class ResultController extends Controller
 
         // if the user could not type the amount of characters
         // in the calculated timeframe, user must be cheating
-        if($characters < $nonce->character_amount) {
+        // (minus a 5% margin of error that takes into account delays will submitting results)
+        if($characters < $nonce->character_amount - ($nonce->character_amount * 0.05)) {
 
           return false;
 
