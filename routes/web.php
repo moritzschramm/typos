@@ -76,6 +76,8 @@ Route::group(['namespace' => 'Training'], function() {
   Route::post('/results/upload',        'ResultController@upload');
   Route::get('/results/show',           'ResultController@show');
 
+  Route::post('/training/nonce',        'NonceController@generateNonce');
+
   Route::get('/training',               'TrainingController@showTraining');
   Route::post('/training',              'TrainingController@getWords');
 
