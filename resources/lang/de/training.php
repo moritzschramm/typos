@@ -34,5 +34,9 @@ return [
     'amountCorrects'    => 'Anzahl korrekt getippter Zeichen',
     'amountErrors'      => 'Anzahl der Fehler',
     'avgSpeed'          => 'Durchschnittliche Geschwindigkeit',
+    'cheated'           => 'Deine Ergebnisse wurden nicht gespeichert, da Sie wahrscheinlich verfälscht wurden. Wenn du denkst, dass das ein Fehler ist, melde dich beim Support.',
+    'currentXP'         => 'erreichte XP',
+    'missingXP'         => 'fehlende XP',
+    'todaysXP'          => 'heutige XP',
   ],
 ];

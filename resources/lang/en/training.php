@@ -34,5 +34,9 @@ return [
     'amountCorrects'    => 'Number of correctly typed characters',
     'amountErrors'      => 'Number of errors',
     'avgSpeed'          => 'Average speed',
+    'cheated'           => 'Your results have not been saved since they might be fraudulent. If you think this is a mistake, please contact our support.',
+    'currentXP'         => 'current XP',
+    'missingXP'         => 'missing XP',
+    'todaysXP'          => 'today\'s XP',
   ],
 ];
