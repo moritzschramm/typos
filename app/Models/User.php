@@ -21,13 +21,30 @@ class User extends Authenticatable
       'password', 'remember_token', 'token',
   ];
 
-  public function lectionNonces()
+  /**
+    * Creates a uuid for a new user. Checks if the uuid already exists
+    *
+    * @return string $uuid
+    */
+  public static function uuid()
   {
-    return $this->hasMany(LectionNonce::class, 'id_user', 'id_user');
+    do {
+
+      $uuid = uuidv4();
+      $exists = User::where('uuid', $uuid)->first();
+
+    } while($exists);
+
+    return $uuid;
   }
 
   public function lectionResults()
   {
     return $this->hasMany(LectionResult::class, 'id_user', 'id_user');
+  }
+
+  public function exercises()
+  {
+    return $this->hasMany(Exercise::class, 'id_user', 'id_user');
   }
 }
