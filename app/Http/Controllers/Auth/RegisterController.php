@@ -81,6 +81,10 @@ class RegisterController extends Controller
       } else if($this->is_weak_password($password)) {
 
         $validator->errors()->add('password', 'errors.weak_password');
+
+      } else if( ! in_array($request->input('locale'), config('app.available_locales'))) {
+
+        $validator->errors()->add('locale', 'errors.locale_not_available');
       }
     });
 
@@ -95,6 +99,7 @@ class RegisterController extends Controller
       $user->uuid     = User::uuid();
       $user->password = bcrypt($request->input('password'));
       $user->verified = NULL;
+      $user->locale   = $request->input('locale');
       $user->save();
 
       $token = $this->createUserToken($user);
