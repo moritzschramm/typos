@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-use App;
+use App, Auth;
 
 class Locale
 {
@@ -19,7 +19,11 @@ class Locale
     {
       if(!session()->has('app_locale') || !in_array(session('app_locale'), config('app.available_locales'))) {
 
-        if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+        if(Auth::check()) {
+
+          $lang = Auth::user()->locale;
+
+        } else if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
 
           $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
           # since we currently only have 2 supported languages,
@@ -37,7 +41,7 @@ class Locale
             session(['app_locale' => 'de']);
             break;
 
-          default: # case 'en':
+          default: # case 'en':             // fallback to locale 'en'
 
             session(['app_locale' => 'en']);
             break;

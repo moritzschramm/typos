@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Locale;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App;
+use App, Auth;
 
 class LocaleController extends Controller
 {
@@ -26,6 +26,13 @@ class LocaleController extends Controller
     if( ! in_array($locale, config('app.available_locales'))) {
 
       $locale = 'en';
+    }
+
+    if(Auth::check()) {
+
+      $user = Auth::user();
+      $user->locale = $locale;
+      $user->update();
     }
 
     App::setLocale($locale);
