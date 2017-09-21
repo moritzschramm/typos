@@ -22,7 +22,7 @@
               <ul class="dropdown-menu">
                 <li style="color: #333; padding: 3px 20px;">{{ Auth::user()->email }}</li>
                   <li class="divider"></li>
-                  <li><a href="{{ url('/settings') }}">@lang('layout.settings')</a></li>
+                  <li><a href="{{ url('/preferences/account') }}">@lang('layout.settings')</a></li>
                   <li><a href="{{ url('/support') }}">@lang('layout.help')</a></li>
                  <li class="divider"></li>
                 <li>
@@ -51,6 +51,7 @@
         <ul class="nav navbar-nav navbar-left">
           <li @yield('nav1')><a href="{{ url('/') }}">@lang('layout.home')</a></li>
           <li @yield('nav2')><a href="{{ url('/support') }}">@lang('layout.support')</a></li>
+          <li><a href="https://github.com/moritzschramm/typos" target="_blank">GitHub</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="{{ url('/register') }}">@lang('layout.register')</a></li>
