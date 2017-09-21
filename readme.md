@@ -23,18 +23,14 @@ A guide for using homestead: https://laravel.com/docs/5.5/homestead
 
 Start docker containers
 <br>
-<code>
-docker-compose up -d
-</code>
+<code>docker-compose up -d</code>
 <br>
 To access the application now, go to http://localhost via your browser
 <br>
 <br>
 Stop docker containers
 <br>
-<code>
-docker-compose down
-</code>
+<code>docker-compose down</code>
 
 ### Running tests
 
@@ -44,17 +40,15 @@ Run <code>phpunit</code> or <code>./vendor/bin/phpunit</code>
 Since the docker containers run on their own network, we can't run <code>phpunit</code> directly
 (we have to run it from within the php docker container).
 There is a little bash script to make things easier:<br>
-<code>
-./start-test
-</code><br>
+<code>./start-test</code><br>
 This is basically just an alias for <code>phpunit</code>.
 
 
 ### Migrations
 Run <code>php artisan migrate --seed</code> (this will automatically seed the database with a test user).
 <br>
-You may also want to upload the wordlists used by the 'training mode' of the app
-(<code>php artisan words:upload all</code>). For more info, read the readme located in ./resources/assets/wordlists.
+You may also want to upload the wordlists and lections used by the 'training mode' of the app
+(<code>php artisan load:words</code> and <code>php artisan load:lections</code>). For more info, read the readme located in ./resources/assets/wordlists.
 
 #### Using docker
 Again, since the docker containers are on their own network, running <code>php artisan migrate</code> doesn't work as expected, and, again, there is a bash script called remote-artisan, which just runs <code>php artisan</code> from within the php docker container.<br>
