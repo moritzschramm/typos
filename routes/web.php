@@ -87,6 +87,10 @@ Route::group(['namespace' => 'Training'], function() {
   Route::get('/exercise/{exerciseId}',  'ExerciseController@showExercise');
   Route::post('/exercise/{exerciseId}', 'ExerciseController@getExercise');
 
+  Route::get('/trial',                  'TrialController@showApp');
+  Route::post('/trial',                 'TrialController@getWords');
+  Route::post('/trial/upload',          'TrialController@handleUpload');
+
 });
 
 /**
@@ -104,7 +108,6 @@ Route::group(['namespace' => 'Exercise'], function() {
   */
 Route::group(['namespace' => 'Preferences'], function() {
 
-  Route::get('/preferences',                    'PreferencesController@showOverview');
   Route::get('/preferences/account',            'AccountController@showAccount');
   Route::get('/preferences/security',           'SecurityController@showSecurity');
   Route::get('/preferences/app',                'AppController@showAppPreferences');
