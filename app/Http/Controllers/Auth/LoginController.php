@@ -103,9 +103,13 @@ class LoginController extends Controller
     */
   public function logout()
   {
+    $locale = session('app_locale');
+
     Auth::logout();
     session()->flush();
 
-    return redirect('/');
+    session(['app_locale' => $locale]);
+
+    return redirect('/')->with('notification-success', 'auth.loggedOut');
   }
 }
