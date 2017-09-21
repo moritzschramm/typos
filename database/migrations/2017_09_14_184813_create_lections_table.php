@@ -15,9 +15,10 @@ class CreateLectionsTable extends Migration
     {
         Schema::create('lections', function (Blueprint $table) {
             $table->increments('id_lection');
+            $table->integer('external_id')->unsigned();
             $table->string('title');
             $table->text('content');
-            $table->integer('character_amount');
+            $table->integer('character_amount')->unsigned();
             $table->string('locale');
         });
     }
