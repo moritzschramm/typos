@@ -17,6 +17,7 @@ class RegisterTest extends TestCase
   const URI = '/register';
   const EMAIL = 'someMail@example.com';
   const PASSWORD = 'testtest1234'; # absolutely safe password
+  const LOCALE = 'en';
 
   /**
    * tests registration with valid input
@@ -37,6 +38,7 @@ class RegisterTest extends TestCase
       'email'     => self::EMAIL,
       'password'  => self::PASSWORD,
       'confirm'   => self::PASSWORD,
+      'locale'    => self::LOCALE,
     ]);
 
     $response->assertStatus(302);
@@ -72,6 +74,7 @@ class RegisterTest extends TestCase
       'email'     => '',
       'password'  => '',
       'confirm'   => '',
+      'locale'    => '',
     ], ['email', 'password', 'confirm']);
 
     # test 'email' validation
@@ -80,6 +83,7 @@ class RegisterTest extends TestCase
       'email'     => '',
       'password'  => self::PASSWORD,
       'confirm'   => self::PASSWORD,
+      'locale'    => self::LOCALE,
     ], ['email']);
 
     # test 'unique' validation
@@ -88,6 +92,7 @@ class RegisterTest extends TestCase
       'email'     => 'test@example.com',
       'password'  => self::PASSWORD,
       'confirm'   => self::PASSWORD,
+      'locale'    => self::LOCALE,
     ], ['email']);
 
     # test 'unique' validation
@@ -96,6 +101,7 @@ class RegisterTest extends TestCase
       'email'     => 'test@example.com',
       'password'  => self::PASSWORD,
       'confirm'   => self::PASSWORD,
+      'locale'    => self::LOCALE,
     ], ['email']);
 
     # test 'weak password' validation
@@ -104,6 +110,7 @@ class RegisterTest extends TestCase
       'email'     => self::EMAIL,
       'password'  => 'password',
       'confirm'   => 'password',
+      'locale'    => self::LOCALE,
     ], ['password']);
 
     # test 'password !== confirm' validation
@@ -112,7 +119,16 @@ class RegisterTest extends TestCase
       'email'     => self::EMAIL,
       'password'  => self::PASSWORD,
       'confirm'   => self::PASSWORD . 'something',
+      'locale'    => self::LOCALE,
     ], ['confirm']);
+
+    $this->failedRegisterPostRequest([
+      '_token'    => csrf_token(),
+      'email'     => self::EMAIL,
+      'password'  => self::PASSWORD,
+      'confirm'   => self::PASSWORD,
+      'locale'    => 'invalidLocale',
+    ], ['locale']);
   }
 
   private function failedRegisterPostRequest($params, $errors) {
