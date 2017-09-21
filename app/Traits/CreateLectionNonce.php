@@ -14,10 +14,9 @@ trait CreateLectionNonce {
     * @param boolean $isLection (default false): used for xp calculation (lections always 10XP)
     * @return string $nonce
     */
-  public function createLectionNonce($userId, $characterAmount, $isLection = false)
+  public function createLectionNonce($characterAmount, $isLection = false)
   {
     $nonce                    = new LectionNonce;
-    $nonce->id_user           = $userId;
     $nonce->character_amount  = $characterAmount;
     $nonce->is_lection        = $isLection;
 

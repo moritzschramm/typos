@@ -20,7 +20,6 @@ namespace App\Models;
 
 class LectionNonce
 {
-  public $id_user;
   public $nonce;
   public $character_amount;
   public $timestamp;
