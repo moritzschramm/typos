@@ -15,10 +15,11 @@ var STATE_IDLE        = 1;    // waiting for first user input (app will start AF
 var STATE_RUNNING     = 2;    // user works through sequences
 var STATE_FINISHED    = 3;    // user has finished typing all lines
 
-var app_state       = STATE_LOADING;    // current app state
-var app_inError     = false;            // if the there is currently some wrong input which has to be deleted before the user can type again
-var app_errorCount  = 0;                // amount of errors made by user
-var app_nonce       = "";               // retrieved when lection starts, should be submitted when uploading results
+var app_state       = STATE_LOADING;      // current app state
+var app_inError     = false;              // if the there is currently some wrong input which has to be deleted before the user can type again
+var app_errorCount  = 0;                  // amount of errors made by user
+var app_nonce       = "";                 // retrieved when lection starts, should be submitted when uploading results
+var app_resultURI   = "/results/upload";  // upload URI for results
 
 var app_silentKeys = ["Shift", "AltGraph", "Alt", "Control"];    // keys that should not be printed to display
 
@@ -301,7 +302,7 @@ function app_nextLine() {
   */
 function app_uploadResults() {
 
-  $.post("/results/upload",
+  $.post(app_resultURI,
   {
     nonce:      app_nonce,
     errors:     app_errorCount,
@@ -312,7 +313,8 @@ function app_uploadResults() {
 
     if(status == "success") {
 
-      window.location = "/results/show";
+      document.body.onbeforeunload = "";
+      window.location.href = "/results/show";
 
     } else {
 
