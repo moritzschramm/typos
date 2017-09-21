@@ -24,6 +24,10 @@ function sq_init(loaded) {
 
     if(status == "success") {
 
+      if(typeof data.meta.resultURI !== "undefined") {        // check if property exists and add to styles
+        app_resultURI = data.meta.resultURI;
+      }
+
       switch(data.meta.mode) {
 
         case "expand":            // adapt line content to fit display width (lines too short, use for single words)
