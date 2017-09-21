@@ -8,16 +8,6 @@ use App\Http\Controllers\Controller;
 class NonceController extends Controller
 {
   /**
-    * Middlewares:
-    *  - auth
-    *
-    */
-  public function __construct()
-  {
-    $this->middleware('auth');
-  }
-
-  /**
     * generates the actual nonce and the timestamp
     *
     * @return string $nonce
@@ -28,7 +18,7 @@ class NonceController extends Controller
 
     if($nonce) {
 
-      $nonce->nonce = generateSecureString();
+      $nonce->nonce = generateSecureString(32);         // create 32 chars long token
       $nonce->timestamp = time();
 
       return $nonce->nonce;
