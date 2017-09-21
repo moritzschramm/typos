@@ -16,6 +16,7 @@ class CreateLectionResultsTable extends Migration
         Schema::create('lection_results', function (Blueprint $table) {
             $table->increments('id_lection_result');
             $table->integer('id_user')->unsigned()->index();
+            $table->integer('id_lection')->nullable();
             $table->float('velocity', 8, 2);                  // 8 digits in total, 2 after decimal point
             $table->integer('keystrokes')->unsigned();
             $table->integer('errors')->unsigned();
