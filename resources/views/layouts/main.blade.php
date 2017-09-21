@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ App::getLocale() }}">
 <head>
-  <title>@yield('title')</title>
+  <title>@yield('title') - Typos</title>
   <meta charset="utf-8">
   <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
