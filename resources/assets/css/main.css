@@ -268,3 +268,15 @@ footer p, footer strong, footer li, footer a, footer div {
 .notification-error {
   background-color: #cf0000;
 }
+.notification-close {
+  position: absolute;
+  right: 10px;
+  margin-top: -6px;
+  padding: 0px 10px;
+  font-size: 20pt;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+}
+.notification-close:hover {
+  color: rgba(255, 255, 255, 1.0);
+}
