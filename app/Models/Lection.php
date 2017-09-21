@@ -20,6 +20,7 @@ class Lection extends Model
 {
   protected $table = 'lections';
   protected $primaryKey = 'id_lection';
+  public $timestamps = [];
 
-  protected $fillable = [ 'id_lection', 'title', 'content', 'character_amount', 'locale',];
+  protected $fillable = [ 'external_id', 'title', 'content', 'character_amount', 'locale',];
 }
