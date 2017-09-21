@@ -47,7 +47,12 @@
     </div>
 
     <div class="text-right">
-      <a href="{{ url('/dashboard') }}" class="btn btn-default btn-main btn-continue"><span>@lang('info.continue')</span></a>
+
+      @if(Auth::check())
+        <a href="{{ url('/dashboard') }}" class="btn btn-default btn-main btn-continue"><span>@lang('info.continue')</span></a>
+      @else
+        <a href="{{ url('/trial') }}" class="btn btn-default btn-main btn-continue"><span>@lang('info.repeat')</span></a>
+      @endif
     </div>
 
   </div>
@@ -59,7 +64,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
 <script>
 var xp = {{ $xp }};
-var goal = 30;
+var goal = {{ $xp_goal }};
 
 $(document).ready(function() {
 
