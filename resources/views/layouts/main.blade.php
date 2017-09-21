@@ -25,6 +25,13 @@
 
   <script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function() {
+    $(".notification-close").on("click", function() {
+      $(".notification").fadeOut();
+    });
+  });
+  </script>
 
   @yield('footer')
 
