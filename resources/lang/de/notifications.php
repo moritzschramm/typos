@@ -25,4 +25,6 @@ return [
   'verify' => [
     'success' => 'Ihr Benutzerkonto wurde erfolgreich bestätigt, Sie können sich jetzt anmelden.',
   ],
+
+  'close' => 'Benachrichtigung ausblenden',
 ];

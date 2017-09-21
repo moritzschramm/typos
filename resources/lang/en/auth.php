@@ -36,4 +36,6 @@ return [
       'action' => 'Reset',
     ],
   ],
+
+  'loggedOut' => 'Logged out successfully',
 ];

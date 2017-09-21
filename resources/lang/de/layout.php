@@ -8,7 +8,7 @@ return [
 
   'dashboard' => 'Dashboard',
   'stats'     => 'Statistiken',
-  'support'    => 'Support',
+  'support'   => 'Support',
   'settings'  => 'Einstellungen',
   'help'      => 'Hilfe',
   'logout'    => 'Abmelden',

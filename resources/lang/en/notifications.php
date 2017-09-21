@@ -26,4 +26,5 @@ return [
     'success' => 'Your account is now verified, you can now login.',
   ],
 
+  'close' => 'Close notification',
 ];

@@ -36,4 +36,6 @@ return [
       'action' => 'Zurücksetzen',
     ],
   ],
+
+  'loggedOut' => 'Erfolgreich abgemeldet',
 ];
