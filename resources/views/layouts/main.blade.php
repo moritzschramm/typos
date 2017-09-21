@@ -13,7 +13,7 @@
   @yield('header')
 </head>
 
-<body>
+<body @yield('bodyattr')>
 
   @include('layouts.notification-bar')
 
