@@ -62,6 +62,7 @@ class RegisterController extends Controller
       'email'     => 'required|email|unique:users,email|max:' . config('database.stringLength'),
       'password'  => 'required|max:'       . config('database.stringLength'),
       'confirm'   => 'required|max:'       . config('database.stringLength'),
+      'locale'    => 'required'
     ], [
       'required'  => 'errors.required',
       'email'     => 'errors.email',
