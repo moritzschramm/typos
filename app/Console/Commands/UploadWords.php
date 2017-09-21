@@ -14,16 +14,16 @@ class UploadWords extends Command
      *
      * @var string
      */
-    protected $signature = 'words:upload {filenames*}';
+    protected $signature = 'load:words {--name=*}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = "Uploads wordlists from /resources/assets/wordlists to the database.
-Expects locale of wordlists to upload (Like 'php artisan words:upload words-de.txt words-en.txt').
-You can also call 'php artisan words:upload all' to upload
+    protected $description = "Uploads wordlists from /resources/assets/wordlists to database.
+Expects filenames of wordlists to upload (Like 'php artisan load:words --name=words_de --name=words_en').
+You can also call 'php artisan load:words' to upload
 all wordlists from the wordlist directory.";
 
     /**
@@ -50,19 +50,12 @@ all wordlists from the wordlist directory.";
      */
     public function handle()
     {
-      $wordlists = $this->argument('filenames');
+      $wordlists = $this->option('name');
 
       if(is_null($wordlists) || count($wordlists) === 0) {
 
-        $this->error("Please specify a wordlist to be uploaded. See 'php artisan help words:upload' for help");
-        return;
-      }
-
-      if($wordlists[0] === 'all') {
-
         // find names of all wordlists
         $wordlists = $this->find_wordlists();
-
       }
 
       $this->info('Wordlist(s) to be uploaded:');
@@ -90,11 +83,11 @@ all wordlists from the wordlist directory.";
       $dir_contents = scandir($this->wordlists_dir);
       $wordlists = [];
 
-      foreach($dir_contents as $content) {
+      foreach($dir_contents as $filename) {
 
-        if( ! is_dir($content) && $content !== 'readme.md') {     // filter directories and readme out
+        if( ! is_dir($filename) && $filename !== 'readme.md') {     // filter directories and readme out
 
-          $wordlists[] = $content;
+          $wordlists[] = $filename;
         }
       }
 

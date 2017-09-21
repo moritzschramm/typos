@@ -9,12 +9,12 @@ use DB;
 
 class ClearWords extends Command
 {
-    /**
+    /**$filename
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'words:clear {tables*}';
+    protected $signature = 'unload:words {--name=*}';
 
     /**
      * The console command description.
@@ -22,7 +22,7 @@ class ClearWords extends Command
      * @var string
      */
     protected $description = "Delete all words from specified tables.
-Use 'php artisan words:clear all' to clear all wordlist tables.";
+Use 'php artisan unload:words' to clear all wordlist tables.";
 
     /**
      * The directory of the wordlists
@@ -48,19 +48,12 @@ Use 'php artisan words:clear all' to clear all wordlist tables.";
      */
     public function handle()
     {
-      $wordlists = $this->argument('tables');
+      $wordlists = $this->option('name');
 
       if(is_null($wordlists) || count($wordlists) === 0) {
 
-        $this->error("Please specify table names to be cleared. See 'php artisan help words:clear' for help");
-        return;
-      }
-
-      if($wordlists[0] === 'all') {
-
         // find names of all wordlists
         $wordlists = $this->find_wordlists();
-
       }
 
       $this->info('Table(s) to be cleared:');
@@ -102,11 +95,11 @@ Use 'php artisan words:clear all' to clear all wordlist tables.";
       $dir_contents = scandir($this->wordlists_dir);
       $wordlists = [];
 
-      foreach($dir_contents as $content) {
+      foreach($dir_contents as $filename) {
 
-        if( ! is_dir($content) && $content !== 'readme.md') {
+        if( ! is_dir($filename) && $filename !== 'readme.md') {
 
-          $wordlists[] = $content;
+          $wordlists[] = $filename;
         }
       }
 
