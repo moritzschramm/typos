@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-      $user = factory(User::class)->states('testEmail', 'verified')->make();
+      $user = factory(User::class)->states('testuser', 'verified')->make();
       $user->save();
     }
 }

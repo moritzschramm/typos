@@ -5,6 +5,7 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
+        'username'        => $faker->unique()->userName,
         'email'           => $faker->unique()->safeEmail,
         'password'        => $password ?: $password = bcrypt('testtest'),
         'uuid'            => uuidv4(),
@@ -13,9 +14,10 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->state(App\Models\User::class, 'testEmail', function($faker) {
+$factory->state(App\Models\User::class, 'testuser', function($faker) {
   return [
-    'email' => 'test@example.com',
+    'username'  => 'testuser',
+    'email'     => 'test@example.com',
   ];
 });
 
