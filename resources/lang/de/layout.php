@@ -15,4 +15,6 @@ return [
   'login'     => 'Login',
   'register'  => 'Registrieren',
   'home'      => 'Startseite',
+  'locale'    => 'Sprache wählen:',
+  
 ];

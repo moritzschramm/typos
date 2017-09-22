@@ -17,5 +17,6 @@ return [
   'differs'               => 'Passwörter stimmen nicht überein. Bitte geben Sie Ihr Passwort erneut ein.',
   'throttle'              => 'Zu viele Versuche. Bitte versuchen Sie es in :sec Sekunden erneut.',
   'locale_not_available'  => 'Sprache nicht verfügbar',
+  'acceptPolicy'          => 'Bitte stimmen Sie der Datenschutzerklärung zu.',
 
 ];
