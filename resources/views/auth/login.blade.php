@@ -17,17 +17,15 @@
     <form role="form" method="POST" action="{{ url('/login') }}">
       {{ csrf_field() }}
 
-      <div class="form-group has-feedback">
-        <input type="text" class="form-control" id="email" name="email" placeholder="@lang('info.email')" value="{{ old('email') }}">
-        <span id="email_error" class="glyphicon glyphicon-remove form-control-feedback gone"></span>
+      <div class="form-group">
+        <input type="text" class="form-control" id="emailOrUsername" name="emailOrUsername" placeholder="@lang('info.email')/@lang('info.username')" value="{{ old('emailOrUsername') }}">
       </div>
-      @if($errors->has('email'))
-        <div class="alert alert-danger">@lang($errors->first('email'))</div>
+      @if($errors->has('emailOrUsername'))
+        <div class="alert alert-danger">@lang($errors->first('emailOrUsername'))</div>
       @endif
 
       <div class="form-group has-feedback">
         <input type="password" class="form-control" id="password" name="password" placeholder="@lang('info.password')">
-        <span id="pwd_error" class="glyphicon glyphicon-remove form-control-feedback gone"></span>
       </div>
       @if($errors->has('password'))
         <div class="alert alert-danger">@lang($errors->first('password'))</div>
@@ -40,7 +38,7 @@
         </label>
       </div>
 
-      @unless($errors->has('email') || $errors->has('password'))
+      @unless($errors->has('emailOrUsername') || $errors->has('password'))
 
         @foreach($errors->all() as $message)
           <div class="alert alert-danger">@lang($message, ['sec' => session('retryAfter')])</div>

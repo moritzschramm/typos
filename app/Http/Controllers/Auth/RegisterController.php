@@ -59,15 +59,19 @@ class RegisterController extends Controller
   public function register(Request $request)
   {
     $validator = Validator::make($request->all(), [
-      'email'     => 'required|email|unique:users,email|max:' . config('database.stringLength'),
-      'password'  => 'required|max:'       . config('database.stringLength'),
-      'confirm'   => 'required|max:'       . config('database.stringLength'),
-      'locale'    => 'required'
+      'username'  => 'required|alpha_dash|unique:users,username|max:'  . config('database.stringLength'),
+      'email'     => 'required|email|unique:users,email|max:'          . config('database.stringLength'),
+      'password'  => 'required|max:'                                   . config('database.stringLength'),
+      'confirm'   => 'required|max:'                                   . config('database.stringLength'),
+      'locale'    => 'required',
+      'checkbox'  => 'required',
     ], [
-      'required'  => 'errors.required',
-      'email'     => 'errors.email',
-      'max'       => 'errors.max',
-      'unique'    => 'errors.uniqueEmail',
+      'required'          => 'errors.required',
+      'email'             => 'errors.email',
+      'max'               => 'errors.max',
+      'email.unique'      => 'errors.uniqueEmail',
+      'username.unique'   => 'errors.uniqueUsername',
+      'checkbox.required' => 'errors.acceptPolicy',
     ]);
 
     $validator->after(function ($validator) use ($request) {
@@ -96,6 +100,7 @@ class RegisterController extends Controller
     } else {
 
       $user           = new User;
+      $user->username = $request->input('username');
       $user->email    = $request->input('email');
       $user->uuid     = User::uuid();
       $user->password = bcrypt($request->input('password'));

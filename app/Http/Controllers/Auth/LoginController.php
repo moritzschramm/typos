@@ -44,26 +44,28 @@ class LoginController extends Controller
   public function login(Request $request)
   {
     $validator = Validator::make($request->all(), [
-      'email'     => 'required|email|max:'  . config('database.stringLength'),
-      'password'  => 'required|max:'        . config('database.stringLength'),
+      'emailOrUsername'     => 'required|max:'  . config('database.stringLength'),
+      'password'  => 'required|max:'  . config('database.stringLength'),
     ], [
       'required'  => 'errors.required',
-      'email'     => 'errors.email',
       'max'       => 'errors.max',
     ]);
 
     $validator->after(function ($validator) use ($request) {
 
-      $email            = $request->input('email');
+      $emailOrUsername  = $request->input('emailOrUsername');
       $password         = $request->input('password');
       $with_remember_me = $request->input('remember_me') == 'on';
-      $user = User::where('email', $email)->first();
+      $user = User::where('email', $emailOrUsername)
+                    ->orWhere('username', $emailOrUsername)
+                    ->first();
 
       if($user) {
 
         if( ! is_null($user->verified)) { # has user verified his email?
 
-          if(Auth::validate(['email' => $email, 'password' => $password])) {  # check email and password
+          if( Auth::validate(['email'     => $emailOrUsername, 'password' => $password]) ||
+              Auth::validate(['username'  => $emailOrUsername, 'password' => $password]) ) {
 
             session()->regenerate();  # prevent session fixation attacks
 
