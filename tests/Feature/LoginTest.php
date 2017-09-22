@@ -12,6 +12,7 @@ use Auth;
 class LoginTest extends TestCase
 {
   const URI = '/login';
+  const USERNAME = 'testuser';
   const EMAIL = 'test@example.com';
   const PASSWORD = 'testtest';
 
@@ -24,10 +25,26 @@ class LoginTest extends TestCase
   {
     session()->start();
 
+    # test email
     $response = $this->call('POST', self::URI, [
-      'email'     => self::EMAIL,
-      'password'  => self::PASSWORD,
-      '_token'    => csrf_token(),
+      'emailOrUsername' => self::EMAIL,
+      'password'        => self::PASSWORD,
+      '_token'          => csrf_token(),
+    ]);
+
+    $response->assertStatus(302);
+    $response->assertRedirect(\App\Http\Controllers\Auth\LoginController::$redirectTo);
+
+    $this->assertTrue(Auth::check());
+
+    Auth::logout();
+    $this->assertFalse(Auth::check());
+
+    # test username
+    $response = $this->call('POST', self::URI, [
+      'emailOrUsername' => self::USERNAME,
+      'password'        => self::PASSWORD,
+      '_token'          => csrf_token(),
     ]);
 
     $response->assertStatus(302);
@@ -49,9 +66,9 @@ class LoginTest extends TestCase
     $response->assertStatus(200);
 
     $response = $this->call('POST', self::URI, [
-      'email'     => self::EMAIL,
-      'password'  => 'definitelyTheWrongPass',
-      '_token'    => csrf_token(),
+      'emailOrUsername' => self::EMAIL,
+      'password'        => 'definitelyTheWrongPass',
+      '_token'          => csrf_token(),
     ]);
 
     $response->assertStatus(302);
@@ -74,14 +91,14 @@ class LoginTest extends TestCase
     $response->assertStatus(200);
 
     $response = $this->call('POST', self::URI, [
-      'email'     => '',
-      'password'  => '',
-      '_token'    => csrf_token(),
+      'emailOrUsername' => '',
+      'password'        => '',
+      '_token'          => csrf_token(),
     ]);
 
     $response->assertStatus(302);
     $response->assertRedirect(self::URI);
-    $response->assertSessionHasErrors(['email', 'password']);
+    $response->assertSessionHasErrors(['emailOrUsername', 'password']);
 
     $this->assertFalse(Auth::check());
   }
@@ -102,9 +119,9 @@ class LoginTest extends TestCase
     for($i = 0; $i < 5; $i++) {
 
       $response = $this->call('POST', self::URI, [
-        'email'     => self::EMAIL,
-        'password'  => 'definitelyTheWrongPass',
-        '_token'    => csrf_token(),
+        'emailOrUsername' => self::EMAIL,
+        'password'        => 'definitelyTheWrongPass',
+        '_token'          => csrf_token(),
       ]);
 
       $response->assertStatus(302);
@@ -114,10 +131,11 @@ class LoginTest extends TestCase
       $this->assertFalse(Auth::check());
     }
 
+    # login should be limited
     $response = $this->call('POST', self::URI, [
-      'email'     => self::EMAIL,
-      'password'  => 'definitelyTheWrongPass',
-      '_token'    => csrf_token(),
+      'emailOrUsername' => self::EMAIL,
+      'password'        => 'definitelyTheWrongPass',
+      '_token'          => csrf_token(),
     ]);
 
     $response->assertStatus(302);

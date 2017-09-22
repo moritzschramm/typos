@@ -15,6 +15,7 @@ class RegisterTest extends TestCase
   use DatabaseTransactions;
 
   const URI = '/register';
+  const USERNAME = 'someuser';
   const EMAIL = 'someMail@example.com';
   const PASSWORD = 'testtest1234'; # absolutely safe password
   const LOCALE = 'en';
@@ -35,10 +36,12 @@ class RegisterTest extends TestCase
 
     $response = $this->call('POST', self::URI, [
       '_token'    => csrf_token(),
+      'username'  => self::USERNAME,
       'email'     => self::EMAIL,
       'password'  => self::PASSWORD,
       'confirm'   => self::PASSWORD,
       'locale'    => self::LOCALE,
+      'checkbox'  => true,
     ]);
 
     $response->assertStatus(302);
@@ -71,63 +74,67 @@ class RegisterTest extends TestCase
     # test if 'required' validation works as expected
     $this->failedRegisterPostRequest([
       '_token'    => csrf_token(),
+      'username'  => '',
       'email'     => '',
       'password'  => '',
       'confirm'   => '',
       'locale'    => '',
+      'checkbox'  => true,
     ], ['email', 'password', 'confirm']);
 
-    # test 'email' validation
+    # test 'email' validation and 'username' alpha_dash
     $this->failedRegisterPostRequest([
       '_token'    => csrf_token(),
+      'username'  => 'invalidUsernameßäöü',
       'email'     => '',
       'password'  => self::PASSWORD,
       'confirm'   => self::PASSWORD,
       'locale'    => self::LOCALE,
-    ], ['email']);
+      'checkbox'  => true,
+    ], ['email', 'username']);
 
     # test 'unique' validation
     $this->failedRegisterPostRequest([
       '_token'    => csrf_token(),
+      'username'  => 'testuser',
       'email'     => 'test@example.com',
       'password'  => self::PASSWORD,
       'confirm'   => self::PASSWORD,
       'locale'    => self::LOCALE,
-    ], ['email']);
-
-    # test 'unique' validation
-    $this->failedRegisterPostRequest([
-      '_token'    => csrf_token(),
-      'email'     => 'test@example.com',
-      'password'  => self::PASSWORD,
-      'confirm'   => self::PASSWORD,
-      'locale'    => self::LOCALE,
-    ], ['email']);
+      'checkbox'  => true,
+    ], ['email', 'username']);
 
     # test 'weak password' validation
     $this->failedRegisterPostRequest([
       '_token'    => csrf_token(),
+      'username'  => self::USERNAME,
       'email'     => self::EMAIL,
       'password'  => 'password',
       'confirm'   => 'password',
       'locale'    => self::LOCALE,
+      'checkbox'  => true,
     ], ['password']);
 
     # test 'password !== confirm' validation
     $this->failedRegisterPostRequest([
       '_token'    => csrf_token(),
+      'username'  => self::USERNAME,
       'email'     => self::EMAIL,
       'password'  => self::PASSWORD,
       'confirm'   => self::PASSWORD . 'something',
       'locale'    => self::LOCALE,
+      'checkbox'  => true,
     ], ['confirm']);
 
+    # test 'locale' validation
     $this->failedRegisterPostRequest([
       '_token'    => csrf_token(),
+      'username'  => self::USERNAME,
       'email'     => self::EMAIL,
       'password'  => self::PASSWORD,
       'confirm'   => self::PASSWORD,
       'locale'    => 'invalidLocale',
+      'checkbox'  => true,
     ], ['locale']);
   }
 
