@@ -137,7 +137,8 @@ function app_keyPressed(key, keyId) {
     dp_setNormalText(line);
 
     // unhighlight current key
-    kb_unhighlightKey(keyId);
+    if( ! misc_assignmentVisible)
+      kb_unhighlightKey(keyId);
 
     // highlight next key
     var nextKey   = app_replaceSpecialChar(line.charAt(0));
@@ -156,8 +157,10 @@ function app_keyPressed(key, keyId) {
 
     app_inError = true;
 
-    kb_unhighlightKey(kb_lastHighlightedKeyId);
-    kb_highlightKey(kb_getKeyIdFromKey("Backspace"));
+    if( ! misc_assignmentVisible) {
+      kb_unhighlightKey(kb_lastHighlightedKeyId);
+      kb_highlightKey(kb_getKeyIdFromKey("Backspace"));
+    }
 
     if(dp_red.length < 5) {
 
@@ -201,7 +204,8 @@ function app_handleSpecialKeyPress(key, keyId) {
 
           app_inError = false;
 
-          kb_unhighlightKey(kb_lastHighlightedKeyId);   // unhighlight backspace
+          if( ! misc_assignmentVisible)
+            kb_unhighlightKey(kb_lastHighlightedKeyId);   // unhighlight backspace
 
           // highlight next key
           var nextKey = app_replaceSpecialChar(dp_normal.charAt(0));
@@ -271,7 +275,8 @@ function app_nextLine() {
 
   sequence.index++;
 
-  kb_unhighlightKey(kb_lastHighlightedKeyId);
+  if( ! misc_assignmentVisible)
+    kb_unhighlightKey(kb_lastHighlightedKeyId);
 
   if(sequence.index === sequence.lines.length) {  // there are no more lines
 
