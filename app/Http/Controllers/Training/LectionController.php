@@ -7,11 +7,11 @@ use App\Http\Controllers\Controller;
 
 use Auth;
 use App\Models\Lection;
-use App\Traits\CreateLectionNonce;
+use App\Traits\CreateLectionNonce, App\Traits\CreateAppView;
 
 class LectionController extends Controller
 {
-  use CreateLectionNonce;
+  use CreateLectionNonce, CreateAppView;
 
   /**
     * Middlewares:
@@ -31,7 +31,7 @@ class LectionController extends Controller
     */
   public function showLection($lectionId)
   {
-    return view('training.app', ['dataURI' => "/lection/$lectionId", 'keyboardLayout' => 'de-de']);
+    return $this->createAppView("/lection/$lectionId");
   }
 
   /**

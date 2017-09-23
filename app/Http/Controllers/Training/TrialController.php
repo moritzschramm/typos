@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use DB;
-use App\Traits\CreateLectionNonce, App\Traits\ValidateLectionNonce;
+use App\Traits\CreateLectionNonce, App\Traits\ValidateLectionNonce, App\Traits\CreateAppView;
 
 class TrialController extends Controller
 {
-  use CreateLectionNonce, ValidateLectionNonce;
+  use CreateLectionNonce, ValidateLectionNonce, CreateAppView;
 
   /**
     * show app view
@@ -19,7 +19,7 @@ class TrialController extends Controller
     */
   public function showApp()
   {
-    return view('training.app', ['dataURI' => '/trial', 'keyboardLayout' => 'de-de']);
+    return $this->createAppView('/trial', ['trial' => true]);
   }
 
   /**
