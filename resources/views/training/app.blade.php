@@ -10,7 +10,9 @@
 @endsection
 
 @section('bodyattr')
-onbeforeunload="return '@lang('training.beforeUnloadContent')';"
+  @unless($trial)
+    onbeforeunload="return '@lang('training.beforeUnloadContent')';"
+  @endunless
 @endsection
 
 @section('content')
@@ -26,9 +28,9 @@ onbeforeunload="return '@lang('training.beforeUnloadContent')';"
     <span class="glyphicon glyphicon-cog settings-icon unselectable"></span>
   </a>
     <ul class="dropdown-menu dropdown-menu-right">
-      <li><a class="settings-item" onclick="showAssignment();"><span id="assignment-state" class="glyphicon glyphicon-unchecked"></span> @lang('training.showAssignment')</a></li>
-      <li><a class="settings-item" onclick="showDivider();"><span id="divider-state" class="glyphicon glyphicon-unchecked"></span> @lang('training.showDivider')</a></li>
-      <li><a class="settings-item" onclick="showKeyboard();"><span id="keyboard-state" class="glyphicon glyphicon-unchecked"></span> @lang('training.showKeyboard')</a></li>
+      <li><a class="settings-item" onclick="toggleAssignment();"><span id="assignment-state" class="glyphicon glyphicon-unchecked"></span> @lang('training.showAssignment')</a></li>
+      <li><a class="settings-item" onclick="toggleDivider();"><span id="divider-state" class="glyphicon glyphicon-unchecked"></span> @lang('training.showDivider')</a></li>
+      <li><a class="settings-item" onclick="toggleKeyboard();"><span id="keyboard-state" class="glyphicon glyphicon-unchecked"></span> @lang('training.showKeyboard')</a></li>
     </ul>
   </div>
 
@@ -130,6 +132,14 @@ $.ajaxSetup({
 kb_layout   = "{{ $keyboardLayout }}";
 sq_dataURI  = "{{ $dataURI }}";
 
+misc_assignmentVisible  = {{ $setting['assignment'] }};
+misc_dividerVisible     = {{ $setting['divider'] }};
+misc_keyboardVisible    = {{ $setting['keyboard'] }};
+
+@if($trial)
+misc_backURI = "/";
+@endif
+
 kb_init(app_moduleCallback);
 
 $(document).ready(function() {
@@ -138,7 +148,10 @@ $(document).ready(function() {
   dp_init(app_moduleCallback);
   ib_init(app_moduleCallback);
   tm_init(app_moduleCallback);
-  misc_init(app_moduleCallback);
+
+  setTimeout(function() {
+    misc_init(app_moduleCallback);
+  }, 100);
 
   $('[data-toggle="tooltip"]').tooltip();
 });
