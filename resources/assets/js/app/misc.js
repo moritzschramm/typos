@@ -10,26 +10,16 @@
 var misc_assignmentVisible  = false;
 var misc_dividerVisible     = false;
 var misc_keyboardVisible    = true;
+var misc_backURI            = "/dashboard";
 
 /**
   * initialization
   */
 function misc_init(loaded) {
 
-  if(misc_assignmentVisible) {
-    $("#assignment-state").removeClass("glyphicon-unchecked");
-    $("#assignment-state").addClass("glyphicon-check");
-  }
-
-  if(misc_dividerVisible) {
-    $("#divider-state").removeClass("glyphicon-unchecked");
-    $("#divider-state").addClass("glyphicon-check");
-  }
-
-  if(misc_keyboardVisible) {
-    $("#keyboard-state").removeClass("glyphicon-unchecked");
-    $("#keyboard-state").addClass("glyphicon-check");
-  }
+  if(misc_keyboardVisible)   misc_showKeyboard();   else misc_hideKeyboard();
+  if(misc_assignmentVisible) misc_showAssignment(); else misc_hideAssignment();
+  if(misc_dividerVisible)    misc_showDivider();    else misc_hideDivider();
 
   loaded("misc");
 }
@@ -49,99 +39,120 @@ function back() {
 function backConfirm() {
 
   document.body.onbeforeunload = "";
-  window.location.href = '/dashboard';
+  window.location.href = misc_backURI;
 }
 
 /**
   * shows/hides assignment of keys
   */
-function showAssignment() {
+function toggleAssignment() {
 
   if(misc_assignmentVisible) {
 
-    // update checkbox
-    $("#assignment-state").addClass("glyphicon-unchecked");
-    $("#assignment-state").removeClass("glyphicon-check");
-
-    // update fingerInfo
-    $("#fingerInfo").addClass("gone");
-
-    // unhightlight keys
-    kb_unhighlightAllKeys();
-
-    misc_assignmentVisible = false;
+    misc_hideAssignment();
 
   } else {
 
-    // update checkbox
-    $("#assignment-state").removeClass("glyphicon-unchecked");
-    $("#assignment-state").addClass("glyphicon-check");
-
-    // update fingerInfo
-    $("#fingerInfo").removeClass("gone");
-
-    // hightlight keys
-    kb_highlightAllKeys();
-
-    misc_assignmentVisible = true;
+    misc_showAssignment();
   }
+  misc_assignmentVisible = ! misc_assignmentVisible;
 }
 
 /**
   * shows/hides divider between keys
   */
-function showDivider() {
+function toggleDivider() {
 
   if(misc_dividerVisible) {
 
-    // update checkbox
-    $("#divider-state").removeClass("glyphicon-check");
-    $("#divider-state").addClass("glyphicon-unchecked");
-
-    // hide divider
-    $("#divider").addClass("gone");
-
-    misc_dividerVisible = false;
+    misc_hideDivider();
 
   } else {
 
-    // update checkbox
-    $("#divider-state").addClass("glyphicon-check");
-    $("#divider-state").removeClass("glyphicon-unchecked");
-
-    // show divider
-    $("#divider").removeClass("gone");
-
-    misc_dividerVisible = true;
+    misc_showDivider();
   }
+  misc_dividerVisible = ! misc_dividerVisible;
 }
 
 /**
   * shows/hides keyboard
   */
-function showKeyboard() {
+function toggleKeyboard() {
 
   if(misc_keyboardVisible) {
 
-    // update checkbox
-    $("#keyboard-state").addClass("glyphicon-unchecked");
-    $("#keyboard-state").removeClass("glyphicon-check");
-
-    // hide keyboard
-    kb_clearCanvas();
-    $("#keyboard").addClass("gone");
-
-    misc_keyboardVisible = false;
+    misc_hideKeyboard();
 
   } else {
 
-    // update checkbox
-    $("#keyboard-state").removeClass("glyphicon-unchecked");
-    $("#keyboard-state").addClass("glyphicon-check");
-
-    // show keyboard
-    $("#keyboard").removeClass("gone");
-
-    misc_keyboardVisible = true;
+    misc_showKeyboard();
   }
+
+  misc_keyboardVisible = ! misc_keyboardVisible;
+}
+
+function misc_showAssignment() {
+
+  // update checkbox
+  $("#assignment-state").removeClass("glyphicon-unchecked");
+  $("#assignment-state").addClass("glyphicon-check");
+
+  // update fingerInfo
+  $("#fingerInfo").removeClass("gone");
+
+  // hightlight keys
+  kb_highlightAllKeys();
+}
+
+function misc_hideAssignment() {
+
+  // update checkbox
+  $("#assignment-state").addClass("glyphicon-unchecked");
+  $("#assignment-state").removeClass("glyphicon-check");
+
+  // update fingerInfo
+  $("#fingerInfo").addClass("gone");
+
+  // unhightlight keys
+  kb_unhighlightAllKeys();
+}
+
+function misc_showDivider() {
+
+  // update checkbox
+  $("#divider-state").addClass("glyphicon-check");
+  $("#divider-state").removeClass("glyphicon-unchecked");
+
+  // show divider
+  $("#divider").removeClass("gone");
+}
+
+function misc_hideDivider() {
+
+  // update checkbox
+  $("#divider-state").removeClass("glyphicon-check");
+  $("#divider-state").addClass("glyphicon-unchecked");
+
+  // hide divider
+  $("#divider").addClass("gone");
+}
+
+function misc_showKeyboard() {
+
+  // update checkbox
+  $("#keyboard-state").removeClass("glyphicon-unchecked");
+  $("#keyboard-state").addClass("glyphicon-check");
+
+  // show keyboard
+  $("#keyboard").removeClass("gone");
+}
+
+function misc_hideKeyboard() {
+
+  // update checkbox
+  $("#keyboard-state").addClass("glyphicon-unchecked");
+  $("#keyboard-state").removeClass("glyphicon-check");
+
+  // hide keyboard
+  $("#keyboard").addClass("gone");
 }
