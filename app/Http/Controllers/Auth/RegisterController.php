@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Models\User;
+use App\Models\User, App\Models\UserPreference;
 use App\Traits\CreateUserToken, App\Traits\PasswordCheck;
 use Validator, Mail;
 use App\Mail\VerifyAccountMail;
@@ -107,6 +107,10 @@ class RegisterController extends Controller
       $user->verified = NULL;
       $user->locale   = $request->input('locale');
       $user->save();
+
+      $preferences = new UserPreference(UserPreference::defaults($user->locale));
+      $preferences->id_user = $user->id_user;
+      $preferences->save();
 
       $token = $this->createUserToken($user);
 
