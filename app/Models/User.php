@@ -38,6 +38,23 @@ class User extends Authenticatable
     return $uuid;
   }
 
+  /**
+    * delete account with all relationships
+    *
+    * @return void
+    */
+  public function deleteAccount()
+  {
+    $this->lectionsResults()->delete();
+    $this->exercises()->delete();
+    $this->preferences()->delete();
+
+    $this->delete();
+  }
+
+
+  // database relationships:
+
   public function lectionResults()
   {
     return $this->hasMany(LectionResult::class, 'id_user', 'id_user');
@@ -46,5 +63,10 @@ class User extends Authenticatable
   public function exercises()
   {
     return $this->hasMany(Exercise::class, 'id_user', 'id_user');
+  }
+
+  public function preferences()
+  {
+    return $this->hasOne(UserPreference::class, 'id_user', 'id_user');
   }
 }

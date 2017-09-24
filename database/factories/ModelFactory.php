@@ -38,3 +38,8 @@ $factory->state(App\Models\User::class, 'locale-en', function($faker) {
     'locale' => 'en',
   ];
 });
+
+$factory->define(App\Models\UserPreference::class, function (Faker\Generator $faker) {
+
+    return App\Models\UserPreference::defaults();
+});
