@@ -20,7 +20,8 @@ class Exercise extends Model
   protected $primaryKey = 'id_exercise';
 
   protected $fillable = [ 'id_user', 'content', 'character_amount', 'is_public' ];
-
+  
+  // database relationship
   public function user()
   {
     return $this->belongsTo(User::class, 'id_user', 'id_user');
