@@ -1,5 +1,19 @@
-#!/bin/bash
-# shell script for starting a test in the php docker container on correct docker network
-# usage: ./start-test <any valid phpunit option>
+#!/usr/bin/env php
+<?php
 
-docker run -it --rm -v $(pwd):/opt -w /opt --network=${PWD##*/}_appnet moritzschramm/php-laravel ./vendor/bin/phpunit "$@"
+# php script for starting a test in the php docker container on correct docker network
+# usage: php start-test <any valid phpunit option>
+
+# in case you want to create a bash script instead, this is the shell command:
+# docker run -it --rm -v $(pwd):/opt -w /opt --network=${PWD##*/}_appnet moritzschramm/php-laravel ./vendor/bin/phpunit "$@"
+
+array_shift($argv);                         # remove first item (script name) from argument vector
+$args = implode(' ', $argv);                # create string from arguments
+
+$dirs = explode('/', __DIR__);
+$current_dir = $dirs[count($dirs) - 1];     # get the name of the current directory
+
+$cmd = 'docker run -it --rm -v ' . __DIR__ . ':/opt -w /opt --network=' .
+        $current_dir . '_appnet moritzschramm/php-laravel ./vendor/bin/phpunit ' . $args;
+
+passthru($cmd);
