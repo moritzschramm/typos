@@ -24,13 +24,13 @@
       <ul>
 
         <a href="{{ url('/preferences?view=account') }}">
-          <li class="<?php if($view == 'account') echo 'item-active'; ?> unselectable">@lang('preferences.account')</li>
+          <li class="@echoIf($view == 'account', 'item-active') unselectable">@lang('preferences.account')</li>
         </a>
         <a href="{{ url('/preferences?view=security') }}">
-          <li class="<?php if($view == 'security') echo 'item-active'; ?> unselectable">@lang('preferences.security')</li>
+          <li class="@echoIf($view == 'security', 'item-active') unselectable">@lang('preferences.security')</li>
         </a>
         <a href="{{ url('/preferences?view=app') }}">
-          <li class="<?php if($view == 'app') echo 'item-active'; ?> unselectable">@lang('preferences.app')</li>
+          <li class="@echoIf($view == 'app', 'item-active') unselectable">@lang('preferences.app')</li>
         </a>
 
       </ul>
@@ -53,18 +53,25 @@
             <div class="col-xs-4">
               <input id="password" name="password" class="form-control" type="password" placeholder="@lang('preferences.currentPassword')">
             </div>
+            @if($errors->has('password'))
+              <div class="alert alert-danger">@lang($errors->first('password'))</div>
+            @endif
           </div>
           <div class="row" style="margin-bottom: 10px;">
             <div class="col-xs-4">
               <input id="email" name="email" class="form-control" type="text" placeholder="@lang('preferences.newEmail')">
             </div>
+            @if($errors->has('email'))
+              <div class="alert alert-danger">@lang($errors->first('email'))</div>
+            @endif
           </div>
+
+          @if($errors->has('credentials'))
+            <div class="alert alert-danger">@lang($errors->first('credentials'))</div>
+          @endif
 
           <p>@lang('preferences.changeEmailInfo')</p>
 
-          <div id="alert_email_send" class="alert alert-success gone">E-mail gesendet</div>
-          <div id="alert_email_incorrect" class="alert alert-danger gone">Falsches Passwort</div>
-          <div id="alert_email_empty" class="alert alert-danger gone">Bitte alle Felder ausfüllen</div>
           <button type="submit" class="btn btn-default btn-simple" style="width: 150px;">@lang('info.save')</button>
         </form>
 
@@ -86,22 +93,37 @@
           {{ csrf_field() }}
 
           <div class="row" style="margin-bottom: 10px;">
+
             <div class="col-xs-4">
               @lang('preferences.currentPassword'):
               <input id="currentPassword" name="currentPassword" class="form-control" type="password" placeholder="@lang('preferences.currentPassword')">
             </div>
+            @if($errors->has('currentPassword'))
+              <div class="alert alert-danger">@lang($errors->first('currentPassword'))</div>
+            @endif
+
           </div>
           <div class="row" style="margin-bottom: 10px;">
+
             <div class="col-xs-4">
               @lang('preferences.newPassword'):
               <input id="newPassword" name="newPassword" class="form-control" type="password" placeholder="@lang('preferences.newPassword')">
             </div>
+            @if($errors->has('newPassword'))
+              <div class="alert alert-danger">@lang($errors->first('newPassword'))</div>
+            @endif
+
           </div>
           <div class="row" style="margin-bottom: 10px;">
+
             <div class="col-xs-4">
               @lang('info.confirm'):
               <input id="confirm" name="confirm" class="form-control" type="password" placeholder="@lang('info.confirm')">
             </div>
+            @if($errors->has('confirm'))
+              <div class="alert alert-danger">@lang($errors->first('confirm'))</div>
+            @endif
+
           </div>
 
           <br>
@@ -118,29 +140,45 @@
           <div class="row" style="margin-bottom: 10px;">
             <div class="col-xs-4">
               @lang('preferences.xpGoal'):
-              <input id="xp_goal" name="xp_goal" class="form-control" type="text" placeholder="@lang('preferences.xpGoal')">
+              <input value="{{ $xp_goal }}" id="xp_goal" name="xp_goal" class="form-control" type="text" placeholder="@lang('preferences.xpGoal')">
             </div>
+            @if($errors->has('xp_goal'))
+              <div class="alert alert-danger">@lang($errors->first('xp_goal'))</div>
+            @endif
           </div>
 
           <div class="checkbox unselectable">
             <label>
-              <input type="checkbox" value="" id="settingAssignment" name="settingAssignment">
+              <input type="checkbox" id="setting_assignment" name="setting_assignment" @echoIf($setting['assignment'], 'checked')>
               @lang('preferences.showAssignment')
             </label>
           </div>
           <div class="checkbox unselectable">
             <label>
-              <input type="checkbox" value="" id="settingDivider" name="settingDivider">
+              <input type="checkbox" id="setting_divider" name="setting_divider" @echoIf($setting['divider'], 'checked')>
               @lang('preferences.showDivider')
             </label>
           </div>
           <div class="checkbox unselectable">
             <label>
-              <input type="checkbox" value="" id="settingKeyboard" name="settingKeyboard" checked>
+              <input type="checkbox" id="setting_keyboard" name="setting_keyboard" @echoIf($setting['keyboard'], 'checked')>
               @lang('preferences.showKeyboard')
             </label>
           </div>
 
+          @lang('preferences.keyboardLayout'):
+          <select name="keyboard_layout" id="keyboard_layout">
+            <option value="de-de">Deutsch (Deutschland)</option>
+            <option value="en-us">English (US)</option>
+          </select>
+          @if($errors->has('keyboard_layout'))
+            <div class="alert alert-danger">@lang($errors->first('keyboard_layout'))</div>
+          @endif
+
+          {{-- changing option of select element (does only work via js, at least for firefox) --}}
+          <script>document.getElementById("keyboard_layout").value = "{{ $keyboardLayout }}";</script>
+
+          <br>
           <br>
           <button type="submit" class="btn btn-default btn-simple" style="width: 150px;">@lang('info.save')</button>
         </form>
