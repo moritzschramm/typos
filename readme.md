@@ -40,7 +40,7 @@ Run <code>phpunit</code> or <code>./vendor/bin/phpunit</code>
 Since the docker containers run on their own network, we can't run <code>phpunit</code> directly
 (we have to run it from within the php docker container).
 There is a little bash script to make things easier:<br>
-<code>./start-test</code><br>
+<code>php start-test</code><br>
 This is basically just an alias for <code>phpunit</code>.
 
 
@@ -52,14 +52,10 @@ You may also want to upload the wordlists and lections used by the 'training mod
 
 #### Using docker
 Again, since the docker containers are on their own network, running <code>php artisan migrate</code> doesn't work as expected, and, again, there is a bash script called remote-artisan, which just runs <code>php artisan</code> from within the php docker container.<br>
-<code>
-./remote-artisan
-</code>
+<code>php remote-artisan</code>
 <br>
 So to migrate, run:<br>
-<code>
-./remote-artisan migrate --seed
-</code>
+<code>php remote-artisan migrate --seed</code>
 <br>
 
 ## License
