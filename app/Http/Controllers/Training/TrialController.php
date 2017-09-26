@@ -81,10 +81,10 @@ class TrialController extends Controller
       session(['trial_xp' => $currentXP]);
     }
 
-    session()->flash('velocity',    $request->input('velocity'));
-    session()->flash('errors',      $request->input('errors'));
-    session()->flash('keystrokes',  $request->input('keystrokes'));
-    session()->flash('xp',          $currentXP);
+    session()->flash('velocity',      $request->input('velocity'));
+    session()->flash('error_amount',  $request->input('errors'));
+    session()->flash('keystrokes',    $request->input('keystrokes'));
+    session()->flash('xp',            $currentXP);
 
     return response('', 200);
   }

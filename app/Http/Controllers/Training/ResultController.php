@@ -36,13 +36,12 @@ class ResultController extends Controller
     session()->reflash();
 
     return response()->view('training.results', [
-      'xp'          => session('xp'),
-      'velocity'    => session('velocity'),
-      'errors'      => session('errors'),
-      'keystrokes'  => session('keystrokes'),
-      'cheated'     => session('cheated'),
-      'xp_goal'     => 30,
-      'loggedIn'    => Auth::check(),
+      'xp'            => session('xp'),
+      'velocity'      => session('velocity'),
+      'error_amount'  => session('error_amount'),
+      'keystrokes'    => session('keystrokes'),
+      'cheated'       => session('cheated'),
+      'xp_goal'       => Auth::check() ? Auth::user()->preferences->xp_goal : 30,
     ],
     session('cheated') ? 418 : 200);
   }
@@ -62,12 +61,6 @@ class ResultController extends Controller
     $keystrokes = $request->input('keystrokes');
     $xp         = $this->calculateXP($nonce);
 
-    // flash results to session (so that they can be used in show())
-    session()->flash('velocity',    $velocity);
-    session()->flash('errors',      $errors);
-    session()->flash('keystrokes',  $keystrokes);
-    session()->flash('xp',          $xp);
-
     // check results and, if valid, save them
     if($this->validateLectionNonce($nonce, $velocity)) {
 
@@ -85,6 +78,12 @@ class ResultController extends Controller
 
       session()->flash('cheated', true);
     }
+
+    // flash results to session (so that they can be used in show())
+    session()->flash('velocity',      $velocity);
+    session()->flash('error_amount',  $errors);
+    session()->flash('keystrokes',    $keystrokes);
+    session()->flash('xp', LectionResult::getTodaysXP($user->id_user));
 
     // nonce has been validated and isn't needed anymore
     session()->forget('nonce');
