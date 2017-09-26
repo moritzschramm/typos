@@ -29,4 +29,14 @@ class UserPreference extends Model
   {
     $this->belongsTo(User::class, 'id_user', 'id_user');
   }
+
+  /**
+    * extracts locale from keyboard layout
+    *
+    * @return string $locale
+    */
+  public function getKeyboardLocale()
+  {
+    return substr($this->keyboard, 0, 2);   // cuts 'de-de' to 'de'
+  }
 }
