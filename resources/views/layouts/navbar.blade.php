@@ -13,16 +13,16 @@
       <div class="collapse navbar-collapse" id="myNavbar">
   			<ul class="nav navbar-nav navbar-left">
   				<li @yield('nav1')><a href="{{ url('/dashboard') }}">@lang('layout.dashboard')</a></li>
-  				<li @yield('nav2')><a href="{{ url('/stats') }}">@lang('layout.stats')</a></li>
+  				<li @yield('nav2')><a href="{{ url('/statistics') }}">@lang('layout.stats')</a></li>
   				<li @yield('nav3')><a href="{{ url('/support') }}">@lang('layout.support')</a></li>
   			</ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a class="dropdown-toggle btn-account" data-toggle="dropdown" href="#"></a>
               <ul class="dropdown-menu">
-                <li style="color: #333; padding: 3px 20px;">{{ Auth::user()->email }}</li>
+                <li style="color: #333; padding: 3px 20px;">{{ Auth::user()->username }}</li>
                   <li class="divider"></li>
-                  <li><a href="{{ url('/preferences/account') }}">@lang('layout.settings')</a></li>
+                  <li><a href="{{ url('/preferences') }}">@lang('layout.settings')</a></li>
                   <li><a href="{{ url('/support') }}">@lang('layout.help')</a></li>
                  <li class="divider"></li>
                 <li>
