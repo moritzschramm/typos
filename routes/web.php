@@ -54,7 +54,7 @@ Route::group(['namespace' => 'Dashboard'], function() {
 
   Route::post('/stats/velocity',      'StatsController@velocityStats');
   Route::post('/stats/xp',            'StatsController@xpStats');
-  Route::post('/stats/keystrokes'     'StatsController@keystrokesStats');
+  Route::post('/stats/keystrokes',    'StatsController@keystrokesStats');
 
 });
 
