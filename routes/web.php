@@ -49,8 +49,12 @@ Route::group(['namespace' => 'Auth'], function() {
   */
 Route::group(['namespace' => 'Dashboard'], function() {
 
-  Route::get('/dashboard',          'DashboardController@showDashboard');
-  Route::get('/statistics',         'StatsController@showStats');
+  Route::get('/dashboard',            'DashboardController@showDashboard');
+  Route::get('/statistics',           'StatsController@showStats');
+
+  Route::post('/stats/velocity',      'StatsController@velocityStats');
+  Route::post('/stats/xp',            'StatsController@xpStats');
+  Route::post('/stats/keystrokes'     'StatsController@keystrokesStats');
 
 });
 
@@ -108,13 +112,11 @@ Route::group(['namespace' => 'Exercise'], function() {
   */
 Route::group(['namespace' => 'Preferences'], function() {
 
-  Route::get('/preferences/account',            'AccountController@showAccount');
-  Route::get('/preferences/security',           'SecurityController@showSecurity');
-  Route::get('/preferences/app',                'AppController@showAppPreferences');
+  Route::get('/preferences',                    'PreferencesController@showPreferences');
 
   Route::post('/preferences/account/email',     'AccountController@changeEmail');
   Route::post('/preferences/account/reset',     'AccountController@resetAccount');
   Route::post('/preferences/account/delete',    'AccountController@deleteAccount');
   Route::post('/preferences/security/password', 'SecurityController@changePassword');
-  Route::post('/preferences/app',               'AppController@editAppPreferences');
+  Route::post('/preferences/app',               'AppPreferencesController@editAppPreferences');
 });
