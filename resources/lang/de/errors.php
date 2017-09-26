@@ -18,5 +18,7 @@ return [
   'throttle'              => 'Zu viele Versuche. Bitte versuchen Sie es in :sec Sekunden erneut.',
   'locale_not_available'  => 'Sprache nicht verfügbar',
   'acceptPolicy'          => 'Bitte stimmen Sie der Datenschutzerklärung zu.',
-
+  'integer'               => 'Bitte geben Sie eine Ganzzahl ein.',
+  'numericMax'            => 'Bitte geben Sie eine Zahl kleiner als :max ein.',
+  
 ];

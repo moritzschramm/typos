@@ -18,5 +18,7 @@ return [
   'throttle'              => 'Too many attempts. Please try again in :sec seconds',
   'locale_not_available'  => 'Locale not available',
   'acceptPolicy'          => 'Please agree to the privacy statement.',
+  'integer'               => 'Please enter an integer.',
+  'numericMax'            => 'Please enter a number smaller than :max.', 
 
 ];

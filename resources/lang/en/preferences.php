@@ -6,28 +6,37 @@
 
 return [
 
-  'title'             => 'Preferences',
-  'account'           => 'Account',
-  'security'          => 'Security',
-  'app'               => 'App',
+  'title'               => 'Preferences',
+  'account'             => 'Account',
+  'security'            => 'Security',
+  'app'                 => 'App',
 
-  'changeEmail'       => 'Change email',
-  'changeEmailInfo'   => 'IMPORTANT: You will be logged out and will receive a confirmation email to your new address to activate your account.',
-  'currentPassword'   => 'Current password',
-  'newEmail'          => 'New email',
-  'newPassword'       => 'New password',
+  'changeEmail'         => 'Change email',
+  'changeEmailInfo'     => 'IMPORTANT: You will be logged out and will receive a confirmation email to your new address to activate your account. After that, you can login as usual.',
+  'currentPassword'     => 'Current password',
+  'newEmail'            => 'New email',
+  'newPassword'         => 'New password',
 
-  'deleteTitle'       => 'Actions that cannot be undone',
-  'deleteStats'       => 'Reset statistics',
-  'deleteAccount'     => 'Delete user account',
+  'deleteTitle'         => 'Actions that cannot be undone',
+  'deleteStats'         => 'Reset statistics',
+  'deleteAccount'       => 'Delete user account',
 
-  'xpGoal'            => 'Daily XP goal',
-  'showAssignment'    => 'Show keyboard assignment',
-  'showDivider'       => 'Show divider between keys',
-  'showKeyboard'      => 'Show keyboard',
+  'xpGoal'              => 'Daily XP goal',
+  'showAssignment'      => 'Show keyboard assignment',
+  'showDivider'         => 'Show divider between keys',
+  'showKeyboard'        => 'Show keyboard',
+  'keyboardLayout'      => 'Keyboard layout',
 
-  'reset'             => 'Reset',
-  'delete'            => 'Delete',
+  'keyboardUnavailable' => 'Keyboard unavailable',
+
+  'emailChanged'        => 'Successfully changed email address',
+  'statsDeleted'        => 'Successfully deleted statistics',
+  'accountDeleted'      => 'Successfully deleted user account',
+  'passwordChanged'     => 'Successfully changed password',
+
+  'saved'               => 'Preferences saved',
+  'reset'               => 'Reset',
+  'delete'              => 'Delete',
 
   'modal' => [
     'deleteAccount' => [
