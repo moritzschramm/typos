@@ -13,7 +13,7 @@ class ContentController extends Controller
     */
   public function __construct()
   {
-    $this->middleware('guest');
+    $this->middleware('guest')->only('index');
   }
 
   /**
@@ -34,5 +34,15 @@ class ContentController extends Controller
   public function privacy()
   {
     return view('public.privacy');
+  }
+
+  /**
+    * return legal notice
+    *
+    * @return view
+    */
+  public function notice()
+  {
+    return view('public.notice');
   }
 }
