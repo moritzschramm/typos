@@ -16,5 +16,10 @@ return [
   'register'  => 'Registrieren',
   'home'      => 'Startseite',
   'locale'    => 'Sprache wählen:',
-  
+  'shortcuts' => 'Shortcuts',
+  'privacy'   => 'Datenschutzerklärung',
+  'notice'    => 'Impressum',
+  'others'    => 'Sonstiges',
+  'contact'   => 'Kontakt',
+
 ];
