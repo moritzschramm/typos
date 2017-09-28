@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-Typos
+  @lang('layout.home')
 @endsection
 
 @section('nav1')
@@ -18,12 +18,14 @@ Typos
 <div class="container outercontainer">
   <div class="splash_container">
     <span id="splash_text">Schnell und einfach das Zehnfingersystem lernen.</span><br>
-    <a class="btn-splash unselectable" id="splash_btn" onclick="clickMore();">Mehr erfahren »<span></span><span></span></a>
+    <a href="{{ url('/trial') }}" class="btn-splash unselectable" id="splash_btn">Kostenlos ausprobieren »<span></span><span></span></a>
   </div>
 </div>
 
 <div id="jumbotron" class="jumbotron text-center" style="background-color: #fff; margin-bottom: 0; padding: 40px 60px; box-shadow: 0px 0px 30px #000;">
-  <p style="margin-bottom: 0; font-size: 25px; font-weight: 600; color: #292929;">Typos ist ein Online-Trainer, mit dem Du das Zehnfingersystem lernst.</p>
+  <p style="margin-bottom: 0; font-size: 25px; font-weight: 600; color: #292929;">
+    Typos ist ein Online-Trainer, mit dem Du das Zehnfingersystem lernst.
+  </p>
 </div>
 
 <div class="container-fluid" style="background-color: #f6f6f6;">
@@ -83,7 +85,7 @@ Typos
         <br>
         Natürlich kannst du den Online-Trainer auch unverbindlich ausprobieren.
       </p>
-      <a href="{{ url('/login/user') }}" class="btn-action">Kostenlos ausprobieren »<span></span><span></span></a><br>
+      <a href="{{ url('/trial') }}" class="btn-action">Kostenlos ausprobieren »<span></span><span></span></a><br>
     </div>
   </div>
 
