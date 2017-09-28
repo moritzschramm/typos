@@ -7,7 +7,7 @@
 @section('header')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
-<link href="/css/preferences.css" rel="stylesheet" type="text/css">
+<link href="/css/preferences.min.css" rel="stylesheet" type="text/css">
 @endsection
 
 @section('content')
@@ -52,18 +52,20 @@
           <div class="row" style="margin-bottom: 10px;">
             <div class="col-xs-4">
               <input id="password" name="password" class="form-control" type="password" placeholder="@lang('preferences.currentPassword')">
+              @if($errors->has('password'))
+                <br>
+                <div class="alert alert-danger">@lang($errors->first('password'))</div>
+              @endif
             </div>
-            @if($errors->has('password'))
-              <div class="alert alert-danger">@lang($errors->first('password'))</div>
-            @endif
           </div>
           <div class="row" style="margin-bottom: 10px;">
             <div class="col-xs-4">
               <input id="email" name="email" class="form-control" type="text" placeholder="@lang('preferences.newEmail')">
+              @if($errors->has('email'))
+                <br>
+                <div class="alert alert-danger">@lang($errors->first('email'))</div>
+              @endif
             </div>
-            @if($errors->has('email'))
-              <div class="alert alert-danger">@lang($errors->first('email'))</div>
-            @endif
           </div>
 
           @if($errors->has('credentials'))
@@ -97,10 +99,11 @@
             <div class="col-xs-4">
               @lang('preferences.currentPassword'):
               <input id="currentPassword" name="currentPassword" class="form-control" type="password" placeholder="@lang('preferences.currentPassword')">
+              @if($errors->has('currentPassword'))
+                <br>
+                <div class="alert alert-danger">@lang($errors->first('currentPassword'))</div>
+              @endif
             </div>
-            @if($errors->has('currentPassword'))
-              <div class="alert alert-danger">@lang($errors->first('currentPassword'))</div>
-            @endif
 
           </div>
           <div class="row" style="margin-bottom: 10px;">
@@ -108,10 +111,15 @@
             <div class="col-xs-4">
               @lang('preferences.newPassword'):
               <input id="newPassword" name="newPassword" class="form-control" type="password" placeholder="@lang('preferences.newPassword')">
+              @if($errors->has('newPassword'))
+                <br>
+                <div class="alert alert-danger">@lang($errors->first('newPassword'))</div>
+              @endif
+              @if($errors->has('password'))
+                <br>
+                <div class="alert alert-danger">@lang($errors->first('password'))</div>
+              @endif
             </div>
-            @if($errors->has('newPassword'))
-              <div class="alert alert-danger">@lang($errors->first('newPassword'))</div>
-            @endif
 
           </div>
           <div class="row" style="margin-bottom: 10px;">
@@ -119,12 +127,18 @@
             <div class="col-xs-4">
               @lang('info.confirm'):
               <input id="confirm" name="confirm" class="form-control" type="password" placeholder="@lang('info.confirm')">
+              @if($errors->has('confirm'))
+                <br>
+                <div class="alert alert-danger">@lang($errors->first('confirm'))</div>
+              @endif
             </div>
-            @if($errors->has('confirm'))
-              <div class="alert alert-danger">@lang($errors->first('confirm'))</div>
-            @endif
 
           </div>
+
+          @if($errors->has('credentials'))
+            <br>
+            <div class="alert alert-danger">@lang($errors->first('credentials'))</div>
+          @endif
 
           <br>
           <button type="submit" class="btn btn-default btn-simple" style="width: 150px;">@lang('info.save')</button>
@@ -141,10 +155,11 @@
             <div class="col-xs-4">
               @lang('preferences.xpGoal'):
               <input value="{{ $xp_goal }}" id="xp_goal" name="xp_goal" class="form-control" type="text" placeholder="@lang('preferences.xpGoal')">
+              @if($errors->has('xp_goal'))
+                <br>
+                <div class="alert alert-danger">@lang($errors->first('xp_goal'))</div>
+              @endif
             </div>
-            @if($errors->has('xp_goal'))
-              <div class="alert alert-danger">@lang($errors->first('xp_goal'))</div>
-            @endif
           </div>
 
           <div class="checkbox unselectable">
