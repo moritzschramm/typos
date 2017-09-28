@@ -8,8 +8,142 @@
   class="active"
 @endsection
 
+@section('header')
+<link href="/css/training.css" rel="stylesheet" type="text/css">
+<link href="/css/training-lections.css" rel="stylesheet" type="text/css">
+@endsection
+
 @section('content')
 
-dashboard
+<div class="container" style="margin-top: 30px; min-height: 100vh;">
 
+  <div class="lection-nav">
+    <div id="item-lections" class="nav-item unselectable item-active">Lektionen</div>
+    <div id="item-exercises" class="nav-item unselectable">Übungen</div>
+  </div>
+  <div></div> {{-- to fix css issue with float… --}}
+
+  <div class="lection-panel">
+
+    <div id="container-lections">{{-- container for lections --}}
+
+      @foreach($lections as $lection)
+        <div class="lection-item">
+          <div class="lection-num">Lektion {{ $lection->external_id }}</div>
+          <div class="lection-title">{{ $lection->title }}</div>
+          <div class="lection-footer">
+            <a href="{{ url("/lection/$lection->external_id") }}"><span class="lection-link">anfangen</span></a>
+          </div>
+        </div>
+      @endforeach
+
+    </div>
+
+    <div id="container-exercises" class="gone">
+
+      @foreach ($exercises as $exercise)
+        <div class="lection-item">
+          <div class="lection-title">{{ $exercise->title }}</div>
+          <div class="lection-footer">
+            <a href="{{ url("/exercise/$exercise->id_exercise") }}"><span class="lection-link">anfangen</span></a>
+          </div>
+        </div>
+      @endforeach
+
+      <a href="{{ url('/exercise/create') }}" class="lection-item-add"><span class="glyphicon glyphicon-plus"></span></a>
+
+    </div>
+
+  </div>
+
+  <div class="extra-panel">
+
+    <div>
+      <a href="{{ url('/training') }}" class="btn btn-default btn-main btn-training" style="font-size: 17px;"><span><span class="glyphicon glyphicon-education"></span> Freies Training</span></a>
+    </div>
+
+    <div class="circle-container" data-toggle="tooltip" title="heutige XP">
+      <div style="position: relative;">
+        <canvas id="xp-graph" height="200" width="200"></canvas>
+        <div style="position: absolute; top: 40%; text-align: center; width: 100%; font-size: 24px; font-family: Montserrat; cursor: default;" class="unselectable">
+
+          xp / goal XP
+        </div>
+      </div>
+    </div>
+
+    <div data-toggle="tooltip" title="XP der letzten Woche">
+      <canvas id="graph" width="160" height="100"></canvas>
+    </div>
+
+  </div>
+
+</div>
+
+<div id="modal_delete" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Lektion löschen?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Die Aktion kann nicht rückgängig gemacht werden. Soll die Lektion wirklich gelöscht werden?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" onclick="commitDelete();">Löschen</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="modal_publish" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Lektion veröffentlichen?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Wenn du die Lektion veröffentlichen willst, musst du bestimmte Regeln einhalten.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="commitPublish();">Veröffentlichen</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+@endsection
+
+@section('footer')
+<script>
+$(document).ready(function() {
+
+  $(".gone").hide().removeClass("gone");
+  var lastContainer = $("#container-lections");
+
+  // switch between tab views
+  $(".nav-item").on("click", function() {
+
+    $(".item-active").removeClass("item-active");
+    $(this).addClass("item-active");
+
+    var navId = $(this).attr("id");
+    var containerId = "container-" + navId.split("-")[1];
+
+    lastContainer.fadeOut("fast", function() {
+
+      lastContainer = $("#"+containerId);
+      lastContainer.fadeIn("fast");
+    });
+
+  })
+});
+</script>
 @endsection
