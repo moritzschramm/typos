@@ -25,9 +25,9 @@ class LectionResult extends Model
     $to   = "'$to'";
 
     $results =
-    LectionResult::select(DB::raw('id_user, SUM(keystrokes) keystrokes, SUM(erros) errors, DATE(created_at) date'))   # sum keystrokes and errors, convert created_at to date
-      ->groupBy(DB::raw('id_user, DATE(created_at)'))                                                                 # group by id_user and created_at (as date)
-      ->havingRaw('`date` >= ' . $from . ' AND `date` <= ' . $to . ' AND `id_user` = ' . $id_user)                    # return only results where date is in range and user id matches parameter
+    LectionResult::select(DB::raw('id_user, SUM(`keystrokes`) keystrokes, SUM(`errors`) errors, DATE(created_at) date')) # sum keystrokes and errors, convert created_at to date
+      ->groupBy(DB::raw('id_user, DATE(created_at)'))                                                                    # group by id_user and created_at (as date)
+      ->havingRaw('`date` >= ' . $from . ' AND `date` <= ' . $to . ' AND `id_user` = ' . $id_user)                       # return only results where date is in range and user id matches parameter
       ->get();
 
     $data = [];
@@ -59,13 +59,13 @@ class LectionResult extends Model
 
     if( ! is_null($limit)) $query = $query->limit($limit);
 
-    $result = $query->get();
+    $results = $query->get();
 
     $data = [];
 
     foreach($results as $result) {
 
-      $data[$result->created_at] = [
+      $data[$result->created_at->format('Y-m-d H:i:s')] = [
         'keystrokes'  => $result->keystrokes,
         'errors'      => $result->errors,
       ];
@@ -90,13 +90,13 @@ class LectionResult extends Model
 
     if( ! is_null($limit)) $query = $query->limit($limit);
 
-    $result = $query->get();
+    $results = $query->get();
 
     $data = [];
 
     foreach($results as $result) {
 
-      $data[$result->created_at] = $result->velocity;
+      $data[$result->created_at->format('Y-m-d H:i:s')] = $result->velocity;
     }
 
     return $data;
@@ -146,5 +146,5 @@ class LectionResult extends Model
                   ->havingRaw('`today` = ' . $today . ' AND `id_user` = ' . $id_user)    # return only results where date = today and user id matches parameter
                   ->first()->xp;                                                         # get first row (there is only one) and return value of column xp
   }
-  
+
 }
