@@ -23,7 +23,7 @@
                 <li style="color: #333; padding: 3px 20px;">{{ Auth::user()->username }}</li>
                   <li class="divider"></li>
                   <li><a href="{{ url('/preferences') }}">@lang('layout.settings')</a></li>
-                  <li><a href="{{ url('/support') }}">@lang('layout.help')</a></li>
+                  <li><a href="{{ url('/help') }}">@lang('layout.help')</a></li>
                  <li class="divider"></li>
                 <li>
                   <a href="{{ url('/logout') }}">@lang('layout.logout')</a>
