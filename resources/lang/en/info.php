@@ -16,4 +16,5 @@ return [
   'back'      => 'Back',
   'continue'  => 'Continue',
   'repeat'    => 'Repeat',
+  'message'   => 'Message',
 ];

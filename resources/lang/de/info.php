@@ -15,4 +15,5 @@ return [
   'back'      => 'Zurück',
   'continue'  => 'Weiter',
   'repeat'    => 'Wiederholen',
+  'message'   => 'Nachricht',
 ];

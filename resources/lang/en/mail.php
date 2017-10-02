@@ -9,6 +9,10 @@ return [
 
   'signature' => 'Best regards,<br> Typos',
 
+  'support' => [
+    'sent' => 'Message sent',
+  ],
+
   'verification' => [
     'title' => 'Verify account',
     'message' => 'Click on the link below to verify your user account.',
