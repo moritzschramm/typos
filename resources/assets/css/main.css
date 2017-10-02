@@ -280,3 +280,22 @@ footer p, footer strong, footer li, footer a, footer div {
 .notification-close:hover {
   color: rgba(255, 255, 255, 1.0);
 }
+
+#github-link {
+  background-color: #f0f0f0;
+}
+#github-link > a {
+  color: #333 !important;
+}
+#github-link:hover > a {
+  background-color: #e0e0e0 !important;
+}
+#github-link > a::before {
+  content: "";
+  background-image: url("/imgs/github_logo.png");
+  display: inline-block;
+  width: 18px; height: 18px;
+  background-size: contain;
+  margin-right: 6px;
+  margin-bottom: -3px;
+}
