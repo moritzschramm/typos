@@ -10,9 +10,9 @@
 
 @section('content')
 
-  <div class="container regouter">
+  <div class="container" style="min-height: 100vh;">
 
-      <div class="regcontainer">
+      <div class="box-container" style="padding: 40px 0px;">
 
         <div style="margin: 0px auto; width: 80%;">
 

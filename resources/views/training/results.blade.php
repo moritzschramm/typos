@@ -12,7 +12,7 @@
 
 <div class="container" style="min-height: 100vh;">
 
-  <div class="completecontainer text-center">
+  <div class="box-container text-center" style="padding: 30px 40px;">
 
     <h1>@lang('training.results.title')</h1>
 
