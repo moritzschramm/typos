@@ -29,7 +29,7 @@
           @endif
 
           <div id="email_form" class="form-group">
-            <input type="email" class="form-control" id="email" name="email" placeholder="@lang('info.email')" value="{{ old('email') }}">
+            <input type="email" class="form-control" id="email" name="email" placeholder="@lang('info.email') @lang('auth.register.email_info')" value="{{ old('email') }}">
           </div>
           @if($errors->has('email'))
             <div class="alert alert-danger">@lang($errors->first('email'))</div>

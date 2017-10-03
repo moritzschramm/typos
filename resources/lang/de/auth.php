@@ -14,8 +14,9 @@ return [
   ],
 
   'register' => [
-    'title' => 'Registrieren',
-    'statement' => 'Ich habe die <a target="_blank" href=":url">Datenschutzerklärung <span class="glyphicon glyphicon-new-window"></span></a> gelesen und bin mit ihr einverstanden.',
+    'title'       => 'Registrieren',
+    'email_info'  => '(wird nur für das Zurücksetzen des Passworts benötigt)',
+    'statement'   => 'Ich habe die <a target="_blank" href=":url">Datenschutzerklärung <span class="glyphicon glyphicon-new-window"></span></a> gelesen und bin mit ihr einverstanden.',
 
     'success' => [
       'title' => 'Registrierung erfolgreich',
