@@ -9,7 +9,7 @@ use App\Traits\CreateUserToken;
 
 use App\Mail\VerifyAccountMail;
 
-use Auth, Validator;
+use Auth, Validator, Mail;
 
 class AccountController extends Controller
 {
