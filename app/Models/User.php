@@ -69,4 +69,10 @@ class User extends Authenticatable
   {
     return $this->hasOne(UserPreference::class, 'id_user', 'id_user');
   }
+
+  // helper method for testing
+  public static function getTestUser()
+  {
+    return self::where('username', 'testuser')->first();
+  }
 }
