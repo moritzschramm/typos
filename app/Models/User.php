@@ -45,7 +45,7 @@ class User extends Authenticatable
     */
   public function deleteAccount()
   {
-    $this->lectionsResults()->delete();
+    $this->lectionResults()->delete();
     $this->exercises()->delete();
     $this->preferences()->delete();
 
