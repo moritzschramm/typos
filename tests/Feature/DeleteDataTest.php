@@ -15,6 +15,7 @@ class DeleteDataTest extends TestCase
   const URI_PREFERENCES     = '/preferences';
   const URI_PARAMS          = '?view=account';
   const URI_DELETE_ACCOUNT  = '/preferences/account/delete';
+  const PASSWORD            = 'testtest';
 
   /**
     * prepares session and testing env
@@ -47,7 +48,8 @@ class DeleteDataTest extends TestCase
     $user = $this->prepareSession();
 
     $response = $this->call('POST', self::URI_DELETE_ACCOUNT, [
-      '_token' => csrf_token(),
+      '_token'    => csrf_token(),
+      'password'  => self::PASSWORD,
     ]);
 
     $response->assertStatus(302);
@@ -57,6 +59,54 @@ class DeleteDataTest extends TestCase
     $this->assertFalse(Auth::check());
 
     $this->assertDatabaseMissing('users', [
+      'username' => $user->username
+    ]);
+  }
+
+  /**
+   * test deleting user account with wrong password
+   *
+   */
+  public function testDeleteUserAccountWithWrongPassword()
+  {
+    $user = $this->prepareSession();
+
+    $response = $this->call('POST', self::URI_DELETE_ACCOUNT, [
+      '_token'    => csrf_token(),
+      'password'  => 'wrongPass',
+    ]);
+
+    $response->assertStatus(302);
+    $response->assertRedirect(self::URI_PREFERENCES . self::URI_PARAMS);
+    $response->assertSessionHasErrors(['password'], null, 'account');
+
+    $this->assertTrue(Auth::check());
+
+    $this->assertDatabaseHas('users', [
+      'username' => $user->username
+    ]);
+  }
+
+  /**
+   * test deleting user account with no password
+   *
+   */
+  public function testDeleteUserAccountWithNoPassword()
+  {
+    $user = $this->prepareSession();
+
+    $response = $this->call('POST', self::URI_DELETE_ACCOUNT, [
+      '_token'    => csrf_token(),
+      'password'  => '',
+    ]);
+
+    $response->assertStatus(302);
+    $response->assertRedirect(self::URI_PREFERENCES . self::URI_PARAMS);
+    $response->assertSessionHasErrors(['password'], null, 'account');
+
+    $this->assertTrue(Auth::check());
+
+    $this->assertDatabaseHas('users', [
       'username' => $user->username
     ]);
   }
