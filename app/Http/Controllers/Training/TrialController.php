@@ -19,6 +19,8 @@ class TrialController extends Controller
     */
   public function showApp()
   {
+    session()->flash('notification', 'info.beta');
+    
     return $this->createAppView('/trial', ['trial' => true]);
   }
 

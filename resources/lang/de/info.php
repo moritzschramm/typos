@@ -16,4 +16,5 @@ return [
   'continue'  => 'Weiter',
   'repeat'    => 'Wiederholen',
   'message'   => 'Nachricht',
+  'beta'      => 'Die App befindet sich momentan noch in der Beta Phase. Falls Fehler auftreten, bitte dem Support melden.',
 ];
