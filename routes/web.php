@@ -115,7 +115,7 @@ Route::group(['namespace' => 'Preferences'], function() {
   Route::get('/preferences',                    'PreferencesController@showPreferences');
 
   Route::post('/preferences/account/email',     'AccountController@changeEmail');
-  Route::post('/preferences/account/reset',     'AccountController@resetAccount');
+  Route::post('/preferences/account/reset',     'AccountController@deleteStats');
   Route::post('/preferences/account/delete',    'AccountController@deleteAccount');
   Route::post('/preferences/security/password', 'SecurityController@changePassword');
   Route::post('/preferences/app',               'AppPreferencesController@editAppPreferences');
