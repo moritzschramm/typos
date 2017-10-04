@@ -125,7 +125,7 @@ class EmailChangeTest extends TestCase
     # assert response
     $response->assertStatus(302);
     $response->assertRedirect(self::URI_PREFERENCES . self::URI_PARAMS);
-    $response->assertSessionHasErrors(['credentials']);
+    $response->assertSessionHasErrors(['password'], null, 'email');
 
     $this->assertEmailChanged(false);
   }
@@ -149,7 +149,7 @@ class EmailChangeTest extends TestCase
     # assert response
     $response->assertStatus(302);
     $response->assertRedirect(self::URI_PREFERENCES . self::URI_PARAMS);
-    $response->assertSessionHasErrors(['email']);
+    $response->assertSessionHasErrors(['email'], null, 'email');
 
     $this->assertEmailChanged(false);
   }
@@ -173,7 +173,7 @@ class EmailChangeTest extends TestCase
     # assert response
     $response->assertStatus(302);
     $response->assertRedirect(self::URI_PREFERENCES . self::URI_PARAMS);
-    $response->assertSessionHasErrors(['email', 'password']);
+    $response->assertSessionHasErrors(['email', 'password'], null, 'email');
 
     $this->assertEmailChanged(false);
   }
