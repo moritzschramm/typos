@@ -48,7 +48,7 @@ class FeedbackController extends Controller
 
       $email = $request->input('email');
       $message = $request->input('message');
-      $userId = Auth::check() ? Auth::user()->id_user : -1;
+      $userId = Auth::check() ? Auth::user()->uuid : -1;
 
       Mail::to(config('mail.from.support'))
             ->send(new SupportMail('Feedback', $email, $message, $userId));
