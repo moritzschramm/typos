@@ -11,7 +11,7 @@ return [
   'max'                   => 'Bitte geben Sie nicht mehr als :max Zeichen ein.',
   'min'                   => 'Bitte geben Sie mehr als :min Zeichen ein.',
   'unverified'            => 'Ihr Benutzerkonto ist noch nicht verifiziert. Bitte bestätigen Sie Ihre E-mail Adresse.',
-  'credentials'           => 'Ungültige E-mail Adresse oder ungültiges Passwort.',
+  'credentials'           => 'Ungültige E-mail Adresse/Benutzername oder ungültiges Passwort.',
   'uniqueEmail'           => 'Diese E-mail Adresse wurde bereits registriert.',
   'weak_password'         => 'Passwort zu schwach, bitte wählen Sie ein anderes.',
   'differs'               => 'Passwörter stimmen nicht überein. Bitte geben Sie Ihr Passwort erneut ein.',
@@ -20,5 +20,6 @@ return [
   'acceptPolicy'          => 'Bitte stimmen Sie der Datenschutzerklärung zu.',
   'integer'               => 'Bitte geben Sie eine Ganzzahl ein.',
   'numericMax'            => 'Bitte geben Sie eine Zahl kleiner als :max ein.',
-  
+  'wrongPassword'         => 'Falsches Passwort',
+
 ];
