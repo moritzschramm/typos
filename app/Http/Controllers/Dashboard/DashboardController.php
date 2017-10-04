@@ -25,14 +25,29 @@ class DashboardController extends Controller
     *
     * @return view
     */
-  public function showDashboard()
+  public function showDashboard(Request $request)
   {
-    $locale = Auth::user()->preferences->getKeyboardLocale();
+    $view = $request->filled('view') ? $request->input('view') : 'lections';
 
-    $lections   = Lection::where('locale', $locale)->get();
-    $exercises  = Exercise::where('id_user', Auth::user()->id_user)->get();
+    $lections   = [];
+    $exercises  = [];
+
+    switch($view) {
+
+      case 'lections':
+        $locale = Auth::user()->preferences->getKeyboardLocale();
+        $lections = Lection::where('locale', $locale)->get();
+        break;
+
+      case 'exercises':
+        $exercises = Exercise::where('id_user', Auth::user()->id_user)->get();
+        break;
+
+      default: abort(404);
+    }
 
     return view('dashboard.index', [
+      'view'      => $view,
       'lections'  => $lections,
       'exercises' => $exercises,
     ]);
