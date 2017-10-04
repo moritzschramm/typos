@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
 
       Blade::directive('echoIf', function ($arguments) {
 
-        list($statement, $output) = explode(',', str_replace(['(',')',' '], '', $arguments));
+        list($statement, $output) = explode(',', rtrim(ltrim($arguments, '('), ')'));
 
         return "<?php if($statement) echo($output); ?>";
       });
