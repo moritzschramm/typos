@@ -49,16 +49,16 @@ class AccountController extends Controller
     $validator->after(function ($validator) use ($request, $user) {
 
       if( ! Auth::validate([
-        'email' => $user->email,
+        'username' => $user->username,
         'password' => $request->input('password')]) ) {
 
-        $validator->errors()->add('credentials', 'errors.credentials');
+        $validator->errors()->add('password', 'errors.wrongPassword');
       }
     });
 
     if($validator->fails()) {
 
-      return back()->withInput()->withErrors($validator);
+      return back()->withInput()->withErrors($validator, 'email');
 
     } else {
 
@@ -84,29 +84,81 @@ class AccountController extends Controller
   /**
     * deletes user's statistics
     *
+    * @param Request
     * @return redirect (back)
     */
-  public function deleteStats()
+  public function deleteStats(Request $request)
   {
-    $user->lectionResults()->delete();
+    $validator = Validator::make($request->all(), [
+      'password' => 'required',
+    ],[
+      'required' => 'errors.required',
+    ]);
 
-    return back()->with('notification-success', 'preferences.statsDeleted');
+    $user = Auth::user();
+
+    $validator->after(function ($validator) use ($request, $user) {
+
+      if( ! Auth::validate([
+        'username'  => $user->username,
+        'password'  => $request->input('password')]) ) {
+
+        $validator->errors()->add('password', 'errors.wrongPassword');
+      }
+    });
+
+    if($validator->fails()) {
+
+      session()->flash('triggerModalStats', true);
+      return back()->withErrors($validator, 'stats');
+
+    } else {
+
+      $user->lectionResults()->delete();
+
+      return back()->with('notification-success', 'preferences.statsDeleted');
+    }
   }
 
   /**
     * deletes user account after logging user out
     *
+    * @param Request
     * @return redirect
     */
-  public function deleteAccount()
+  public function deleteAccount(Request $request)
   {
+    $validator = Validator::make($request->all(), [
+      'password' => 'required',
+    ],[
+      'required' => 'errors.required',
+    ]);
+
     $user = Auth::user();
 
-    Auth::logout();
-    session()->flush();
+    $validator->after(function ($validator) use ($request, $user) {
 
-    $user->deleteAccount();
+      if( ! Auth::validate([
+        'username'  => $user->username,
+        'password'  => $request->input('password')]) ) {
 
-    return redirect('/')->with('notification-success', 'preferences.accountDeleted');
+        $validator->errors()->add('password', 'errors.wrongPassword');
+      }
+    });
+
+    if($validator->fails()) {
+
+      session()->flash('triggerModalAccount', true);
+      return back()->withErrors($validator, 'account');
+
+    } else {
+
+      Auth::logout();
+      session()->flush();
+
+      $user->deleteAccount();
+
+      return redirect('/')->with('notification-success', 'preferences.accountDeleted');
+    }
   }
 }
