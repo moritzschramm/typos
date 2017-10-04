@@ -22,7 +22,7 @@
         <ul class="footer-list">
           <li><a href="{{ url('/notice') }}" class="footer-link">@lang('layout.notice')</a></li>
           <li><a href="{{ url('/privacy') }}" class="footer-link">@lang('layout.privacy')</a></li>
-          <li><a href="{{ url('/contact') }}" class="footer-link">@lang('layout.contact')</a></li>
+          <li><a href="{{ url('/support') }}" class="footer-link">@lang('layout.contact')</a></li>
         </ul>
       </div>
       <div class="col-md-3"></div>
