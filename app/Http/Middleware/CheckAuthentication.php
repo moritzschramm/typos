@@ -21,6 +21,8 @@ class CheckAuthentication
 
       } else {
 
+        session(['url.intended' => $request->fullUrl()]);
+
         return redirect('/login')->with('notification-error', 'notifications.auth.required');
       }
     }

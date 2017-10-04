@@ -92,7 +92,7 @@ class LoginController extends Controller
 
     } else {
 
-      return redirect(self::$redirectTo); #->intended(self::$redirectTo);
+      return redirect()->intended(self::$redirectTo);
     }
   }
 
