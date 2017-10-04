@@ -20,7 +20,7 @@ class TrialController extends Controller
   public function showApp()
   {
     session()->flash('notification', 'info.beta');
-    
+
     return $this->createAppView('/trial', ['trial' => true]);
   }
 
@@ -74,10 +74,10 @@ class TrialController extends Controller
     */
   public function handleUpload(Request $request)
   {
-    $nonce = session('nonce');
-    $cheated = ! $this->validateLectionNonce($nonce, $request->input('velocity'));
+    $nonce     = session('nonce');
+    $currentXP = 0;
 
-    if( ! $cheated) {
+    if($this->validateLectionNonce($nonce, $request->input('velocity'))) {
 
       $currentXP = session()->has('trial_xp') ? session('trial_xp') + 5 : 5;    // increment session xp by 5
       session(['trial_xp' => $currentXP]);
