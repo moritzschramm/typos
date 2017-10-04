@@ -18,13 +18,22 @@
 <div class="container" style="margin-top: 30px; min-height: 100vh;">
 
   <div class="lection-nav">
-    <div id="item-lections" class="nav-item unselectable item-active">Lektionen</div>
-    <div id="item-exercises" class="nav-item unselectable">Übungen</div>
+    <a href="/dashboard?view=lections" style="text-decoration:none">
+      <div id="item-lections" class="nav-item unselectable @echoIf($view == 'lections', 'item-active')">
+        Lektionen
+      </div>
+    </a>
+    <a href="{{ url('/dashboard?view=exercises') }}" style="text-decoration:none">
+      <div id="item-exercises" class="nav-item unselectable @echoIf($view == 'exercises', 'item-active')">
+        Übungen
+      </div>
+    </a>
   </div>
   <div></div> {{-- to fix css issue with float… --}}
 
   <div class="lection-panel">
 
+    @if($view == 'lections')
     <div id="container-lections">{{-- container for lections --}}
 
       @foreach($lections as $lection)
@@ -39,7 +48,12 @@
 
     </div>
 
-    <div id="container-exercises" class="gone">
+    @elseif($view == 'exercises')
+    <div id="container-exercises">
+
+      <p style="padding-left: 32px; margin-top: -18px;">
+        Hier kannst du deine eigenen Übungen erstellen und sie zum Training auswählen
+      </p>
 
       @foreach ($exercises as $exercise)
         <div class="lection-item">
@@ -50,9 +64,10 @@
         </div>
       @endforeach
 
-      <a href="{{ url('/exercise/create') }}" class="lection-item-add"><span class="glyphicon glyphicon-plus"></span></a>
+      <a href="{{ url('/exercises') }}" class="lection-item-add"><span class="glyphicon glyphicon-plus"></span></a>
 
     </div>
+    @endif
 
   </div>
 
@@ -119,31 +134,4 @@
   </div>
 </div>
 
-@endsection
-
-@section('footer')
-<script>
-$(document).ready(function() {
-
-  $(".gone").hide().removeClass("gone");
-  var lastContainer = $("#container-lections");
-
-  // switch between tab views
-  $(".nav-item").on("click", function() {
-
-    $(".item-active").removeClass("item-active");
-    $(this).addClass("item-active");
-
-    var navId = $(this).attr("id");
-    var containerId = "container-" + navId.split("-")[1];
-
-    lastContainer.fadeOut("fast", function() {
-
-      lastContainer = $("#"+containerId);
-      lastContainer.fadeIn("fast");
-    });
-
-  })
-});
-</script>
 @endsection
