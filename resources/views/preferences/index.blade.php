@@ -5,8 +5,6 @@
 @endsection
 
 @section('header')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
 <link href="/css/preferences.min.css" rel="stylesheet" type="text/css">
 @endsection
 
@@ -14,7 +12,7 @@
 
 <div class="container" style="min-height: 100vh;">
 
-  <div class="settingscontainer">
+  <div class="box-container">
 
     <h3 style="padding: 8px 20px;">@lang('preferences.title')</h3>
     <hr style="margin-bottom: 0;">
@@ -52,24 +50,24 @@
           <div class="row" style="margin-bottom: 10px;">
             <div class="col-xs-4">
               <input id="password" name="password" class="form-control" type="password" placeholder="@lang('preferences.currentPassword')">
-              @if($errors->has('password'))
+              @if($errors->email->has('password'))
                 <br>
-                <div class="alert alert-danger">@lang($errors->first('password'))</div>
+                <div class="alert alert-danger">@lang($errors->email->first('password'))</div>
               @endif
             </div>
           </div>
           <div class="row" style="margin-bottom: 10px;">
             <div class="col-xs-4">
               <input id="email" name="email" class="form-control" type="text" placeholder="@lang('preferences.newEmail')">
-              @if($errors->has('email'))
+              @if($errors->email->has('email'))
                 <br>
-                <div class="alert alert-danger">@lang($errors->first('email'))</div>
+                <div class="alert alert-danger">@lang($errors->email->first('email'))</div>
               @endif
             </div>
           </div>
 
-          @if($errors->has('credentials'))
-            <div class="alert alert-danger">@lang($errors->first('credentials'))</div>
+          @if($errors->email->has('credentials'))
+            <div class="alert alert-danger">@lang($errors->email->first('credentials'))</div>
           @endif
 
           <p>@lang('preferences.changeEmailInfo')</p>
@@ -86,6 +84,85 @@
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_acc">@lang('preferences.deleteAccount')</button>
           </div>
         </div>
+
+        {{-- modals --}}
+        @if(session('triggerModalStats'))
+          <script>var triggerModalId = "modal_stats";</script>
+        @elseif(session('triggerModalAccount'))
+          <script>var triggerModalId = "modal_acc";</script>
+        @endif
+
+        <div id="modal_stats" class="modal @echoIf( ! session('triggerModalStats'), 'fade')" role="dialog">
+          <div class="modal-dialog">
+
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@lang('preferences.modal.deleteStats.title')</h4>
+              </div>
+              <div class="modal-body">
+                <p>@lang('preferences.modal.deleteStats.content')</p>
+
+                <form id="form_delete_stats" method="POST" action="{{ url('/preferences/account/reset') }}">
+                  {{ csrf_field() }}
+
+                  @lang('preferences.currentPassword'):
+                  <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-xs-4">
+                      <input id="password" name="password" class="form-control" type="password" placeholder="@lang('preferences.currentPassword')">
+                    </div>
+                  </div>
+                  @if($errors->stats->has('password'))
+                    <div class="alert alert-danger">@lang($errors->stats->first('password'))</div>
+                  @endif
+                </form>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@lang('info.back')</button>
+                <button type="button" onclick="document.getElementById('form_delete_stats').submit();" class="btn btn-danger">@lang('preferences.reset')</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div id="modal_acc" class="modal @echoIf( ! session('triggerModalAccount'), 'fade')" role="dialog">
+          <div class="modal-dialog">
+
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@lang('preferences.modal.deleteAccount.title')</h4>
+              </div>
+              <div class="modal-body">
+                <p>@lang('preferences.modal.deleteAccount.content')</p>
+
+                <form id="form_delete_account" method="POST" action="{{ url('/preferences/account/delete') }}">
+                  {{ csrf_field() }}
+
+                  @lang('preferences.currentPassword'):
+                  <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-xs-4">
+                      <input id="password" name="password" class="form-control" type="password" placeholder="@lang('preferences.currentPassword')">
+                    </div>
+                  </div>
+                  @if($errors->account->has('password'))
+                    <div class="alert alert-danger">@lang($errors->account->first('password'))</div>
+                  @endif
+
+                </form>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@lang('info.back')</button>
+                <button type="button" onclick="document.getElementById('form_delete_account').submit();" class="btn btn-danger">@lang('preferences.delete')</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        {{-- end modals --}}
 
       @elseif($view == 'security')
 
@@ -202,56 +279,14 @@
 
     </div>
 
-
-    {{-- modals --}}
-
-    <div id="modal_stats" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">@lang('preferences.modal.deleteStats.title')</h4>
-          </div>
-          <div class="modal-body">
-            <p>@lang('preferences.modal.deleteStats.content')</p>
-          </div>
-          <div class="modal-footer">
-            <form method="POST" action="{{ url('/preferences/account/reset') }}">
-              {{ csrf_field() }}
-              <button type="button" class="btn btn-default" data-dismiss="modal">@lang('info.back')</button>
-              <button type="submit" class="btn btn-danger" data-dismiss="modal">@lang('preferences.reset')</button>
-            </form>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div id="modal_acc" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">@lang('preferences.modal.deleteAccount.title')</h4>
-          </div>
-          <div class="modal-body">
-            <p>@lang('preferences.modal.deleteAccount.content')</p>
-          </div>
-          <div class="modal-footer">
-            <form method="POST" action="{{ url('/preferences/account/delete') }}">
-              {{ csrf_field() }}
-              <button type="button" class="btn btn-default" data-dismiss="modal">@lang('info.back')</button>
-              <button type="submit" class="btn btn-danger" data-dismiss="modal">@lang('preferences.delete')</button>
-            </form>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
   </div>
 
 </div>
+@endsection
+
+@section('footer')
+<script>
+if(typeof triggerModalId !== "undefined")
+  $(function() { $("#"+triggerModalId).modal(); });
+</script>
 @endsection
