@@ -50,7 +50,7 @@ class SecurityController extends Controller
       $confirm          = $request->input('confirm');
 
       if( ! Auth::validate([
-        'email' => $user->email,
+        'username' => $user->username,
         'password' => $currentPassword])) {
 
         $validator->errors()->add('credentials', 'errors.credentials');
