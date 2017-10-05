@@ -20,6 +20,7 @@ return [
   'velocityUnit'        => 'K/min',
   'errors'              => 'Errors',
   'errorRatio'          => 'Error rate',
+  'startString'         => 'Press any key',
 
   'modal' => [
     'title'       => 'Leave this page?',

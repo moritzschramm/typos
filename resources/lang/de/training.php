@@ -20,6 +20,7 @@ return [
   'velocityUnit'        => 'A/min',
   'errors'              => 'Fehler',
   'errorRatio'          => 'Fehlerquote',
+  'startString'         => 'Beliebige Taste drücken',
 
   'modal' => [
     'title'       => 'Die Seite wirklich verlassen?',
