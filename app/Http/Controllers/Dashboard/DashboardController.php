@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use App\Models\Lection;
 use App\Models\Exercise;
+use App\Models\LectionResult;
 
 class DashboardController extends Controller
 {
@@ -29,13 +30,14 @@ class DashboardController extends Controller
   {
     $view = $request->filled('view') ? $request->input('view') : 'lections';
 
-    $lections   = [];
-    $exercises  = [];
+    $lections     = [];
+    $exercises    = [];
+    $preferences  = Auth::user()->preferences;
 
     switch($view) {
 
       case 'lections':
-        $locale = Auth::user()->preferences->getKeyboardLocale();
+        $locale = $preferences->getKeyboardLocale();
         $lections = Lection::where('locale', $locale)->get();
         break;
 
@@ -46,10 +48,15 @@ class DashboardController extends Controller
       default: abort(404);
     }
 
+    $xp       = LectionResult::getTodaysXP(Auth::user()->id_user);
+    $xp_goal  = $preferences->xp_goal;
+
     return view('dashboard.index', [
       'view'      => $view,
       'lections'  => $lections,
       'exercises' => $exercises,
+      'xp'        => $xp,
+      'xp_goal'   => $xp_goal,
     ]);
   }
 }
