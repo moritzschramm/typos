@@ -19,8 +19,26 @@ class Exercise extends Model
   protected $table = 'exercises';
   protected $primaryKey = 'id_exercise';
 
-  protected $fillable = [ 'id_user', 'content', 'character_amount', 'is_public' ];
-  
+  protected $fillable = [ 'external_id', 'id_user', 'content', 'character_amount', 'is_public' ];
+
+  /**
+    * create ID for new exercise (external_id)
+    * check if ID already exists
+    *
+    * @return string ID
+    */
+  public static function newId()
+  {
+    do {
+
+      $id = generateSecureString();
+      $exists = Exercise::where('external_id', $id)->first();
+
+    } while($exists);
+
+    return $id;
+  }
+
   // database relationship
   public function user()
   {

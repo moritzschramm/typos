@@ -16,9 +16,11 @@ class CreateExercisesTable extends Migration
         Schema::create('exercises', function (Blueprint $table) {
             $table->increments('id_exercise');
             $table->integer('id_user')->unsigned()->index();
+            $table->string('external_id')->index();
             $table->string('title');
             $table->text('content');
-            $table->datetime('is_public');
+            $table->integer('character_amount')->unsigned();
+            $table->datetime('is_public')->nullable();
             $table->timestamps();
         });
     }
