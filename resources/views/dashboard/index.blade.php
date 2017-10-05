@@ -79,8 +79,8 @@
 
     <div class="circle-container" data-toggle="tooltip" title="heutige XP">
       <div style="position: relative;">
-        <canvas id="xp-graph" height="200" width="200"></canvas>
-        <div style="position: absolute; top: 40%; text-align: center; width: 100%; font-size: 24px; font-family: Montserrat; cursor: default;" class="unselectable">
+        <canvas id="xp-graph" height="250" width="250"></canvas>
+        <div style="position: absolute; top: 42.5%; text-align: center; width: 100%; font-size: 17px; font-family: Montserrat; cursor: default;" class="unselectable">
           {{ $xp }} / {{ $xp_goal }} XP
         </div>
       </div>
@@ -133,4 +133,56 @@
   </div>
 </div>
 
+@endsection
+
+@section('footer')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+<script>
+var xp = {{ $xp }};
+var goal = {{ $xp_goal }};
+
+$(document).ready(function() {
+
+  // chart
+  var ctx = document.getElementById("xp-graph");
+  var dif = Math.max(0, goal - xp);
+
+  Chart.defaults.global.legend.display = false;
+  Chart.defaults.global.defaultFontFamily = "'Montserrat', 'Arial', 'sans-serif'";
+
+  var data = {
+      labels: [
+          "@lang('training.results.currentXP')",
+          "@lang('training.results.missingXP')"
+      ],
+      datasets: [
+          {
+              data: [xp, dif],
+              backgroundColor: [
+                  "#ff5722",
+                  "#ffab91"
+              ],
+              borderColor: [
+                  "#ff5722",
+                  "#ffab91"
+              ],
+              hoverBackgroundColor: [
+                  "#ff5722",
+                  "#ffab91"
+              ]
+          }]
+  };
+
+  var chart = new Chart(ctx, {
+    type: 'doughnut',
+    data: data,
+    animation:{
+          animateScale: true
+    },
+    options: {
+      cutoutPercentage: 70
+    }
+  });
+});
+</script>
 @endsection
