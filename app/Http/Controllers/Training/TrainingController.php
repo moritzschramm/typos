@@ -40,7 +40,10 @@ class TrainingController extends Controller
     */
   public function getWords()
   {
-    $number_of_rows = DB::table('words_de')->select(DB::raw('COUNT(*) as count'))->first()->count;
+    $locale = session('app_locale');
+    $table  = 'words_' . $locale;
+
+    $number_of_rows = DB::table($table)->select(DB::raw('COUNT(*) as count'))->first()->count;
 
     // create a list of 10 random positions
     $position_list = [];
@@ -52,7 +55,7 @@ class TrainingController extends Controller
     }
 
     // get 10 random words from database
-    $query = 'SELECT word FROM words_de WHERE id IN (' . implode(',', $position_list) . ') LIMIT ' . $word_amount;
+    $query = 'SELECT word FROM ' . $table . ' WHERE id IN (' . implode(',', $position_list) . ') LIMIT ' . $word_amount;
     $words_raw = DB::select($query);
     $words = [];
 
