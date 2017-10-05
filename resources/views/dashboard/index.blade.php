@@ -20,12 +20,12 @@
   <div class="lection-nav">
     <a href="/dashboard?view=lections" style="text-decoration:none">
       <div id="item-lections" class="nav-item unselectable @echoIf($view == 'lections', 'item-active')">
-        Lektionen
+        @lang('dashboard.lection')
       </div>
     </a>
     <a href="{{ url('/dashboard?view=exercises') }}" style="text-decoration:none">
       <div id="item-exercises" class="nav-item unselectable @echoIf($view == 'exercises', 'item-active')">
-        Übungen
+        @lang('dashboard.exercise')
       </div>
     </a>
   </div>
@@ -38,10 +38,10 @@
 
       @foreach($lections as $lection)
         <div class="lection-item">
-          <div class="lection-num">Lektion {{ $lection->external_id }}</div>
+          <div class="lection-num">@lang('dashboard.lection') {{ $lection->external_id }}</div>
           <div class="lection-title">{{ $lection->title }}</div>
           <div class="lection-footer">
-            <a href="{{ url("/lection/$lection->external_id") }}"><span class="lection-link">anfangen</span></a>
+            <a href="{{ url("/lection/$lection->external_id") }}"><span class="lection-link">@lang('dashboard.start')</span></a>
           </div>
         </div>
       @endforeach
@@ -52,19 +52,19 @@
     <div id="container-exercises">
 
       <p style="padding-left: 32px; margin-top: -18px;">
-        Hier kannst du deine eigenen Übungen erstellen und sie zum Training auswählen
+        @lang('dashboard.exerciseInfo')
       </p>
 
       @foreach ($exercises as $exercise)
         <div class="lection-item">
           <div class="lection-title">{{ $exercise->title }}</div>
           <div class="lection-footer">
-            <a href="{{ url("/exercise/$exercise->id_exercise") }}"><span class="lection-link">anfangen</span></a>
+            <a href="{{ url("/exercise/$exercise->id_exercise") }}"><span class="lection-link">@lang('dashboard.start')</span></a>
           </div>
         </div>
       @endforeach
 
-      <a href="{{ url('/exercises') }}" class="lection-item-add"><span class="glyphicon glyphicon-plus"></span></a>
+      <a href="{{ url('/exercise') }}" class="lection-item-add"><span class="glyphicon glyphicon-plus"></span></a>
 
     </div>
     @endif
@@ -74,15 +74,14 @@
   <div class="extra-panel">
 
     <div>
-      <a href="{{ url('/training') }}" class="btn btn-default btn-main btn-training" style="font-size: 17px;"><span><span class="glyphicon glyphicon-education"></span> Freies Training</span></a>
+      <a href="{{ url('/training') }}" class="btn btn-default btn-main btn-training" style="font-size: 17px;"><span><span class="glyphicon glyphicon-education"></span> @lang('dashboard.training')</span></a>
     </div>
 
     <div class="circle-container" data-toggle="tooltip" title="heutige XP">
       <div style="position: relative;">
         <canvas id="xp-graph" height="200" width="200"></canvas>
         <div style="position: absolute; top: 40%; text-align: center; width: 100%; font-size: 24px; font-family: Montserrat; cursor: default;" class="unselectable">
-
-          xp / goal XP
+          {{ $xp }} / {{ $xp_goal }} XP
         </div>
       </div>
     </div>
