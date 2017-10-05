@@ -129,6 +129,8 @@ $.ajaxSetup({
     }
 });
 
+app_startString = "@lang('training.startString')";
+
 kb_layout   = "{{ $keyboardLayout }}";
 sq_dataURI  = "{{ $dataURI }}";
 

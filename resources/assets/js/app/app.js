@@ -20,6 +20,7 @@ var app_inError     = false;              // if the there is currently some wron
 var app_errorCount  = 0;                  // amount of errors made by user
 var app_nonce       = "";                 // retrieved when lection starts, should be submitted when uploading results
 var app_resultURI   = "/results/upload";  // upload URI for results
+var app_startString = "";                 // the string that gets displayed at the beginning
 
 var app_silentKeys = ["Shift", "AltGraph", "Alt", "Control"];    // keys that should not be printed to display
 
@@ -60,7 +61,7 @@ function app_changeState(state) {
       // hide loader
       $("#loader").hide();
       // show info
-      dp_setNormalText("Beliebige Taste drücken");
+      dp_setNormalText(app_startString);
 
       break;
 
