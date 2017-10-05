@@ -141,10 +141,12 @@ class LectionResult extends Model
   {
     $today = "'" . date('Y-m-d') . "'";   # e.g. '2017-09-25'
 
-    return LectionResult::select(DB::raw('id_user, SUM(xp) xp, DATE(created_at) today')) # sum xp, convert created_at to date
+    $result = LectionResult::select(DB::raw('id_user, SUM(xp) xp, DATE(created_at) today')) # sum xp, convert created_at to date
                   ->groupBy(DB::raw('id_user, DATE(created_at)'))                        # group by id_user and created_at (as date)
                   ->havingRaw('`today` = ' . $today . ' AND `id_user` = ' . $id_user)    # return only results where date = today and user id matches parameter
-                  ->first()->xp;                                                         # get first row (there is only one) and return value of column xp
+                  ->first();                                                             # get first row (there is only one) and return value of column xp
+
+    return $result ? $result->xp : 0;
   }
 
 }
