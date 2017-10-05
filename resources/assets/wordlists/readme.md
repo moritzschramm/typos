@@ -10,3 +10,6 @@ While setting up the project, use 'php artisan load:words' to upload all
 wordlists. To clear wordlists from the database, use
 'php artisan unload:words --name=<table_name> --name=<table_name2> ...' or
 'php artisan unload:words' (to clear all wordlist tables).
+
+# Sources
+words_en: https://github.com/first20hours/google-10000-english
