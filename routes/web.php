@@ -53,6 +53,8 @@ Route::group(['namespace' => 'Dashboard'], function() {
 
   Route::get('/exercise',             'ExerciseController@showAddExercise');
   Route::post('/exercise',            'ExerciseController@saveExercise');
+  Route::get('/exercise/{id}/edit',   'ExerciseController@showEditExercise');
+  Route::post('/exercise/{id}/edit',  'ExerciseController@editExercise');
 
   Route::get('/statistics',           'StatsController@showStats');
   Route::post('/stats/velocity',      'StatsController@velocityStats');
