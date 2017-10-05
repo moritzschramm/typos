@@ -27,6 +27,8 @@ return [
   'showKeyboard'        => 'Tastatur anzeigen',
   'keyboardLayout'      => 'Tastaturlayout',
 
+  'xpGoalMin'           => 'Bitte gib eine Zahl größer oder gleich 5 ein',
+  'xpGoalMax'           => 'Bitte gib eine Zahl kleiner als 500 ein',
   'keyboardUnavailable' => 'Tastatur nicht verfügbar',
 
   'emailChanged'        => 'E-mail Adresse erfolgreich geändert',

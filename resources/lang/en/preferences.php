@@ -27,6 +27,8 @@ return [
   'showKeyboard'        => 'Show keyboard',
   'keyboardLayout'      => 'Keyboard layout',
 
+  'xpGoalMin'           => 'Please enter an integer bigger than or equal to 5',
+  'xpGoalMax'           => 'Please enter an integer smaller than 500',
   'keyboardUnavailable' => 'Keyboard unavailable',
 
   'emailChanged'        => 'Successfully changed email address',
