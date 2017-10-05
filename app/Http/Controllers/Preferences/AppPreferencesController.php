@@ -28,12 +28,13 @@ class AppPreferencesController extends Controller
   public function editAppPreferences(Request $request)
   {
     $validator = Validator::make($request->all(), [
-      'xp_goal'         => 'required|integer|max:500',
+      'xp_goal'         => 'required|integer|max:500|min:5',
       'keyboard_layout' => 'required',
     ], [
       'required'      => 'errors.required',
       'integer'       => 'errors.integer',
-      'xp_goal.max'   => 'errors.numericMax',
+      'xp_goal.max'   => 'preferences.xpGoalMax',
+      'xp_goal.min'   => 'preferences.xpGoalMin',
     ]);
 
     $validator->after(function ($validator) use ($request) {
