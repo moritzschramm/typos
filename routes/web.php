@@ -45,13 +45,16 @@ Route::group(['namespace' => 'Auth'], function() {
 
 /**
   * Dashboard:
-  * Dashboard, Statistics
+  * Dashboard, Statistics, Exercise
   */
 Route::group(['namespace' => 'Dashboard'], function() {
 
   Route::get('/dashboard',            'DashboardController@showDashboard');
-  Route::get('/statistics',           'StatsController@showStats');
 
+  Route::get('/exercise',             'ExerciseController@showAddExercise');
+  Route::post('/exercise',            'ExerciseController@saveExercise');
+
+  Route::get('/statistics',           'StatsController@showStats');
   Route::post('/stats/velocity',      'StatsController@velocityStats');
   Route::post('/stats/xp',            'StatsController@xpStats');
   Route::post('/stats/keystrokes',    'StatsController@keystrokesStats');
@@ -94,16 +97,6 @@ Route::group(['namespace' => 'Training'], function() {
   Route::get('/trial',                  'TrialController@showApp');
   Route::post('/trial',                 'TrialController@getWords');
   Route::post('/trial/upload',          'TrialController@handleUpload');
-
-});
-
-/**
-  * Exercises
-  */
-Route::group(['namespace' => 'Exercise'], function() {
-
-  Route::get('/exercise',               'ExerciseController@showAddExercise');
-  Route::post('/exercise',              'ExerciseController@saveExercise');
 
 });
 
