@@ -13,10 +13,10 @@ class UserPreference extends Model
                           'show_divider', 'show_keyboard'];
 
   // default preferences
-  public static function defaults($locale = 'en')
+  public static function defaults($layout = 'en-us')
   {
     return [
-      'keyboard'        => 'de-de',
+      'keyboard'        => $layout,
       'xp_goal'         => 30,
       'show_assignment' => false,
       'show_divider'    => false,
