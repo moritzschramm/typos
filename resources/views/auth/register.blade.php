@@ -49,6 +49,15 @@
             <div class="alert alert-danger">@lang($errors->first('confirm'))</div>
           @endif
 
+          @lang('preferences.keyboardLayout'):
+          <select name="keyboard" id="keyboard">
+            <option value="de-de">Deutsch (Deutschland)</option>
+            <option value="en-us">English (US)</option>
+          </select>
+          @if($errors->has('keyboard'))
+            <div class="alert alert-danger">@lang($errors->first('keyboard'))</div>
+          @endif
+
           <div class="checkbox text-left">
             <label class="unselectable">
               <input class="check_box" type="checkbox" name="checkbox" id="checkbox">
