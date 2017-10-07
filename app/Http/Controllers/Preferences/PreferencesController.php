@@ -40,7 +40,7 @@ class PreferencesController extends Controller
         'divider'     => $appPreferences->show_divider,
         'keyboard'    => $appPreferences->show_keyboard,
       ];
-      $data['keyboardLayout'] = 'de-de';
+      $data['keyboardLayout'] = $appPreferences->keyboard;
     }
 
     return view('preferences.index', $data);
