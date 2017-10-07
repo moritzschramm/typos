@@ -29,7 +29,7 @@ return [
     | Available keyboard layouts (from ./public/js/keyboard_layouts/*.json)
     |--------------------------------------------------------------------------
     */
-    'available_keyboards' => ['de-de'],
+    'available_keyboards' => ['de-de', 'en-us'],
 
     /*
     |--------------------------------------------------------------------------
