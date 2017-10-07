@@ -31,7 +31,7 @@ class LectionController extends Controller
     */
   public function showLection($lectionId)
   {
-    return $this->createAppView("/lection/$lectionId");
+    return $this->createAppView("/lection/$lectionId", Auth::user());
   }
 
   /**

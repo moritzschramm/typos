@@ -30,7 +30,7 @@ class TrainingController extends Controller
     */
   public function showTraining()
   {
-    return $this->createAppView('/training');
+    return $this->createAppView('/training', Auth::user());
   }
 
   /**

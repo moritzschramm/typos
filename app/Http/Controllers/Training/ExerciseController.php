@@ -31,7 +31,7 @@ class ExerciseController extends Controller
     */
   public function showLection($exerciseId)
   {
-    return $this->createAppView("/exercise/$exerciseId");
+    return $this->createAppView("/exercise/$exerciseId", Auth::user());
   }
 
   /**
