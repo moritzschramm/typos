@@ -1,0 +1,787 @@
+{
+  "meta": {
+    "locale": "en",
+    "ratio": 3
+  },
+  "keys": [
+    {
+      "label": "~",
+      "id": "tilde",
+      "left": 0,
+      "top": 0,
+      "parentKeyId": "a",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "default": "^",
+        "shift": "`"
+      }
+    },
+    {
+      "label": "1",
+      "id": "n1",
+      "left": 6.667,
+      "top": 0,
+      "parentKeyId": "a",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "default": "1",
+        "shift": "!",
+        "altGr": "¡"
+      }
+    },
+    {
+      "label": "2",
+      "id": "n2",
+      "left": 13.334,
+      "top": 0,
+      "parentKeyId": "a",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "default": "2",
+        "shift": "@",
+        "altGr": "²"
+      }
+    },
+    {
+      "label": "3",
+      "id": "n3",
+      "left": 20.001,
+      "top": 0,
+      "parentKeyId": "s",
+      "highlightClass": "highlightRed",
+      "map": {
+        "default": "3",
+        "shift": "#",
+        "altGr": "³"
+      }
+    },
+    {
+      "label": "4",
+      "id": "n4",
+      "left": 26.668,
+      "top": 0,
+      "parentKeyId": "d",
+      "highlightClass": "highlightGreen",
+      "map": {
+        "default": "4",
+        "shift": "$",
+        "altGr": "¤"
+      }
+    },
+    {
+      "label": "5",
+      "id": "n5",
+      "left": 33.335,
+      "top": 0,
+      "parentKeyId": "f",
+      "highlightClass": "highlightPurple",
+      "map": {
+        "default": "5",
+        "shift": "%",
+        "altGr": "€"
+      }
+    },
+    {
+      "label": "6",
+      "id": "n6",
+      "left": 40.002,
+      "top": 0,
+      "parentKeyId": "f",
+      "highlightClass": "highlightPurple",
+      "map": {
+        "default": "6",
+        "shift": "^",
+        "altGr": "¼"
+      }
+    },
+    {
+      "label": "7",
+      "id": "n7",
+      "left": 46.669,
+      "top": 0,
+      "parentKeyId": "j",
+      "highlightClass": "highlightPurple",
+      "map": {
+        "default": "7",
+        "shift": "&",
+        "altGr": "½"
+      }
+    },
+    {
+      "label": "8",
+      "id": "n8",
+      "left": 53.336,
+      "top": 0,
+      "parentKeyId": "j",
+      "highlightClass": "highlightPurple",
+      "map": {
+        "default": "8",
+        "shift": "*",
+        "altGr": "¾"
+      }
+    },
+    {
+      "label": "9",
+      "id": "n9",
+      "left": 60.003,
+      "top": 0,
+      "parentKeyId": "k",
+      "highlightClass": "highlightGreen",
+      "map": {
+        "default": "9",
+        "shift": "(",
+        "altGr": "’"
+      }
+    },
+    {
+      "label": "0",
+      "id": "n0",
+      "left": 66.670,
+      "top": 0,
+      "parentKeyId": "l",
+      "highlightClass": "highlightRed",
+      "map": {
+        "default": "0",
+        "shift": ")",
+        "altGr": "¸"
+      }
+    },
+    {
+      "label": "-",
+      "id": "dash",
+      "left": 73.337,
+      "top": 0,
+      "parentKeyId": "semicolon",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "default": "-",
+        "shift": "_",
+        "altGr": "¥"
+      }
+    },
+    {
+      "label": "=",
+      "id": "equals",
+      "left": 80.004,
+      "top": 0,
+      "parentKeyId": "semicolon",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "default": "=",
+        "shift": "+",
+        "altGr": "×"
+      }
+    },
+    {
+      "label": "←",
+      "id": "bs",
+      "left": 86.671,
+      "top": 0,
+      "classes": ["backspace"],
+      "parentKeyId": "semicolon",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "special": "Backspace"
+      }
+    },
+
+
+    {
+      "label": "↹",
+      "id": "tab",
+      "left": 0,
+      "top": 20,
+      "classes": ["tab"],
+      "parentKeyId": "a",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "special": "Tab"
+      }
+    },
+    {
+      "label": "Q",
+      "id": "q",
+      "left": 10.312,
+      "top": 20,
+      "parentKeyId": "a",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "default": "q",
+        "shift": "Q",
+        "altGr": "@"
+      }
+    },
+    {
+      "label": "W",
+      "id": "w",
+      "left": 16.982,
+      "top": 20,
+      "parentKeyId": "s",
+      "highlightClass": "highlightRed",
+      "map": {
+        "default": "w",
+        "shift": "W",
+        "altGr": "ł"
+      }
+    },
+    {
+      "label": "E",
+      "id": "e",
+      "left": 23.652,
+      "top": 20,
+      "parentKeyId": "d",
+      "highlightClass": "highlightGreen",
+      "map": {
+        "default": "e",
+        "shift": "E",
+        "altGr": "€"
+      }
+    },
+    {
+      "label": "R",
+      "id": "r",
+      "left": 30.319,
+      "top": 20,
+      "parentKeyId": "f",
+      "highlightClass": "highlightPurple",
+      "map": {
+        "default": "r",
+        "shift": "R",
+        "altGr": "¶"
+      }
+    },
+    {
+      "label": "T",
+      "id": "t",
+      "left": 36.986,
+      "top": 20,
+      "parentKeyId": "f",
+      "highlightClass": "highlightPurple",
+      "map": {
+        "default": "t",
+        "shift": "T",
+        "altGr": "ŧ"
+      }
+    },
+    {
+      "label": "Y",
+      "id": "y",
+      "left": 43.653,
+      "top": 20,
+      "parentKeyId": "j",
+      "highlightClass": "highlightPurple",
+      "map": {
+        "default": "y",
+        "shift": "Y",
+        "altGr": "Ü"
+      }
+    },
+    {
+      "label": "U",
+      "id": "u",
+      "left": 50.320,
+      "top": 20,
+      "parentKeyId": "j",
+      "highlightClass": "highlightPurple",
+      "map": {
+        "default": "u",
+        "shift": "U",
+        "altGr": "↓"
+      }
+    },
+    {
+      "label": "I",
+      "id": "i",
+      "left": 56.987,
+      "top": 20,
+      "parentKeyId": "k",
+      "highlightClass": "highlightGreen",
+      "map": {
+        "default": "i",
+        "shift": "I",
+        "altGr": "→"
+      }
+    },
+    {
+      "label": "O",
+      "id": "o",
+      "left": 63.654,
+      "top": 20,
+      "parentKeyId": "l",
+      "highlightClass": "highlightRed",
+      "map": {
+        "default": "o",
+        "shift": "O",
+        "altGr": "ø"
+      }
+    },
+    {
+      "label": "P",
+      "id": "p",
+      "left": 70.321,
+      "top": 20,
+      "parentKeyId": "semicolon",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "default": "p",
+        "shift": "P",
+        "altGr": "þ"
+      }
+    },
+    {
+      "label": "[",
+      "id": "bracketOpen",
+      "left": 76.988,
+      "top": 20,
+      "parentKeyId": "semicolon",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "default": "[",
+        "shift": "{",
+        "altGr": "«"
+      }
+    },
+    {
+      "label": "]",
+      "id": "bracketClose",
+      "left": 83.655,
+      "top": 20,
+      "parentKeyId": "semicolon",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "default": "]",
+        "shift": "}",
+        "altGr": "»"
+      }
+    },
+    {
+      "label": "\\",
+      "id": "backslash",
+      "left": 90.322,
+      "top": 20,
+      "classes": ["backslash"],
+      "parentKeyId": "semicolon",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "default": "\\",
+        "shift": "|",
+        "altGr": "¦"
+      }
+    },
+
+    {
+      "label": "⇪",
+      "id": "capslock",
+      "left": 0,
+      "top": 40,
+      "classes": ["capslock"],
+      "parentKeyId": "a",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "special": "CapsLock"
+      }
+    },
+    {
+      "label": "A",
+      "id": "a",
+      "left": 11.561,
+      "top": 40,
+      "parentKeyId": "a",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "default": "a",
+        "shift": "A",
+        "altGr": "æ"
+      }
+    },
+    {
+      "label": "S",
+      "id": "s",
+      "left": 18.228,
+      "top": 40,
+      "parentKeyId": "s",
+      "highlightClass": "highlightRed",
+      "map": {
+        "default": "s",
+        "shift": "S",
+        "altGr": "ſ"
+      }
+    },
+    {
+      "label": "D",
+      "id": "d",
+      "left": 24.895,
+      "top": 40,
+      "parentKeyId": "d",
+      "highlightClass": "highlightGreen",
+      "map": {
+        "default": "d",
+        "shift": "D",
+        "altGr": "ð"
+      }
+    },
+    {
+      "label": "F",
+      "id": "f",
+      "left": 31.562,
+      "top": 40,
+      "parentKeyId": "f",
+      "highlightClass": "highlightPurple",
+      "map": {
+        "default": "f",
+        "shift": "F",
+        "altGr": "đ"
+      }
+    },
+    {
+      "label": "G",
+      "id": "g",
+      "left": 38.229,
+      "top": 40,
+      "parentKeyId": "f",
+      "highlightClass": "highlightPurple",
+      "map": {
+        "default": "g",
+        "shift": "G",
+        "altGr": "ŋ"
+      }
+    },
+    {
+      "label": "H",
+      "id": "h",
+      "left": 44.896,
+      "top": 40,
+      "parentKeyId": "j",
+      "highlightClass": "highlightPurple",
+      "map": {
+        "default": "h",
+        "shift": "H",
+        "altGr": "ħ"
+      }
+    },
+    {
+      "label": "J",
+      "id": "j",
+      "left": 51.563,
+      "top": 40,
+      "parentKeyId": "j",
+      "highlightClass": "highlightPurple",
+      "map": {
+        "default": "j",
+        "shift": "J",
+        "altGr": "none"
+      }
+    },
+    {
+      "label": "K",
+      "id": "k",
+      "left": 58.230,
+      "top": 40,
+      "parentKeyId": "k",
+      "highlightClass": "highlightGreen",
+      "map": {
+        "default": "k",
+        "shift": "K",
+        "altGr": "ĸ"
+      }
+    },
+    {
+      "label": "L",
+      "id": "l",
+      "left": 64.897,
+      "top": 40,
+      "parentKeyId": "l",
+      "highlightClass": "highlightRed",
+      "map": {
+        "default": "l",
+        "shift": "L",
+        "altGr": "ł"
+      }
+    },
+    {
+      "label": ";",
+      "id": "semicolon",
+      "left": 71.564,
+      "top": 40,
+      "parentKeyId": "semicolon",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "default": ";",
+        "shift": ":",
+        "altGr": "¶"
+      }
+    },
+    {
+      "label": "'",
+      "id": "apostrophe",
+      "left": 78.231,
+      "top": 40,
+      "parentKeyId": "semicolon",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "default": "'",
+        "shift": "\"",
+        "altGr": "´"
+      }
+    },
+    {
+      "label": "⏎",
+      "id": "enter",
+      "left": 84.898,
+      "top": 40,
+      "classes": ["enter-us"],
+      "parentKeyId": "semicolon",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "special": "Enter"
+      }
+    },
+
+
+    {
+      "label": "⇧",
+      "id": "shift",
+      "left": 0,
+      "top": 60,
+      "classes": ["backspace"],
+      "parentKeyId": "a",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "special": "Shift",
+        "location": "left"
+      }
+    },
+    {
+      "label": "Z",
+      "id": "z",
+      "left": 13.959,
+      "top": 60,
+      "parentKeyId": "a",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "default": "z",
+        "shift": "Z",
+        "altGr": "æ"
+      }
+    },
+    {
+      "label": "X",
+      "id": "x",
+      "left": 20.626,
+      "top": 60,
+      "parentKeyId": "s",
+      "highlightClass": "highlightRed",
+      "map": {
+        "default": "x",
+        "shift": "X",
+        "altGr": "«"
+      }
+    },
+    {
+      "label": "C",
+      "id": "c",
+      "left": 27.293,
+      "top": 60,
+      "parentKeyId": "d",
+      "highlightClass": "highlightGreen",
+      "map": {
+        "default": "c",
+        "shift": "C",
+        "altGr": "¢"
+      }
+    },
+    {
+      "label": "V",
+      "id": "v",
+      "left": 33.960,
+      "top": 60,
+      "parentKeyId": "f",
+      "highlightClass": "highlightPurple",
+      "map": {
+        "default": "v",
+        "shift": "V",
+        "altGr": "„"
+      }
+    },
+    {
+      "label": "B",
+      "id": "b",
+      "left": 40.627,
+      "top": 60,
+      "parentKeyId": "f",
+      "highlightClass": "highlightPurple",
+      "map": {
+        "default": "b",
+        "shift": "B",
+        "altGr": "“"
+      }
+    },
+    {
+      "label": "N",
+      "id": "n",
+      "left": 47.294,
+      "top": 60,
+      "parentKeyId": "j",
+      "highlightClass": "highlightPurple",
+      "map": {
+        "default": "n",
+        "shift": "N",
+        "altGr": "”"
+      }
+    },
+    {
+      "label": "M",
+      "id": "m",
+      "left": 53.961,
+      "top": 60,
+      "parentKeyId": "j",
+      "highlightClass": "highlightPurple",
+      "map": {
+        "default": "m",
+        "shift": "M",
+        "altGr": "µ"
+      }
+    },
+    {
+      "label": ",",
+      "id": "colon",
+      "left": 60.628,
+      "top": 60,
+      "parentKeyId": "k",
+      "highlightClass": "highlightGreen",
+      "map": {
+        "default": ",",
+        "shift": "<",
+        "altGr": "ç"
+      }
+    },
+    {
+      "label": ".",
+      "id": "period",
+      "left": 67.295,
+      "top": 60,
+      "parentKeyId": "l",
+      "highlightClass": "highlightRed",
+      "map": {
+        "default": ".",
+        "shift": ">"
+      }
+    },
+    {
+      "label": "/",
+      "id": "slash",
+      "left": 73.962,
+      "top": 60,
+      "parentKeyId": "semicolon",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "default": "/",
+        "shift": "?",
+        "altGr": "¿"
+      }
+    },
+    {
+      "label": "⇧",
+      "id": "shiftright",
+      "left": 80.629,
+      "top": 60,
+      "classes": ["shiftright"],
+      "parentKeyId": "semicolon",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "special": "Shift",
+        "location": "right"
+      }
+    },
+
+
+    {
+      "label": "Strg",
+      "id": "controlleft",
+      "left": 0,
+      "top": 80,
+      "classes": ["special"],
+      "parentKeyId": "a",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "special": "Control",
+        "location": "left"
+      }
+    },
+    {
+      "label": "⌘",
+      "id": "metaleft",
+      "left": 7.917,
+      "top": 80,
+      "classes": ["special"],
+      "parentKeyId": "a",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "special": "Meta",
+        "location": "left"
+      }
+    },
+    {
+      "label": "Alt",
+      "id": "alt",
+      "left": 15.834,
+      "top": 80,
+      "classes": ["special"],
+      "parentKeyId": "s",
+      "highlightClass": "highlightRed",
+      "map": {
+        "special": "Alt"
+      }
+    },
+    {
+      "label": "",
+      "id": "space",
+      "left": 23.751,
+      "top": 80,
+      "classes": ["space"],
+      "parentKeyId": "space",
+      "highlightClass": "highlightBlue",
+      "map": {
+        "special": "Space"
+      }
+    },
+    {
+      "label": "Alt Gr",
+      "id": "altgr",
+      "left": 76.768,
+      "top": 80,
+      "classes": ["special"],
+      "parentKeyId": "semicolon",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "special": "AltGraph"
+      }
+    },
+    {
+      "label": "⌘",
+      "id": "metaright",
+      "left": 84.685,
+      "top": 80,
+      "classes": ["special"],
+      "parentKeyId": "semicolon",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "special": "Meta",
+        "location": "right"
+      }
+    },
+    {
+      "label": "Strg",
+      "id": "controlright",
+      "left": 92.602,
+      "top": 80,
+      "classes": ["special"],
+      "parentKeyId": "semicolon",
+      "highlightClass": "highlightYellow",
+      "map": {
+        "special": "Control",
+        "location": "right"
+      }
+    }
+  ]
+}
