@@ -12,7 +12,7 @@
       "parentKeyId": "a",
       "highlightClass": "highlightYellow",
       "map": {
-        "default": "^",
+        "default": "~",
         "shift": "`"
       }
     },
@@ -208,7 +208,7 @@
       "map": {
         "default": "q",
         "shift": "Q",
-        "altGr": "@"
+        "altGr": "ä"
       }
     },
     {
@@ -221,7 +221,7 @@
       "map": {
         "default": "w",
         "shift": "W",
-        "altGr": "ł"
+        "altGr": "å"
       }
     },
     {
@@ -234,7 +234,7 @@
       "map": {
         "default": "e",
         "shift": "E",
-        "altGr": "€"
+        "altGr": "é"
       }
     },
     {
@@ -247,7 +247,7 @@
       "map": {
         "default": "r",
         "shift": "R",
-        "altGr": "¶"
+        "altGr": "®"
       }
     },
     {
@@ -260,7 +260,7 @@
       "map": {
         "default": "t",
         "shift": "T",
-        "altGr": "ŧ"
+        "altGr": "þ"
       }
     },
     {
@@ -273,7 +273,7 @@
       "map": {
         "default": "y",
         "shift": "Y",
-        "altGr": "Ü"
+        "altGr": "ü"
       }
     },
     {
@@ -286,7 +286,7 @@
       "map": {
         "default": "u",
         "shift": "U",
-        "altGr": "↓"
+        "altGr": "ú"
       }
     },
     {
@@ -299,7 +299,7 @@
       "map": {
         "default": "i",
         "shift": "I",
-        "altGr": "→"
+        "altGr": "í"
       }
     },
     {
@@ -312,7 +312,7 @@
       "map": {
         "default": "o",
         "shift": "O",
-        "altGr": "ø"
+        "altGr": "ó"
       }
     },
     {
@@ -325,7 +325,7 @@
       "map": {
         "default": "p",
         "shift": "P",
-        "altGr": "þ"
+        "altGr": "ö"
       }
     },
     {
@@ -391,7 +391,7 @@
       "map": {
         "default": "a",
         "shift": "A",
-        "altGr": "æ"
+        "altGr": "á"
       }
     },
     {
@@ -404,7 +404,7 @@
       "map": {
         "default": "s",
         "shift": "S",
-        "altGr": "ſ"
+        "altGr": "ß"
       }
     },
     {
@@ -416,8 +416,7 @@
       "highlightClass": "highlightGreen",
       "map": {
         "default": "d",
-        "shift": "D",
-        "altGr": "ð"
+        "shift": "D"
       }
     },
     {
@@ -429,8 +428,7 @@
       "highlightClass": "highlightPurple",
       "map": {
         "default": "f",
-        "shift": "F",
-        "altGr": "đ"
+        "shift": "F"
       }
     },
     {
@@ -442,8 +440,7 @@
       "highlightClass": "highlightPurple",
       "map": {
         "default": "g",
-        "shift": "G",
-        "altGr": "ŋ"
+        "shift": "G"
       }
     },
     {
@@ -455,8 +452,7 @@
       "highlightClass": "highlightPurple",
       "map": {
         "default": "h",
-        "shift": "H",
-        "altGr": "ħ"
+        "shift": "H"
       }
     },
     {
@@ -468,8 +464,7 @@
       "highlightClass": "highlightPurple",
       "map": {
         "default": "j",
-        "shift": "J",
-        "altGr": "none"
+        "shift": "J"
       }
     },
     {
@@ -481,8 +476,7 @@
       "highlightClass": "highlightGreen",
       "map": {
         "default": "k",
-        "shift": "K",
-        "altGr": "ĸ"
+        "shift": "K"
       }
     },
     {
@@ -495,7 +489,7 @@
       "map": {
         "default": "l",
         "shift": "L",
-        "altGr": "ł"
+        "altGr": "ø"
       }
     },
     {
@@ -573,8 +567,7 @@
       "highlightClass": "highlightRed",
       "map": {
         "default": "x",
-        "shift": "X",
-        "altGr": "«"
+        "shift": "X"
       }
     },
     {
@@ -587,7 +580,7 @@
       "map": {
         "default": "c",
         "shift": "C",
-        "altGr": "¢"
+        "altGr": "©"
       }
     },
     {
@@ -599,8 +592,7 @@
       "highlightClass": "highlightPurple",
       "map": {
         "default": "v",
-        "shift": "V",
-        "altGr": "„"
+        "shift": "V"
       }
     },
     {
@@ -612,8 +604,7 @@
       "highlightClass": "highlightPurple",
       "map": {
         "default": "b",
-        "shift": "B",
-        "altGr": "“"
+        "shift": "B"
       }
     },
     {
@@ -626,7 +617,7 @@
       "map": {
         "default": "n",
         "shift": "N",
-        "altGr": "”"
+        "altGr": "ñ"
       }
     },
     {
