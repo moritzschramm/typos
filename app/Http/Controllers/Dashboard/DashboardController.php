@@ -38,7 +38,7 @@ class DashboardController extends Controller
 
       case 'lections':
         $locale = $preferences->getKeyboardLocale();
-        $lections = Lection::where('locale', $locale)->get();
+        $lections = Lection::where('locale', $locale)->orderBy('external_id')->get();
         break;
 
       case 'exercises':
