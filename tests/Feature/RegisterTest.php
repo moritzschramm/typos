@@ -18,7 +18,7 @@ class RegisterTest extends TestCase
   const USERNAME = 'someuser';
   const EMAIL = 'someMail@example.com';
   const PASSWORD = 'testtest1234'; # absolutely safe password
-  const LOCALE = 'en';
+  const KEYBOARD = 'en-us';
 
   /**
    * tests registration with valid input
@@ -40,7 +40,7 @@ class RegisterTest extends TestCase
       'email'     => self::EMAIL,
       'password'  => self::PASSWORD,
       'confirm'   => self::PASSWORD,
-      'locale'    => self::LOCALE,
+      'keyboard'  => self::KEYBOARD,
       'checkbox'  => true,
     ]);
 
@@ -78,7 +78,7 @@ class RegisterTest extends TestCase
       'email'     => '',
       'password'  => '',
       'confirm'   => '',
-      'locale'    => '',
+      'keyboard'  => '',
       'checkbox'  => true,
     ], ['email', 'password', 'confirm']);
 
@@ -89,7 +89,7 @@ class RegisterTest extends TestCase
       'email'     => '',
       'password'  => self::PASSWORD,
       'confirm'   => self::PASSWORD,
-      'locale'    => self::LOCALE,
+      'keyboard'  => self::KEYBOARD,
       'checkbox'  => true,
     ], ['email', 'username']);
 
@@ -100,7 +100,7 @@ class RegisterTest extends TestCase
       'email'     => 'test@example.com',
       'password'  => self::PASSWORD,
       'confirm'   => self::PASSWORD,
-      'locale'    => self::LOCALE,
+      'keyboard'  => self::KEYBOARD,
       'checkbox'  => true,
     ], ['email', 'username']);
 
@@ -111,7 +111,7 @@ class RegisterTest extends TestCase
       'email'     => self::EMAIL,
       'password'  => 'password',
       'confirm'   => 'password',
-      'locale'    => self::LOCALE,
+      'keyboard'  => self::KEYBOARD,
       'checkbox'  => true,
     ], ['password']);
 
@@ -122,7 +122,7 @@ class RegisterTest extends TestCase
       'email'     => self::EMAIL,
       'password'  => self::PASSWORD,
       'confirm'   => self::PASSWORD . 'something',
-      'locale'    => self::LOCALE,
+      'keyboard'  => self::KEYBOARD,
       'checkbox'  => true,
     ], ['confirm']);
 
@@ -133,7 +133,7 @@ class RegisterTest extends TestCase
       'email'     => self::EMAIL,
       'password'  => self::PASSWORD,
       'confirm'   => self::PASSWORD,
-      'locale'    => 'invalidLocale',
+      'keyboard'  => 'invalidKeyboard',
       'checkbox'  => true,
     ], ['locale']);
   }

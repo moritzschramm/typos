@@ -63,7 +63,7 @@ class RegisterController extends Controller
       'email'     => 'required|email|unique:users,email|max:'          . config('database.stringLength'),
       'password'  => 'required|max:'                                   . config('database.stringLength'),
       'confirm'   => 'required|max:'                                   . config('database.stringLength'),
-      'locale'    => 'required',
+      'keyboard'  => 'required',
       'checkbox'  => 'required',
     ], [
       'required'          => 'errors.required',
@@ -87,9 +87,9 @@ class RegisterController extends Controller
 
         $validator->errors()->add('password', 'errors.weak_password');
 
-      } else if( ! in_array($request->input('locale'), config('app.available_locales'))) {
+      } else if( ! in_array($request->input('keyboard'), config('app.available_keyboards'))) {
 
-        $validator->errors()->add('locale', 'errors.locale_not_available');
+        $validator->errors()->add('keyboard', 'preferences.keyboardUnavailable');
       }
     });
 
@@ -105,10 +105,10 @@ class RegisterController extends Controller
       $user->uuid     = User::uuid();
       $user->password = bcrypt($request->input('password'));
       $user->verified = NULL;
-      $user->locale   = $request->input('locale');
+      $user->locale   = session('app_locale');
       $user->save();
 
-      $preferences = new UserPreference(UserPreference::defaults($user->locale));
+      $preferences = new UserPreference(UserPreference::defaults($request->input('keyboard')));
       $preferences->id_user = $user->id_user;
       $preferences->save();
 
