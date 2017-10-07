@@ -127,6 +127,9 @@
   border: 2px solid #673ab7;
   background-color: #c0b7d0;
 }
+.key-double {
+  width: 12.707%;
+}
 .backspace {
   width: 13.329%;
 }
@@ -136,6 +139,9 @@
 .enter {
   height: 38.125%;
   width: 8.435%;
+}
+.enter-us {
+  width: 15.102%;
 }
 .capslock {
   width: 10.934%
@@ -151,6 +157,9 @@
 }
 .space {
   width: 52.39%;
+}
+.backslash {
+  width: 9.678%;
 }
 .hud {
   position: absolute;
