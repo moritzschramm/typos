@@ -16,7 +16,7 @@ class ResultController extends Controller
   use CalculateXP, ValidateLectionNonce;
   /**
     * Middlewares:
-    *  - auth
+    *  - auth (except show())
     *
     */
   public function __construct()
@@ -34,6 +34,11 @@ class ResultController extends Controller
   {
     // in case page gets reloaded, reflash the session storage
     session()->reflash();
+
+    if( ! session()->has('xp', 'velocity', 'error_amount', 'keystrokes')) {
+
+      return abort(404);
+    }
 
     return response()->view('training.results', [
       'xp'            => session('xp'),
