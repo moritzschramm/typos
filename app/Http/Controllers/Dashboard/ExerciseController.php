@@ -10,6 +10,10 @@ use App\Models\Exercise;
 
 class ExerciseController extends Controller
 {
+  /**
+    * Middlewares:
+    * - auth
+    */
   public function __construct()
   {
     $this->middleware('auth');
