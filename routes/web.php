@@ -28,7 +28,6 @@ Route::group(['namespace' => 'Auth'], function() {
   Route::post('/login',                     'LoginController@login');
 
   Route::get('/register',                   'RegisterController@showRegister');
-  Route::get('/register/success',           'RegisterController@showSuccess');
   Route::post('/register',                  'RegisterController@register');
 
   Route::get('/password/forgot',            'PasswordController@showForgotPassword');
