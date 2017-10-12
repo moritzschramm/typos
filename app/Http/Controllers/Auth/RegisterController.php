@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\User, App\Models\UserPreference;
 use App\Traits\CreateUserToken, App\Traits\PasswordCheck;
-use Validator, Mail;
+use Auth, Mail, Validator;
 use App\Mail\VerifyAccountMail;
 
 class RegisterController extends Controller
@@ -34,25 +34,9 @@ class RegisterController extends Controller
   }
 
   /**
-    * shows register success view
-    *
-    * @return view
-    */
-  public function showSuccess()
-  {
-    session()->reflash();
-    $email = session('register-email');
-
-    if($email === '') {
-      return redirect('/register');
-    }
-
-    return view('auth.registerSuccess', ['email' => $email]);
-  }
-
-  /**
-    * registers a user after validating his email and password
-    * NOTE: user will be unverified after registration (needs to confirm email first)
+    * registers a user after validating his email (optional) and password
+    * NOTE: user will be unverified (if user has email) after
+    *       registration (needs to confirm email first)
     *
     * @return redirect
     */
@@ -60,7 +44,7 @@ class RegisterController extends Controller
   {
     $validator = Validator::make($request->all(), [
       'username'  => 'required|alpha_dash|unique:users,username|max:'  . config('database.stringLength'),
-      'email'     => 'required|email|unique:users,email|max:'          . config('database.stringLength'),
+      'email'     => 'nullable|email|unique:users,email|max:'          . config('database.stringLength'),
       'password'  => 'required|max:'                                   . config('database.stringLength'),
       'confirm'   => 'required|max:'                                   . config('database.stringLength'),
       'keyboard'  => 'required',
@@ -72,6 +56,7 @@ class RegisterController extends Controller
       'email.unique'      => 'errors.uniqueEmail',
       'username.unique'   => 'errors.uniqueUsername',
       'checkbox.required' => 'errors.acceptPolicy',
+      'alpha_dash'        => 'errors.alpha_dash',
     ]);
 
     $validator->after(function ($validator) use ($request) {
@@ -93,18 +78,22 @@ class RegisterController extends Controller
       }
     });
 
+
+
     if($validator->fails()) {
 
       return back()->withInput()->withErrors($validator);
 
     } else {
 
+      $hasEmail = $request->filled('email');
+
       $user           = new User;
       $user->username = $request->input('username');
       $user->email    = $request->input('email');
       $user->uuid     = User::uuid();
       $user->password = bcrypt($request->input('password'));
-      $user->verified = NULL;
+      $user->verified = $hasEmail ? NULL : date('Y-m-d H:i:s');
       $user->locale   = session('app_locale');
       $user->save();
 
@@ -112,13 +101,23 @@ class RegisterController extends Controller
       $preferences->id_user = $user->id_user;
       $preferences->save();
 
-      $token = $this->createUserToken($user);
+      if($hasEmail) {
 
-      $verifyUrl = url('/verify/' . $user->uuid . '/' . $token);
+        $token = $this->createUserToken($user);
 
-      Mail::to($user->email)->send(new VerifyAccountMail($verifyUrl));
+        $verifyUrl = url('/verify/' . $user->uuid . '/' . $token);
 
-      return redirect('/register/success')->with('register-email', $user->email);
+        Mail::to($user->email)->send(new VerifyAccountMail($verifyUrl));
+
+        return view('auth.registerSuccess', ['email' => $user->email]);
+
+      } else {
+
+        Auth::login($user);
+
+        return redirect('/dashboard')
+                ->with('notification-success', 'auth.register.success.title');
+      }
     }
   }
 }
