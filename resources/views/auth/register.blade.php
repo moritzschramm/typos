@@ -6,6 +6,10 @@
 
 @section('header')
 <link href="/css/register.min.css" rel="stylesheet" type="text/css">
+
+{{-- ReCaptcha --}}
+<script src='https://www.google.com/recaptcha/api.js?hl={{ App::getLocale() }}'></script>
+<script>function onSubmit(token){document.getElementById("register-form").submit();}</script>
 @endsection
 
 @section('content')
@@ -18,7 +22,7 @@
 
         <h2>@lang('auth.register.title')</h2>
 
-        <form role="form" action="{{ url('/register') }}" method="POST">
+        <form id="register-form" role="form" action="{{ url('/register') }}" method="POST">
           {{ csrf_field() }}
 
           <div id="username_form" class="form-group">
@@ -68,8 +72,17 @@
             <div class="alert alert-danger">@lang($errors->first('checkbox'))</div>
           @endif
 
+          @if($errors->has('captcha'))
+            <div class="alert alert-danger">@lang($errors->first('captcha'))</div>
+          @endif
+
           <div style="text-align: right">
-            <button type="submit" class="btn btn-default btn-main btn-register"><span>@lang('auth.register.title')</span></button>
+            <button type="submit"
+                    type="submit" class="g-recaptcha btn btn-default btn-main btn-register"
+                    data-sitekey="{{ env('RECAPTCHA_PUBLIC') }}"
+                    data-callback="onSubmit">
+                    <span>@lang('auth.register.title')</span>
+            </button>
           </div>
 
         </form>
