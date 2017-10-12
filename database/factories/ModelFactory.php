@@ -14,6 +14,21 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->state(App\Models\User::class, 'no-email-user', function($faker) {
+  return [
+    'username'  => 'NoMail',
+    'email'     => NULL,
+  ];
+});
+
+$factory->state(App\Models\User::class, 'unverified-user', function($faker) {
+  return [
+    'username'  => 'UnverfiedUser',
+    'email'     => 'unverfied@example.com',
+    'verified'  => NULL,
+  ];
+});
+
 $factory->state(App\Models\User::class, 'testuser', function($faker) {
   return [
     'username'  => 'testuser',
