@@ -7,16 +7,16 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-use DB, Mail;
+use Auth, DB, Mail;
 use App\Mail\VerifyAccountMail;
 
 class RegisterTest extends TestCase
 {
   use DatabaseTransactions;
 
-  const URI = '/register';
+  const URI      = '/register';
   const USERNAME = 'someuser';
-  const EMAIL = 'someMail@example.com';
+  const EMAIL    = 'someMail@example.com';
   const PASSWORD = 'testtest1234'; # absolutely safe password
   const KEYBOARD = 'en-us';
 
@@ -44,8 +44,8 @@ class RegisterTest extends TestCase
       'checkbox'  => true,
     ]);
 
-    $response->assertStatus(302);
-    $response->assertRedirect('/register/success');
+    $this->assertFalse(Auth::check());
+    $response->assertStatus(200);
 
     $user = DB::table('users')->where('email', self::EMAIL)->get();
 
@@ -57,6 +57,45 @@ class RegisterTest extends TestCase
         return $mail->hasTo($user->email);
     });
   }
+
+  /**
+   * tests registration with valid input but WITHOUT email
+   *
+   * asserts redirect, database and mail
+   */
+  public function testSuccessfulRegistrationWithoutEmail()
+  {
+    session()->start();
+    Mail::fake();
+
+    # make simple GET request so that back() works as expected
+    $response = $this->call('GET', self::URI);
+    $response->assertStatus(200);
+
+    $response = $this->call('POST', self::URI, [
+      '_token'    => csrf_token(),
+      'username'  => self::USERNAME,
+      // 'email'     => self::EMAIL,
+      'password'  => self::PASSWORD,
+      'confirm'   => self::PASSWORD,
+      'keyboard'  => self::KEYBOARD,
+      'checkbox'  => true,
+    ]);
+
+    $this->assertTrue(Auth::check());
+
+    $response->assertStatus(302);
+    $response->assertRedirect('/dashboard');
+
+    $user = DB::table('users')->where('username', self::USERNAME)->get();
+
+    $this->assertEquals(1, $user->count());
+    $user = $user->first();
+    $this->assertNotNull($user->verified);
+
+    Mail::assertNotSent(VerifyAccountMail::class);
+  }
+
 
   /**
     * tests registration attempts that should fail
@@ -80,18 +119,18 @@ class RegisterTest extends TestCase
       'confirm'   => '',
       'keyboard'  => '',
       'checkbox'  => true,
-    ], ['email', 'password', 'confirm']);
+    ], ['username' => 'errors.required', 'password' => 'errors.required', 'confirm' => 'errors.required', 'keyboard' => 'errors.required']);
 
     # test 'email' validation and 'username' alpha_dash
     $this->failedRegisterPostRequest([
       '_token'    => csrf_token(),
-      'username'  => 'invalidUsernameßäöü',
-      'email'     => '',
+      'username'  => '###invalidUsername',
+      'email'     => 'sdafdsafdsaf',
       'password'  => self::PASSWORD,
       'confirm'   => self::PASSWORD,
       'keyboard'  => self::KEYBOARD,
       'checkbox'  => true,
-    ], ['email', 'username']);
+    ], ['email' => 'errors.email', 'username' => 'errors.alpha_dash']);
 
     # test 'unique' validation
     $this->failedRegisterPostRequest([
@@ -102,7 +141,7 @@ class RegisterTest extends TestCase
       'confirm'   => self::PASSWORD,
       'keyboard'  => self::KEYBOARD,
       'checkbox'  => true,
-    ], ['email', 'username']);
+    ], ['email' => 'errors.uniqueEmail', 'username' => 'errors.uniqueUsername']);
 
     # test 'weak password' validation
     $this->failedRegisterPostRequest([
@@ -113,7 +152,7 @@ class RegisterTest extends TestCase
       'confirm'   => 'password',
       'keyboard'  => self::KEYBOARD,
       'checkbox'  => true,
-    ], ['password']);
+    ], ['password' => 'errors.weak_password']);
 
     # test 'password !== confirm' validation
     $this->failedRegisterPostRequest([
@@ -124,7 +163,7 @@ class RegisterTest extends TestCase
       'confirm'   => self::PASSWORD . 'something',
       'keyboard'  => self::KEYBOARD,
       'checkbox'  => true,
-    ], ['confirm']);
+    ], ['confirm' => 'errors.differs']);
 
     # test 'locale' validation
     $this->failedRegisterPostRequest([
@@ -135,7 +174,7 @@ class RegisterTest extends TestCase
       'confirm'   => self::PASSWORD,
       'keyboard'  => 'invalidKeyboard',
       'checkbox'  => true,
-    ], ['locale']);
+    ], ['keyboard' => 'preferences.keyboardUnavailable']);
   }
 
   private function failedRegisterPostRequest($params, $errors) {
@@ -144,7 +183,7 @@ class RegisterTest extends TestCase
 
     $response->assertStatus(302);
     $response->assertRedirect(self::URI);
-    $response->assertSessionHasErrors();
+    $response->assertSessionHasErrors($errors);
 
     Mail::assertNotSent(VerifyAccountMail::class);
   }
