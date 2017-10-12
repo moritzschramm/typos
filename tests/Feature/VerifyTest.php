@@ -13,7 +13,7 @@ use App\Traits\CreateUserToken;
 
 class VerifyTest extends TestCase
 {
-  use CreateUserToken;
+  use DatabaseTransactions, CreateUserToken;
 
   const URI = '/verify';
 
