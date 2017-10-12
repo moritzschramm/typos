@@ -45,7 +45,7 @@ class LoginController extends Controller
   {
     $validator = Validator::make($request->all(), [
       'emailOrUsername'     => 'required|max:'  . config('database.stringLength'),
-      'password'  => 'required|max:'  . config('database.stringLength'),
+      'password'            => 'required|max:'  . config('database.stringLength'),
     ], [
       'required'  => 'errors.required',
       'max'       => 'errors.max',
@@ -56,9 +56,9 @@ class LoginController extends Controller
       $emailOrUsername  = $request->input('emailOrUsername');
       $password         = $request->input('password');
       $with_remember_me = $request->input('remember_me') == 'on';
-      $user = User::where('email', $emailOrUsername)
-                    ->orWhere('username', $emailOrUsername)
-                    ->first();
+      $user             = User::where('email', $emailOrUsername)
+                                ->orWhere('username', $emailOrUsername)
+                                ->first();
 
       if($user) {
 
