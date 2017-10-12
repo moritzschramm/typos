@@ -1,14 +1,14 @@
 @extends('layouts.main')
 
 @section('title')
-  @lang('layouts.privacy')
+  @lang('layout.privacy')
 @endsection
 
 @section('content')
 
 <div class="container">
 
-  <h1>@lang('layouts.privacy')</h1>
+  <h1>@lang('layout.privacy')</h1>
   <p>Verantwortliche Stelle im Sinne der Datenschutzgesetze ist:</p>
   <p>a</p>
   <p><br><strong>Erfassung allgemeiner Informationen</strong></p>
