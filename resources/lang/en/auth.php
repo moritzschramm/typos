@@ -15,7 +15,7 @@ return [
 
   'register' => [
     'title'       => 'Register',
-    'email_info'  => '(only used for password resets)',
+    'email_info'  => '(optional; only used for password resets)',
     'statement'   => 'I have read and agree to the <a target="_blank" href=":url">privacy policy <span class="glyphicon glyphicon-new-window"></span></a>',
 
     'success' => [
