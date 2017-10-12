@@ -20,6 +20,7 @@ return [
   'acceptPolicy'          => 'Please agree to the privacy statement.',
   'integer'               => 'Please enter an integer.',
   'numericMax'            => 'Please enter a number smaller than :max.',
-  'wrongPassword'         => 'Wrong password', 
+  'wrongPassword'         => 'Wrong password',
+  'alpha_dash'            => 'Please enter only characters (A-Z), numbers and _ as well as -',
 
 ];

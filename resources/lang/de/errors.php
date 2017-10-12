@@ -21,5 +21,6 @@ return [
   'integer'               => 'Bitte geben Sie eine Ganzzahl ein.',
   'numericMax'            => 'Bitte geben Sie eine Zahl kleiner als :max ein.',
   'wrongPassword'         => 'Falsches Passwort',
+  'alpha_dash'            => 'Bitte geben Sie nur Buchstaben von A-Z, Zahlen sowie _ und - ein',
 
 ];
