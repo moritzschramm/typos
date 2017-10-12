@@ -14,6 +14,11 @@ return [
     |
     */
 
+    'recaptcha' => [
+        'public'  => env('RECAPTCHA_PUBLIC'),
+        'private' => env('RECAPTCHA_PRIVATE'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
