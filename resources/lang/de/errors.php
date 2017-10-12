@@ -22,5 +22,6 @@ return [
   'numericMax'            => 'Bitte geben Sie eine Zahl kleiner als :max ein.',
   'wrongPassword'         => 'Falsches Passwort',
   'alpha_dash'            => 'Bitte geben Sie nur Buchstaben von A-Z, Zahlen sowie _ und - ein',
+  'captchaError'          => 'Captcha-Verifizierung fehlgeschlagen. Bitte laden Sie die Seite neu und versuchen es erneut.',
 
 ];
