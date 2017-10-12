@@ -11,10 +11,13 @@ use Auth;
 
 class LoginTest extends TestCase
 {
-  const URI = '/login';
-  const USERNAME = 'testuser';
-  const EMAIL = 'test@example.com';
-  const PASSWORD = 'testtest';
+  const URI                 = '/login';
+  const USERNAME            = 'testuser';
+  const EMAIL               = 'test@example.com';
+  const PASSWORD            = 'testtest';
+  const USERNAME_NOMAIL     = 'NoMail';
+  const USERNAME_UNVERIFIED = 'UnverfiedUser';
+
 
   /**
     * tests login, uses constant credentials (@see top)
@@ -51,6 +54,43 @@ class LoginTest extends TestCase
     $response->assertRedirect(\App\Http\Controllers\Auth\LoginController::$redirectTo);
 
     $this->assertTrue(Auth::check());
+
+    # test username without email
+    $response = $this->call('POST', self::URI, [
+      'emailOrUsername' => self::USERNAME,
+      'password'        => self::PASSWORD,
+      '_token'          => csrf_token(),
+    ]);
+
+    $response->assertStatus(302);
+    $response->assertRedirect(\App\Http\Controllers\Auth\LoginController::$redirectTo);
+
+    $this->assertTrue(Auth::check());
+  }
+
+  /**
+    * tests login using unverified user
+    *
+    * asserts redirect, session errors and Auth::check()
+    */
+  public function testLoginWithUnverifiedUser()
+  {
+    session()->start();
+
+    $response = $this->call('GET', self::URI);
+    $response->assertStatus(200);
+
+    $response = $this->call('POST', self::URI, [
+      'emailOrUsername' => self::USERNAME_UNVERIFIED,
+      'password'        => self::PASSWORD,
+      '_token'          => csrf_token(),
+    ]);
+
+    $response->assertStatus(302);
+    $response->assertRedirect(self::URI);
+    $response->assertSessionHasErrors(['unverified' => 'errors.unverified']);
+
+    $this->assertFalse(Auth::check());
   }
 
   /**
@@ -73,7 +113,7 @@ class LoginTest extends TestCase
 
     $response->assertStatus(302);
     $response->assertRedirect(self::URI);
-    $response->assertSessionHasErrors(['credentials']);
+    $response->assertSessionHasErrors(['credentials' => 'errors.credentials']);
 
     $this->assertFalse(Auth::check());
   }
@@ -98,7 +138,7 @@ class LoginTest extends TestCase
 
     $response->assertStatus(302);
     $response->assertRedirect(self::URI);
-    $response->assertSessionHasErrors(['emailOrUsername', 'password']);
+    $response->assertSessionHasErrors(['emailOrUsername' => 'errors.required', 'password' => 'errors.required']);
 
     $this->assertFalse(Auth::check());
   }
@@ -126,7 +166,7 @@ class LoginTest extends TestCase
 
       $response->assertStatus(302);
       $response->assertRedirect(self::URI);
-      $response->assertSessionHasErrors(['credentials']);
+      $response->assertSessionHasErrors(['credentials' => 'errors.credentials']);
 
       $this->assertFalse(Auth::check());
     }
@@ -140,7 +180,7 @@ class LoginTest extends TestCase
 
     $response->assertStatus(302);
     $response->assertRedirect(self::URI);
-    $response->assertSessionHasErrors(['tooManyAttempts']);
+    $response->assertSessionHasErrors(['tooManyAttempts' => 'errors.throttle']);
 
     $this->assertFalse(Auth::check());
   }
