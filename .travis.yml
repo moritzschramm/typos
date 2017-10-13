@@ -11,6 +11,9 @@ before_script:
   - php artisan key:generate
   - php artisan migrate --seed
 
+after_failure:
+  - cat storage/logs/laravel.log
+
 before_install:
   - mysql -e 'CREATE DATABASE homestead;'
 
