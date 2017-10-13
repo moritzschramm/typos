@@ -7,6 +7,8 @@ Route::group(['namespace' => 'Content'], function() {
 
   Route::get('/',           'ContentController@index');
   Route::get('/privacy',    'ContentController@privacy');
+  Route::get('/notice',     'ContentController@notice');
+  Route::get('/help',       'ContentController@help');
 
 });
 

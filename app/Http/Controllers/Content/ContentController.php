@@ -45,4 +45,14 @@ class ContentController extends Controller
   {
     return view('public.notice');
   }
+
+  /**
+    * return help view
+    *
+    * @return view
+    */
+  public function help()
+  {
+    return view('public.help');
+  }
 }
