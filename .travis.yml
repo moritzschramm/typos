@@ -1,0 +1,23 @@
+language: php
+
+php:
+  - 7.0
+
+before_script:
+  - phpenv config-rm xdebug.ini
+  - cp .env.travis .env
+  - composer self-update
+  - composer install --no-interaction
+  - php artisan key:generate
+  - php artisan migrate --seed
+
+before_install:
+  - mysql -e 'CREATE DATABASE homestead;'
+
+services:
+  - mysql
+  - redis-server
+
+cache:
+  directories:
+    - vendor
