@@ -62,12 +62,16 @@ class RegisterController extends Controller
     $validator->after(function ($validator) use ($request) {
 
       # reCaptcha validation
-      $recaptcha = new \ReCaptcha\ReCaptcha(config('services.recaptcha.private'));
-      $response  = $recaptcha->verify($request->input('g-recaptcha-response'), $request->ip());
+      if(env('APP_ENV') !== 'testing') {
 
-      if ( ! $response->isSuccess() && env('APP_ENV') !== 'testing') {
+        $recaptcha = new \ReCaptcha\ReCaptcha(config('services.recaptcha.private'));
+        $response  = $recaptcha->verify($request->input('g-recaptcha-response'), $request->ip());
 
-        $validator->errors()->add('captcha', 'errors.captchaError');
+        if ( ! $response->isSuccess()) {
+
+          $validator->errors()->add('captcha', 'errors.captchaError');
+          return;
+        }
       }
 
       $password = $request->input('password');
