@@ -10,7 +10,7 @@ class="active"
 
 @section('header')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
-<link href="/css/stats.min.css" rel="stylesheet" type="text/css">
+<link href="/res/css/stats.min.css" rel="stylesheet" type="text/css">
 @endsection
 
 @section('content')
@@ -107,7 +107,7 @@ class="active"
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
-<script src="/js/stats.js"></script>
+<script src="/res/js/stats.js"></script>
 <script>
 view = "{{ $view }}";
 </script>

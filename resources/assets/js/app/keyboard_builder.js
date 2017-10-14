@@ -36,7 +36,7 @@ var kb_isCapslock               = false;    // current capslock state
 function kb_init(loaded) {
 
   // load keyboard layout from json file
-  $.get("/js/keyboard_layouts/" + kb_layout + ".json",
+  $.get("/res/js/keyboard_layouts/" + kb_layout + ".json",
 
   function (data, status) {
 

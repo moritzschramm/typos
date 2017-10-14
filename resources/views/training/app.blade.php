@@ -6,7 +6,7 @@
 
 @section('header')
 <link href='https://fonts.googleapis.com/css?family=Roboto+Mono' rel='stylesheet' type='text/css'>
-<link href="/css/app.min.css" rel="stylesheet" type="text/css">
+<link href="/res/css/app.min.css" rel="stylesheet" type="text/css">
 @endsection
 
 @section('bodyattr')
@@ -121,7 +121,7 @@
 
 @section('footer')
 
-<script src="/js/app/app.min.js"></script>
+<script src="/res/js/app/app.min.js"></script>
 <script>
 $.ajaxSetup({
     headers: {

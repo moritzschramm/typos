@@ -78,7 +78,7 @@ body {
   height: 85vh;
   min-height: 500px;
   width: 100%;
-  background: url('../imgs/splash_index.jpg') bottom right no-repeat;
+  background: url('/res/imgs/splash_index.jpg') bottom right no-repeat;
   background-size: cover;
 }
 .outercontainer {

@@ -5,7 +5,7 @@
 @endsection
 
 @section('header')
-<link href="/css/results.min.css" rel="stylesheet" type="text/css">
+<link href="/res/css/results.min.css" rel="stylesheet" type="text/css">
 @endsection
 
 @section('content')

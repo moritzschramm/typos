@@ -61,7 +61,7 @@ html * {
 
 /* ACCOUNT DROPDOWN */
 .btn-account {
-  background: url('../imgs/face.png') no-repeat;
+  background: url('/res/imgs/face.png') no-repeat;
   background-size: 36px 36px;
   background-position: center;
   width: 50px;
@@ -292,7 +292,7 @@ footer p, footer strong, footer li, footer a, footer div {
 }
 #github-link > a::before {
   content: "";
-  background-image: url("/imgs/github_logo.png");
+  background-image: url("/res/imgs/github_logo.png");
   display: inline-block;
   width: 18px; height: 18px;
   background-size: contain;

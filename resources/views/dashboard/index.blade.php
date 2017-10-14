@@ -9,8 +9,8 @@
 @endsection
 
 @section('header')
-<link href="/css/training.css" rel="stylesheet" type="text/css">
-<link href="/css/training-lections.css" rel="stylesheet" type="text/css">
+<link href="/res/css/training.css" rel="stylesheet" type="text/css">
+<link href="/res/css/training-lections.css" rel="stylesheet" type="text/css">
 @endsection
 
 @section('content')

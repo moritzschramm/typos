@@ -9,7 +9,7 @@
 @endsection
 
 @section('header')
-<link href="/css/public_index.min.css" rel="stylesheet" type="text/css">
+<link href="/res/css/public_index.min.css" rel="stylesheet" type="text/css">
 @endsection
 
 @section('content')
@@ -32,7 +32,7 @@
 
   <div class="row" style="padding: 80px 0px;">
     <div class="col-md-6 text-right">
-      <img alt="preview" src="/imgs/splash_foreground1.gif" class="img-preview unselectableimg"/>
+      <img alt="preview" src="/res/imgs/splash_foreground1.gif" class="img-preview unselectableimg"/>
     </div>
     <div class="col-md-4 text-center">
       <h2 style="font-family: Arvo, serif;">@lang('home.rows.1.title')</h2>
@@ -48,7 +48,7 @@
   <div class="row" style="padding: 80px 0px;">
 
     <div class="col-md-6 col-md-push-6 text-left">
-      <img alt="preview" src="/imgs/splash_foreground2.jpg" class="img-preview unselectableimg"/>
+      <img alt="preview" src="/res/imgs/splash_foreground2.jpg" class="img-preview unselectableimg"/>
     </div>
 
     <div class="col-md-4 col-md-pull-4 text-center">
@@ -63,7 +63,7 @@
 
   <div class="row" style="padding: 80px 0px;">
     <div class="col-md-6 text-right">
-      <img alt="preview" src="/imgs/splash_foreground3.jpg" class="img-preview unselectableimg"/>
+      <img alt="preview" src="/res/imgs/splash_foreground3.jpg" class="img-preview unselectableimg"/>
     </div>
     <div class="col-md-4 text-center">
       <h2 style="font-family: Arvo, serif;">@lang('home.rows.3.title')</h2>

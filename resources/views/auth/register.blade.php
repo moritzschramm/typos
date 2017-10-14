@@ -5,7 +5,7 @@
 @endsection
 
 @section('header')
-<link href="/css/register.min.css" rel="stylesheet" type="text/css">
+<link href="/res/css/register.min.css" rel="stylesheet" type="text/css">
 
 {{-- ReCaptcha --}}
 <script src='https://www.google.com/recaptcha/api.js?hl={{ App::getLocale() }}'></script>

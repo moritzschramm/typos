@@ -5,7 +5,7 @@
 @endsection
 
 @section('header')
-<link href="/css/preferences.min.css" rel="stylesheet" type="text/css">
+<link href="/res/css/preferences.min.css" rel="stylesheet" type="text/css">
 @endsection
 
 @section('content')
