@@ -39,9 +39,9 @@
     <span class="green" id="green"></span><span class="red" id="red"></span><span class="normal" id="normal"></span>
   </div>
 
-  <div class="progress" style="width: 80%; margin: 30px auto;">
-   <div class="progress-bar progress-bar-striped" role="progressbar" id="progressbar"
-   aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+  <div class="progress" style="width: 90%; margin: 30px auto;">
+   <div class="progress-bar" role="progressbar" id="progressbar"
+   aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
    </div>
    <div class="progress_sequence" id="progress_sequence"></div>
  </div>
@@ -150,6 +150,7 @@ $(document).ready(function() {
   dp_init(app_moduleCallback);
   ib_init(app_moduleCallback);
   tm_init(app_moduleCallback);
+  pb_init(app_moduleCallback);
 
   setTimeout(function() {
     misc_init(app_moduleCallback);

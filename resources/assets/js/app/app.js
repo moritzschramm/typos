@@ -27,7 +27,7 @@ var app_silentKeys = ["Shift", "AltGraph", "Alt", "Control"];    // keys that sh
 // modules that are essential for the app,
 // loaded via app_moduleCallback (typically injected into _init() functions of other scripts)
 var required_modules = [
-    "keyboard", "display", "sequence", "typometer", "misc", "infobar"
+    "keyboard", "display", "sequence", "typometer", "misc", "infobar", "progressbar"
 ];
 
 function app_moduleCallback(moduleName) {
@@ -37,16 +37,15 @@ function app_moduleCallback(moduleName) {
   if(index === -1) {    // module not found
 
     console.error("Loaded unknown module");
-
-  } else {
+    return;
+  }
 
   // remove from module list
   required_modules.splice(index, 1);
 
-    if(required_modules.length === 0) { // if every module is loaded, change state to idle
+  if(required_modules.length === 0) { // if every module is loaded, change state to idle
 
-      app_changeState(STATE_IDLE);
-    }
+    app_changeState(STATE_IDLE);
   }
 }
 
@@ -275,6 +274,9 @@ function app_startLection() {
 function app_nextLine() {
 
   sequence.index++;
+
+  // update progress bar
+  pb_update();
 
   if( ! misc_assignmentVisible)
     kb_unhighlightKey(kb_lastHighlightedKeyId);
