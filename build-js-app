@@ -1,0 +1,19 @@
+#!usr/bin/env php
+<?php
+
+# usage: php build-js-app
+# requires: nodejs
+# "builds" js app located in ./resources/assets/js/app/
+# concatenates all js files and minifies the output
+# overwrites app.min.js located in ./public/res/js/app/
+
+$output_file  = __DIR__ . '/public/res/js/app/app.min.js';
+$js_dir       = __DIR__ . '/resources/assets/js';
+$app_files    = $js_dir . '/app/*.js';
+$uglifyjs     = $js_dir . '/uglify-js/bin/uglifyjs';
+
+passthru('cat ' . $app_files . ' > tmp.js');
+passthru('rm -f ' . $output_file);
+passthru('nodejs ' . $uglifyjs . ' -c -m -o ' . $output_file . ' tmp.js');
+passthru('rm tmp.js');
+passthru('echo done');
