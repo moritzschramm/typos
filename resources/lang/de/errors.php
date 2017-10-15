@@ -13,6 +13,7 @@ return [
   'unverified'            => 'Ihr Benutzerkonto ist noch nicht verifiziert. Bitte bestätigen Sie Ihre E-mail Adresse.',
   'credentials'           => 'Ungültige E-mail Adresse/Benutzername oder ungültiges Passwort.',
   'uniqueEmail'           => 'Diese E-mail Adresse wurde bereits registriert.',
+  'emailMissing'          => 'E-mail Adresse konnte nicht gefunden werden.',
   'weak_password'         => 'Passwort zu schwach, bitte wählen Sie ein anderes.',
   'differs'               => 'Passwörter stimmen nicht überein. Bitte geben Sie Ihr Passwort erneut ein.',
   'throttle'              => 'Zu viele Versuche. Bitte versuchen Sie es in :sec Sekunden erneut.',

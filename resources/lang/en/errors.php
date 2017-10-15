@@ -13,6 +13,7 @@ return [
   'unverified'            => 'Your account is not verified yet. Please verify your email address',
   'credentials'           => 'Invalid password or email address/username.',
   'uniqueEmail'           => 'This email address is already registered',
+  'emailMissing'          => 'Email adress not found.',
   'weak_password'         => 'Password is too weak. Please choose a different one.',
   'differs'               => 'Passwords do not match, please enter your password again.',
   'throttle'              => 'Too many attempts. Please try again in :sec seconds',

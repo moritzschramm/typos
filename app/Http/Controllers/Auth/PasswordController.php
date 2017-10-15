@@ -68,7 +68,7 @@ class PasswordController extends Controller
     ], [
       'required'  => 'errors.required',
       'email'     => 'errors.email',
-      'exists'    => 'errors.exists',
+      'exists'    => 'errors.emailMissing',
       'max'       => 'errors.max',
     ]);
 
