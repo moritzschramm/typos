@@ -16,15 +16,15 @@ return [
   'rows' => [
     '1' => [
       'title'   => 'Intelligent system',
-      'content' => 'Neben der anfängerfreundlichen Oberfläche, merkt sich der Trainer Deine falsch eingegebenen Wörter sowie Tasten und übt diese häufiger.',
+      'content' => 'In addition to the easy-to-use interface, the trainer remembers your wrongly entered words as well as keys and exercises them more frequently.',
     ],
     '2' => [
       'title'   => 'Custom-made lections',
-      'content' => 'Die Lektionen werden Dir Schritt für Schritt das Schreiben mit 10 Fingern beibringen. Danach perfektioniert Du das Zehnfingersystem mit Hilfe des Trainings und Deinen eigenen Lektionen.',
+      'content' => 'The lections will teach you touch typing step by step. After that, you are perfecting your skills with the aid of the training and your own excersices.',
     ],
     '3' => [
       'title'   => 'Measure your progress',
-      'content' => 'Du kannst deinen Fortschritt immer in den Statistiken nachverfolgen. Dort kannst Du z.B. Deine Tippgeschwindigkeit oder Deine Fehlerquote abrufen.',
+      'content' => 'You can always track your progress in the statistics. Currently, Typos saves your speed as well as your error rate and XP.',
     ],
   ],
 
