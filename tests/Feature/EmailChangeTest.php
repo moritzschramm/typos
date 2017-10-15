@@ -107,6 +107,36 @@ class EmailChangeTest extends TestCase
   }
 
   /**
+    * tests change of email uses constant credentials (@see top)
+    *
+    * asserts response and email changed
+    */
+  public function testChangeEmailNoEmailBefore()
+  {
+    $user = $this->prepareSession();
+
+    # remove email from testuser
+    $user->email = NULL;
+    $user->update();
+
+    # make POST request to change email
+    $response = $this->call('POST', self::URI_EMAIL, [
+      '_token'    => csrf_token(),
+      'email'     => self::NEW_EMAIL,
+      'password'  => self::PASSWORD,
+    ]);
+
+    # assert response
+    $response->assertStatus(302);
+    $response->assertRedirect('/');
+    $response->assertSessionHas(['notification-success']);
+
+    # assert database, mail
+    $this->assertEmailChanged(true);
+  }
+
+
+  /**
     * tests change of email using a wrong password
     *
     * asserts response and email changed
