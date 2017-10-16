@@ -59,7 +59,7 @@
         <div class="lection-item">
           <div class="lection-title">{{ $exercise->title }}</div>
           <div class="lection-footer">
-            <a href="{{ url("/exercise/$exercise->id_exercise") }}"><span class="lection-link">@lang('dashboard.start')</span></a>
+            <a href="{{ url("/exercise/$exercise->external_id") }}"><span class="lection-link">@lang('dashboard.start')</span></a>
           </div>
         </div>
       @endforeach

@@ -29,7 +29,7 @@ class ExerciseController extends Controller
     * @param integer $exerciseId (external_id)
     * @return view
     */
-  public function showLection($exerciseId)
+  public function showExercise($exerciseId)
   {
     return $this->createAppView("/exercise/$exerciseId", Auth::user());
   }
@@ -40,9 +40,9 @@ class ExerciseController extends Controller
     * @param integer $exerciseId (external_id)
     * @return JSON | abort(404)
     */
-  public function getLection($exerciseId)
+  public function getExercise($exerciseId)
   {
-    $exercise = Exercise::where('id_exercise', $exerciseId)->first();
+    $exercise = Exercise::where('external_id', $exerciseId)->first();
 
     if($exercise) {
 
