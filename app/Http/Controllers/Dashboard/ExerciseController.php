@@ -38,22 +38,21 @@ class ExerciseController extends Controller
     */
   public function showEditExercise($id)
   {
-    $exercise = Exercise::where('external_id', $id)->first();
+    $exercise = Exercise::where('external_id', $id)
+                          ->where('id_user', Auth::user()->id_user)
+                          ->first();
 
-    if($exercise) {
+    if(is_null($exercise)) {
 
-      if(Auth::user()->id_user === $exercise->id_user) {
-
-        return view('dashboard.exercise', [
-          'edit'    => true,
-          'id'      => $id,
-          'title'   => $exercise->title,
-          'content' => $exercise->content,
-        ]);
-      }
+      abort(404);
     }
 
-    abort(404);
+    return view('dashboard.exercise', [
+      'edit'    => true,
+      'id'      => $id,
+      'title'   => $exercise->title,
+      'content' => $exercise->content,
+    ]);
   }
 
   /**
@@ -97,38 +96,60 @@ class ExerciseController extends Controller
     */
   public function editExercise($id, Request $request)
   {
-    $exercise = Exercise::where('external_id', $id)->first();
+    $exercise = Exercise::where('external_id', $id)
+                          ->where('id_user', Auth::user()->id_user)
+                          ->first();
 
-    if($exercise) {
+    if(is_null($exercise)) {
 
-      if(Auth::user()->id_user === $exercise->id_user) {
-
-        $validator = Validator::make($request->all(), [
-          'title'   => 'required|max:' . config('database.stringLength'),
-          'content' => 'required',
-        ], [
-          'required'  => 'errors.required',
-          'max'       => 'errors.max',
-        ]);
-
-        if($validator->fails()) {
-
-          return back()->withInput()->withErrors($validator);
-
-        } else {
-
-          $exercise->title            = $request->input('title');
-          $exercise->content          = $request->input('content');
-          $exercise->character_amount = strlen($reques->input('content'));
-          $exercise->is_public        = NULL;
-          $exercise->update();
-
-          return redirect('/dashboard?view=exercises')->with('notification-success', 'exercises.edited');
-        }
-      }
-
+      abort(404);
     }
 
-    abort(404);
+    $validator = Validator::make($request->all(), [
+      'title'   => 'required|max:' . config('database.stringLength'),
+      'content' => 'required',
+    ], [
+      'required'  => 'errors.required',
+      'max'       => 'errors.max',
+    ]);
+
+    if($validator->fails()) {
+
+      return back()->withInput()->withErrors($validator);
+
+    } else {
+
+      $exercise->title            = $request->input('title');
+      $exercise->content          = $request->input('content');
+      $exercise->character_amount = strlen($reques->input('content'));
+      $exercise->is_public        = NULL;
+      $exercise->update();
+
+      return redirect('/dashboard?view=exercises')->with('notification-success', 'exercises.edited');
+    }
+  }
+
+  /**
+    * delete exercise
+    *
+    * @param string id: external_id of exercise
+    * @param Request
+    * @return redirect
+    */
+  public function deleteExercise($id, Request $request)
+  {
+    $exercise = Exercise::where('external_id', $id)
+                          ->where('id_user', Auth::user()->id_user)
+                          ->first();
+
+    if(is_null($exercise)) {
+
+      abort(404);
+    }
+
+    $exercise->delete();
+
+    return redirect('/dashboard?view=exercises')
+            ->with('notification-success', 'Exercise deleted.');
   }
 }
