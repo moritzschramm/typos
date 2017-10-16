@@ -18,5 +18,5 @@ return [
     'title' => 'Edit Exercise',
   ],
   'edited' => 'Exercise saved.',
-
+  'deleted' => 'Exercise deleted.',
 ];

@@ -18,4 +18,5 @@ return [
     'title' => 'Übung bearbeiten',
   ],
   'edited' => 'Änderungen gespeichert.',
+  'deleted' => 'Übung wurde gelöscht.',
 ];
