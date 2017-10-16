@@ -41,7 +41,9 @@
           <div class="lection-num">@lang('dashboard.lection') {{ $lection->external_id }}</div>
           <div class="lection-title">{{ $lection->title }}</div>
           <div class="lection-footer">
-            <a href="{{ url("/lection/$lection->external_id") }}"><span class="lection-link">@lang('dashboard.start')</span></a>
+            <a href="{{ url("/lection/$lection->external_id") }}">
+              <span class="lection-link">@lang('dashboard.start')</span>
+            </a>
           </div>
         </div>
       @endforeach
@@ -57,9 +59,28 @@
 
       @foreach ($exercises as $exercise)
         <div class="lection-item">
-          <div class="lection-title">{{ $exercise->title }}</div>
+          <div class="lection-options">
+            <a class="dropdown-toggle glyphicon glyphicon-option-vertical lection-options-icon" data-toggle="dropdown" href="" style="text-decoration:none">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li>
+                <a href="{{ url("/exercise/$exercise->external_id/edit") }}">
+                  @lang('exercise.edit.action')
+                </a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <a href="#" onclick="deleteExercise(event, '{{ $exercise->external_id }}');">
+                @lang('exercise.delete.action')
+              </a>
+              </li>
+            </ul>
+          </div>
+          <div class="lection-title" style="margin-top:12px">{{ $exercise->title }}</div>
           <div class="lection-footer">
-            <a href="{{ url("/exercise/$exercise->external_id") }}"><span class="lection-link">@lang('dashboard.start')</span></a>
+            <a href="{{ url("/exercise/$exercise->external_id") }}">
+              <span class="lection-link">@lang('dashboard.start')</span>
+            </a>
           </div>
         </div>
       @endforeach
@@ -94,26 +115,38 @@
 
 </div>
 
+<script>
+function deleteExercise(e, id) {
+  e.preventDefault();
+  var url = "{{ url('/exercise') }}" + "/";
+  document.getElementById("delete-exercise-form").action = url + id + "/delete";
+  $("#modal_delete").modal();
+}
+</script>
 <div id="modal_delete" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Lektion löschen?</h4>
+        <h4 class="modal-title">@lang('exercise.delete.title')</h4>
       </div>
       <div class="modal-body">
-        <p>Die Aktion kann nicht rückgängig gemacht werden. Soll die Lektion wirklich gelöscht werden?</p>
+        <p>@lang('exercise.delete.content')</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" onclick="commitDelete();">Löschen</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+        <form id="delete-exercise-form" method="POST" action="">
+          {{ csrf_field() }}
+          <button type="submit" class="btn btn-danger">@lang('exercise.delete.action')</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">@lang('info.back')</button>
+        </form>
       </div>
     </div>
 
   </div>
 </div>
-<div id="modal_publish" class="modal fade" role="dialog">
+
+{{--<div id="modal_publish" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -131,7 +164,7 @@
     </div>
 
   </div>
-</div>
+</div>--}}
 
 @endsection
 
