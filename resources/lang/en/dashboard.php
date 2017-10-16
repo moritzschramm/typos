@@ -6,8 +6,8 @@
 
 return [
 
-  'lection' => 'Lection',
-  'exercise' => 'Exercise',
+  'lection' => 'Lections',
+  'exercise' => 'Exercises',
 
   'start' => 'start',
 

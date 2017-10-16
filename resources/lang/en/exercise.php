@@ -15,8 +15,15 @@ return [
   'created' => 'Exercise created.',
 
   'edit' => [
-    'title' => 'Edit Exercise',
+    'title'   => 'Edit Exercise',
+    'action'  => 'Edit',
   ],
   'edited' => 'Exercise saved.',
+
+  'delete' => [
+    'title'   => 'Delete exercise?',
+    'content' => 'Do you really want to delete your exercise? This action can not be undone.',
+    'action'  => 'Delete',
+  ],
   'deleted' => 'Exercise deleted.',
 ];
