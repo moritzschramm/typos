@@ -41,6 +41,12 @@
         <div class="alert alert-danger">@lang($errors->first('content'))</div>
       @endif
 
+      @if($errors->has('characters'))
+        <div class="alert alert-danger">
+          @lang($errors->first('characters'), ['chars' => session('invalid_chars')])
+        </div>
+      @endif
+
       <div style="text-align: right;">
         <button type="submit" class="btn btn-default btn-main btn-submit" style="width:150px;"><span>@lang('info.save')</span></button>
       </div>
