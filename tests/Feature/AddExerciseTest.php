@@ -13,6 +13,7 @@ class AddExerciseTest extends TestCase
   use DatabaseTransactions;
 
   const URI_CREATE = '/exercise';
+  const CONTENT_REGEX_TEST = "abzABZ123°!\"§$%&/()= ?\ß+#*'~äüö.,;:-_<>|@€µ\nhello\thi\nhow are you?";
 
   /**
     * start session and log user in
@@ -31,19 +32,8 @@ class AddExerciseTest extends TestCase
     return $user;
   }
 
-  /**
-   * test create exercise
-   *
-   * assert response and database
-   */
-  public function testCreateExerciseSuccessfully()
+  protected function makeRequestAndAssertSuccess($user, $title, $content)
   {
-    $user = $this->prepareSession();
-    $faker = \Faker\Factory::create();
-
-    $title = $faker->realText(50);
-    $content = $faker->realText(300);
-
     $response = $this->call('POST', self::URI_CREATE, [
       '_token'  => csrf_token(),
       'title'   => $title,
@@ -64,31 +54,27 @@ class AddExerciseTest extends TestCase
   }
 
   /**
-    * test validation
-    */
-  public function testCreateExerciseInvalidInput()
+   * test create exercise
+   *
+   * assert response and database
+   */
+  public function testCreateExerciseSuccessfully()
   {
     $user = $this->prepareSession();
     $faker = \Faker\Factory::create();
 
-    ## test no input ##
-    $response = $this->call('POST', self::URI_CREATE, [
-      '_token'  => csrf_token(),
-      'title'   => '',
-      'content' => '',
-    ]);
-
-    $response->assertStatus(302);
-    $response->assertRedirect(self::URI_CREATE);
-    $response->assertSessionHasErrors([
-      'title'   => 'errors.required',
-      'content' => 'errors.required',
-    ]);
-
-    ## test title too long ##
-    $title = generateSecureString(config('database.stringLength') + 1);
+    $title = $faker->realText(50);
     $content = $faker->realText(300);
 
+    # "normal" input
+    $this->makeRequestAndAssertSuccess($user, $title, $content);
+
+    # test regex
+    $this->makeRequestAndAssertSuccess($user, $title, self::CONTENT_REGEX_TEST);
+  }
+
+  protected function makeRequestAndAssertFailure($title, $content, $errors)
+  {
     $response = $this->call('POST', self::URI_CREATE, [
       '_token'  => csrf_token(),
       'title'   => $title,
@@ -97,8 +83,35 @@ class AddExerciseTest extends TestCase
 
     $response->assertStatus(302);
     $response->assertRedirect(self::URI_CREATE);
-    $response->assertSessionHasErrors([
-      'title'   => 'errors.max',
+    $response->assertSessionHasErrors($errors);
+  }
+
+  /**
+    * test validation
+    */
+  public function testCreateExerciseInvalidInput()
+  {
+    $user = $this->prepareSession();
+    $faker = \Faker\Factory::create();
+
+    ## test no input ##
+    $this->makeRequestAndAssertFailure('', '', [
+      'title'   => 'errors.required',
+      'content' => 'errors.required',
+    ]);
+
+    ## test title too long ##
+    $title = generateSecureString(config('database.stringLength') + 1);
+    $content = $faker->realText(300);
+
+    $this->makeRequestAndAssertFailure($title, $content, ['title' => 'errors.max']);
+
+    ## test invalid characters ##
+    $title = $faker->realText(50);
+    $content = self::CONTENT_REGEX_TEST . '¹²³ł';
+
+    $this->makeRequestAndAssertFailure($title, $content, [
+      'characters' => 'exercise.errors.invalidChars',
     ]);
   }
 }
