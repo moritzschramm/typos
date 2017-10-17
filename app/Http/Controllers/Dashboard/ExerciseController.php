@@ -7,9 +7,12 @@ use App\Http\Controllers\Controller;
 
 use Validator, Auth;
 use App\Models\Exercise;
+use App\Traits\ValidateExercise;
 
 class ExerciseController extends Controller
 {
+  use ValidateExercise;
+
   /**
     * Middlewares:
     * - auth
@@ -70,6 +73,15 @@ class ExerciseController extends Controller
       'max'      => 'errors.max',
     ]);
 
+    $validator->after(function ($validator) use ($request) {
+
+      if($invalidChars = $this->findInvalidCharacters($request->input('content'))) {
+
+        session()->flash('invalid_chars', $invalidChars);
+        $validator->errors()->add('characters', 'exercise.errors.invalidChars');
+      }
+    });
+
     if($validator->fails()) {
 
       return back()->withInput()->withErrors($validator);
@@ -113,6 +125,15 @@ class ExerciseController extends Controller
       'max'       => 'errors.max',
     ]);
 
+    $validator->after(function ($validator) use ($request) {
+
+      if($invalidChars = $this->findInvalidCharacters($request->input('content'))) {
+
+        session()->flash('invalid_chars', $invalidChars);
+        $validator->errors()->add('characters', 'exercise.errors.invalidChars');
+      }
+    });
+
     if($validator->fails()) {
 
       return back()->withInput()->withErrors($validator);
@@ -150,6 +171,6 @@ class ExerciseController extends Controller
     $exercise->delete();
 
     return redirect('/dashboard?view=exercises')
-            ->with('notification-success', 'Exercise deleted.');
+            ->with('notification-success', 'exercise.deleted');
   }
 }
