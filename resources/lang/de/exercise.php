@@ -9,6 +9,10 @@ return [
   'title'   => 'Titel der Übung',
   'content' => 'Inhalt der Übung',
 
+  'errors' => [
+    'invalidChars' => 'Die Übung enthält diese ungültige Zeichen: :chars',
+  ],
+
   'create' => [
     'title' => 'Neue Übung erstellen',
   ],

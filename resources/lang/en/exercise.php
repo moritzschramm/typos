@@ -9,6 +9,10 @@ return [
   'title'   => 'Title of exercise',
   'content' => 'Content of exercise',
 
+  'errors' => [
+    'invalidChars' => 'Exercise contains these invalid characters: :chars',
+  ],
+
   'create' => [
     'title' => 'Create exercise',
   ],
