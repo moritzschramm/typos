@@ -49,20 +49,18 @@ class LectionController extends Controller
       ['locale',      '=', $locale],
     ])->first();
 
-    if($lection) {
-
-      $this->createLectionNonce($lection->characterAmount, $isLection=true);
-
-      return [
-        'meta' => [
-          'mode' => 'prepared',     // content of lection is already prepared (lines < 20 chars)
-        ],
-        'lines' => explode("\n", $lection->content),
-      ];
-
-    } else {      // if lection does not exists, throw 404
+    if(is_null($lection)) {
 
       abort(404);
     }
+
+    $this->createLectionNonce($lection->characterAmount, $isLection=true);
+
+    return [
+      'meta' => [
+        'mode' => 'prepared',     // content of lection is already prepared (lines < 20 chars)
+      ],
+      'lines' => explode("\n", $lection->content),
+    ];
   }
 }

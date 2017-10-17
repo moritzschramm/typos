@@ -44,25 +44,23 @@ class ExerciseController extends Controller
   {
     $exercise = Exercise::where('external_id', $exerciseId)->first();
 
-    if($exercise) {
-
-      if(Auth::user()->id_user !== $exercise->id_user && is_null($exercise->is_public)) {
-        // exercise does not belong to user and is not publicly available
-        abort(403);
-      }
-
-      $this->createLectionNonce($exercise->characterAmount);
-
-      return [
-        'meta' => [
-          'mode' => 'block',     // to prepare content of exercise properly
-        ],
-        'lines' => $exercise->content,
-      ];
-
-    } else {      // exercise does not exists, throw 404
-
+    if(is_null($exercise)) {
+      // exercise does not exist (anymore)
       abort(404);
     }
+
+    if(Auth::user()->id_user !== $exercise->id_user && is_null($exercise->is_public)) {
+      // exercise does not belong to user and is not publicly available
+      abort(403);
+    }
+
+    $this->createLectionNonce($exercise->characterAmount);
+
+    return [
+      'meta' => [
+        'mode' => 'block',     // to prepare content of exercise properly
+      ],
+      'lines' => str_replace("\r\n", "\n", $exercise->content),
+    ];
   }
 }
