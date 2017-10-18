@@ -59,14 +59,14 @@ class TrialController extends Controller
       $words[] = $word_raw->word;
     }*/
 
-    $locale = session('app_locale');
-    switch($locale) {
-      case 'de': $locale = 'de_DE'; break;
-      case 'en': $locale = 'en_US'; break;
-      default: $locale = 'en_US';
-    }
+    // $locale = session('app_locale');
+    // switch($locale) {
+    //   case 'de': $locale = 'de_DE'; break;
+    //   case 'en': $locale = 'en_US'; break;
+    //   default: $locale = 'en_US';
+    // }
 
-    $faker      = \Faker\Factory::create($locale);
+    $faker      = \Faker\Factory::create();
     $text       = $faker->realText(200);
     $words      = explode("\n", wordwrap($text, 20, "\n", true));
     $charAmount = strlen(implode($words, ''));  // strlen($text) returns wrong result, $words has fewer chars because some \n were removed
