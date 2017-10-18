@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Training;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Models\LectionNonce;
+
 class NonceController extends Controller
 {
   /**
@@ -14,14 +16,9 @@ class NonceController extends Controller
     */
   public function generateNonce()
   {
-    $nonce = session('nonce');
+    if(LectionNonce::exists()) {
 
-    if($nonce) {
-
-      $nonce->nonce = generateSecureString(32);         // create 32 chars long token
-      $nonce->timestamp = time();
-
-      return $nonce->nonce;
+      return LectionNonce::generateToken();
 
     } else {
 

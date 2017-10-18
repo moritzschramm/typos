@@ -7,11 +7,13 @@ use App\Http\Controllers\Controller;
 
 use Auth;
 use App\Models\Lection;
-use App\Traits\CreateLectionNonce, App\Traits\CreateAppView;
+use App\Models\LectionNonce;
+
+use App\Traits\CreateAppView;
 
 class LectionController extends Controller
 {
-  use CreateLectionNonce, CreateAppView;
+  use CreateAppView;
 
   /**
     * Middlewares:
@@ -54,12 +56,9 @@ class LectionController extends Controller
       abort(404);
     }
 
-    $this->createLectionNonce($lection->characterAmount, $isLection=true);
+    LectionNonce::create($lection->characterAmount, $isLection=true);
 
     return [
-      'meta' => [
-        'mode' => 'prepared',     // content of lection is already prepared (lines < 20 chars)
-      ],
       'lines' => explode("\n", $lection->content),
     ];
   }

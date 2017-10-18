@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Training;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Models\LectionNonce;
+
 use DB;
-use App\Traits\CreateLectionNonce, App\Traits\ValidateLectionNonce, App\Traits\CreateAppView;
+use App\Traits\CreateAppView;
+use Illuminate\Support\Facades\Log;
+
 
 class TrialController extends Controller
 {
-  use CreateLectionNonce, ValidateLectionNonce, CreateAppView;
+  use CreateAppView;
 
   /**
     * show app view
@@ -31,7 +35,7 @@ class TrialController extends Controller
     */
   public function getWords()
   {
-    $locale = session('app_locale');
+    /*$locale = session('app_locale');
     $table  = 'words_' . $locale;
 
     $number_of_rows = DB::table($table)->select(DB::raw('COUNT(*) as count'))->first()->count;
@@ -53,18 +57,32 @@ class TrialController extends Controller
     foreach($words_raw as $word_raw) {
 
       $words[] = $word_raw->word;
+    }*/
+
+    $locale = session('app_locale');
+    switch($locale) {
+      case 'de': $locale = 'de_DE'; break;
+      case 'en': $locale = 'en_US'; break;
+      default: $locale = 'en_US';
     }
 
-    // store Lection nonce in session
-    $characterAmount = strlen(implode($words, ''));
-    $this->createLectionNonce($characterAmount);
+    $faker      = \Faker\Factory::create($locale);
+    $text       = $faker->realText(200);
+    $words      = explode("\n", wordwrap($text, 20, "\n", true));
+    $charAmount = strlen(implode($words, ''));  // strlen($text) returns wrong result, $words has fewer chars because some \n were removed
+
+    Log::info(strlen(implode($words,'')));
+    Log::info('text:'.$text);
+
+    // store LectionNonce in session
+    LectionNonce::create($charAmount);
 
     return
     [
       'meta' => [
-          'mode' => 'expand', // valid modes: expand, prepared and block (@see resources/assets/js/app/sequence.js)
-          'resultURI' => '/trial/upload',   // overwrite default upload URI
-        ],
+        'uploadResultURI'     => '/trial/upload',   // overwrite default upload URI
+        'showResultURI'       => '/results/show',
+      ],
       'lines' => $words,
     ];
   }
@@ -77,13 +95,16 @@ class TrialController extends Controller
     */
   public function handleUpload(Request $request)
   {
-    $nonce     = session('nonce');
     $currentXP = 0;
 
-    if($this->validateLectionNonce($nonce, $request->input('velocity'))) {
+    if(LectionNonce::validate($request->input('nonce'), $request->input('velocity'))) {
 
       $currentXP = session()->has('trial_xp') ? session('trial_xp') + 5 : 5;    // increment session xp by 5
       session(['trial_xp' => $currentXP]);
+
+    } else {
+
+      session()->flash('cheated', true);
     }
 
     session()->flash('velocity',      $request->input('velocity'));

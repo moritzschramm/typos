@@ -7,11 +7,13 @@ use App\Http\Controllers\Controller;
 
 use DB, Auth;
 
-use App\Traits\CreateLectionNonce, App\Traits\CreateAppView;
+use App\Models\LectionNonce;
+
+use App\Traits\CreateAppView;
 
 class TrainingController extends Controller
 {
-  use CreateLectionNonce, CreateAppView;
+  use CreateAppView;
 
   /**
     * Middlewares:
@@ -65,15 +67,11 @@ class TrainingController extends Controller
     }
 
     // store Lection nonce in session
-    $characterAmount = strlen(implode($words, ''));
-    $this->createLectionNonce(Auth::user()->id_user, $characterAmount);
+    $charAmount = strlen(implode($words, ''));
+    LectionNonce::create($charAmount);
 
     // return array (laravel will automatically encode it to JSON)
-    return
-    [
-      'meta' => [
-          'mode' => 'expand', // valid modes: expand, prepared and block (@see resources/assets/js/app/sequence.js)
-        ],
+    return [
       'lines' => $words,
     ];
   }

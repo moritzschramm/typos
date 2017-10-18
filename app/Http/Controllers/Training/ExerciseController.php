@@ -7,11 +7,12 @@ use App\Http\Controllers\Controller;
 
 use Auth;
 use App\Models\Exercise;
-use App\Traits\CreateLectionNonce, App\Traits\CreateAppView;
+use App\Models\LectionNonce;
+use App\Traits\CreateAppView;
 
 class ExerciseController extends Controller
 {
-  use CreateLectionNonce, CreateAppView;
+  use CreateAppView;
 
   /**
     * Middlewares:
@@ -54,13 +55,12 @@ class ExerciseController extends Controller
       abort(403);
     }
 
-    $this->createLectionNonce($exercise->characterAmount);
+    LectionNonce::create($exercise->character_amount);
+    $text = str_replace("\r\n", "\n", $exercise->content);
+    $lines = explode("\n", wordwrap($text, 20, "\n", true));
 
     return [
-      'meta' => [
-        'mode' => 'block',     // to prepare content of exercise properly
-      ],
-      'lines' => str_replace("\r\n", "\n", $exercise->content),
+      'lines' => $lines,
     ];
   }
 }
