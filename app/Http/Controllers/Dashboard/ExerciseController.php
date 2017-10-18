@@ -7,12 +7,9 @@ use App\Http\Controllers\Controller;
 
 use Validator, Auth;
 use App\Models\Exercise;
-use App\Traits\ValidateExercise;
 
 class ExerciseController extends Controller
 {
-  use ValidateExercise;
-
   /**
     * Middlewares:
     * - auth
@@ -75,7 +72,7 @@ class ExerciseController extends Controller
 
     $validator->after(function ($validator) use ($request) {
 
-      if($invalidChars = $this->findInvalidCharacters($request->input('content'))) {
+      if($invalidChars = Exercise::findInvalidCharacters($request->input('content'))) {
 
         session()->flash('invalid_chars', $invalidChars);
         $validator->errors()->add('characters', 'exercise.errors.invalidChars');
@@ -127,7 +124,7 @@ class ExerciseController extends Controller
 
     $validator->after(function ($validator) use ($request) {
 
-      if($invalidChars = $this->findInvalidCharacters($request->input('content'))) {
+      if($invalidChars = Exercise::findInvalidCharacters($request->input('content'))) {
 
         session()->flash('invalid_chars', $invalidChars);
         $validator->errors()->add('characters', 'exercise.errors.invalidChars');
@@ -142,11 +139,11 @@ class ExerciseController extends Controller
 
       $exercise->title            = $request->input('title');
       $exercise->content          = $request->input('content');
-      $exercise->character_amount = strlen($reques->input('content'));
+      $exercise->character_amount = strlen($request->input('content'));
       $exercise->is_public        = NULL;
       $exercise->update();
 
-      return redirect('/dashboard?view=exercises')->with('notification-success', 'exercises.edited');
+      return redirect('/dashboard?view=exercises')->with('notification-success', 'exercise.edited');
     }
   }
 
