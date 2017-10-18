@@ -12,8 +12,15 @@ $js_dir       = __DIR__ . '/resources/assets/js';
 $app_files    = $js_dir . '/app/*.js';
 $uglifyjs     = $js_dir . '/uglify-js/bin/uglifyjs';
 
+  $arguments = '';
+
 passthru('cat ' . $app_files . ' > tmp.js');
 passthru('rm -f ' . $output_file);
-passthru('nodejs ' . $uglifyjs . ' -c -m -o ' . $output_file . ' tmp.js');
+
+if(isset($argv[1]) && $argv[1] === '--debug')
+  passthru('cp tmp.js ' . $output_file);
+else
+  passthru('nodejs ' . $uglifyjs . ' -c -m -o ' . $output_file . ' tmp.js');
+
 passthru('rm tmp.js');
 passthru('echo done');
