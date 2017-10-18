@@ -24,7 +24,7 @@ function dp_init(loaded) {
   dp_redTextElement     = document.getElementById("red");
   dp_greenTextElement   = document.getElementById("green");
 
-  loaded("display");
+  loaded(app_modules.display);
 }
 
 /**

@@ -21,7 +21,7 @@ function misc_init(loaded) {
   if(misc_assignmentVisible) misc_showAssignment(); else misc_hideAssignment();
   if(misc_dividerVisible)    misc_showDivider();    else misc_hideDivider();
 
-  loaded("misc");
+  loaded(app_modules.misc);
 }
 
 /**

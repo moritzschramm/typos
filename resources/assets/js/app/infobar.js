@@ -19,7 +19,7 @@ function ib_init(loaded) {
   ib_errorCountElement  = $("#errorCount");
   ib_errorRatioElement  = $("#errorRatio");
 
-  loaded("infobar");
+  loaded(app_modules.infobar);
 }
 
 /**

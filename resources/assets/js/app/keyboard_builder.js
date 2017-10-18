@@ -26,6 +26,7 @@ var kb_ratio                    = 3;        // default width/height ratio of key
 var kb_canvas_lineWidth         = 2;        // line thickness of canvas
 var kb_canvas_globalAlpha       = 0.8;      // how transparent the overlaying canvas is
 var kb_isCapslock               = false;    // current capslock state
+var kb_layoutURI                = "/res/js/keyboard_layouts/";  // from which URI to fetch the keyboard layout .json file
 
 /**
   * load keyboad layout, create html elements, add final html code to DOM
@@ -36,7 +37,7 @@ var kb_isCapslock               = false;    // current capslock state
 function kb_init(loaded) {
 
   // load keyboard layout from json file
-  $.get("/res/js/keyboard_layouts/" + kb_layout + ".json",
+  $.get(kb_layoutURI + kb_layout + ".json",
 
   function (data, status) {
 
@@ -115,7 +116,7 @@ function kb_init(loaded) {
       kb_setSize();
 
       // everything ready, call callback
-      loaded("keyboard");
+      loaded(app_modules.keyboard);
 
     } else {
 

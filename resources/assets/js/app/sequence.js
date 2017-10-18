@@ -5,14 +5,14 @@
   ***/
 
 var sequence = {     // the object where the lines, the line pointer and the errors get stored
-  index: 0,
-  lines: [],
-  errors: [],
+  index:    0,
+  lines:    [],
+  errors:   [],
 };
 
 // defaults
-var sq_dataURI        = "";   // from which URI the sequence should be loaded
-var sq_maxLineLength  = 19;   // max line length excluding appended ⏎
+var sq_dataURI        = "";   // from which URI the sequence should be loaded (set in training view)
+var sq_maxLineLength  = 20;   // max line length excluding appended ⏎
 
 /**
   * initialization
@@ -24,34 +24,18 @@ function sq_init(loaded) {
 
     if(status == "success") {
 
-      if(typeof data.meta.resultURI !== "undefined") {        // check if property exists and add to styles
-        app_resultURI = data.meta.resultURI;
+      if(is_set(data.meta)) {
+
+        var m = data.meta;
+
+        app_uploadResultURI = is_set(m.uploadResultURI) ? m.uploadResultURI : app_uploadResultURI;
+        app_showResultURI   = is_set(m.showResultURI)   ? m.showResultURI   : app_showResultURI;
+
       }
 
-      switch(data.meta.mode) {
+      sq_prepareSequence(data.lines);
 
-        case "expand":            // adapt line content to fit display width (lines too short, use for single words)
-
-          sq_expandLines(data.lines);
-          break;
-
-        case "block":             // "lines" are not prepared at all (lines too long)
-
-          sq_sliceLines(data.lines);
-          break;
-
-        case "prepared":          // lines are already correctly prepared, store in sequence
-
-          sq_prepareSequence(data.lines);
-          break;
-
-        default:
-
-          console.error("Error in while preparing sequence: Unknown mode specified in sequence meta information");
-          return;
-      }
-
-      loaded("sequence");
+      loaded(app_modules.sequence);
 
     } else {
 
@@ -62,29 +46,6 @@ function sq_init(loaded) {
 
 }
 
-/**
-  * repeat words to make lines longer
-  *
-  * @param Array lines
-  */
-function sq_expandLines(lines) {
-
-  // TODO
-
-  sq_prepareSequence(lines);
-}
-
-/**
-  * slice between words to make lines fit to display width
-  *
-  * @param Array lines
-  */
-function sq_sliceLines(lines) {
-
-  // TODO
-
-  sq_prepareSequence(lines);
-}
 
 /**
   * prepare and store lines in sequence object
@@ -99,13 +60,17 @@ function sq_prepareSequence(lines) {
 
     line = line.replace(/\n/g, "⏎");      // replace newlines with ⏎
     line = line.replace(/\t/g, "↹");      // replace tabs with ↹
-
-    if(line.charAt(line.length) !== "⏎") {
-
-      line += "⏎";
-    }
+    line = line.replace(/ /g, "␣");
 
     // store line in sequence object
     sequence.lines.push(line);
   }
+}
+
+/**
+  * helper function to check if a property is set
+  */
+function is_set(property) {
+
+  return (typeof property !== "undefined");
 }

@@ -13,7 +13,7 @@ function pb_init(loaded) {
 
   pb_element = $("#progressbar");
 
-  loaded("progressbar");
+  loaded(app_modules.progressbar);
 }
 
 /**

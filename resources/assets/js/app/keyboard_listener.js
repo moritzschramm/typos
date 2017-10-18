@@ -134,7 +134,7 @@ function kb_getKeyIdFromKey(key, location) {
     }
 
 
-  } else if(key === " ") {        // special case for space key
+  } else if(key === " " || key === "␣") {        // special case for space key
 
     keyId = kb_specialMap["Space"];
   }

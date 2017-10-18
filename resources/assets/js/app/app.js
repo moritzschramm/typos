@@ -19,26 +19,43 @@ var app_state       = STATE_LOADING;      // current app state
 var app_inError     = false;              // if the there is currently some wrong input which has to be deleted before the user can type again
 var app_errorCount  = 0;                  // amount of errors made by user
 var app_nonce       = "";                 // retrieved when lection starts, should be submitted when uploading results
-var app_resultURI   = "/results/upload";  // upload URI for results
 var app_startString = "";                 // the string that gets displayed at the beginning
 
 var app_silentKeys = ["Shift", "AltGraph", "Alt", "Control"];    // keys that should not be printed to display
 
+var app_uploadResultURI   = "/results/upload";  // upload URI for results
+var app_showResultURI     = "/results/show";    // redirect to this URI after results have been uploaded
+var app_trainingNonceURI  = "/training/nonce";  // the URI from which the nonce is retrieved
+
 // modules that are essential for the app,
-// loaded via app_moduleCallback (typically injected into _init() functions of other scripts)
+// initialized with their name (indicates module is not loaded yet)
+// when loaded, e.g. app_modules.keyboard === "loaded"
+// loaded via app_moduleCallback (passed to *_init() functions of other scripts)
+var app_modules = {
+  keyboard:     "keyboard",
+  display:      "display",
+  sequence:     "sequence",
+  typometer:    "typometer",
+  misc:         "misc",
+  infobar:      "infobar",
+  progressbar:  "progressbar"
+};
 var required_modules = [
-    "keyboard", "display", "sequence", "typometer", "misc", "infobar", "progressbar"
+  app_modules.keyboard, app_modules.display, app_modules.sequence,
+  app_modules.typometer, app_modules.misc, app_modules.infobar, app_modules.progressbar
 ];
 
-function app_moduleCallback(moduleName) {
+function app_moduleCallback(app_module) {
 
-  var index = required_modules.indexOf(moduleName);   // find module
+  var index = required_modules.indexOf(app_module);   // find module
 
   if(index === -1) {    // module not found
 
     console.error("Loaded unknown module");
     return;
   }
+
+  app_module = "loaded";
 
   // remove from module list
   required_modules.splice(index, 1);
@@ -119,7 +136,11 @@ function app_keyPressed(key, keyId) {
 
   var nextChar = dp_normal.charAt(0);
 
-  if(key === nextChar && !app_inError) {  // correct key and currently no wrong input
+  if((key === nextChar || app_matchesWhitespace(key, nextChar))
+      && !app_inError) {  // correct key and currently no wrong input
+
+    // add correct keystroke to typometer
+    tm_keystroke();
 
     // cut line, remove first character old line
     var line = dp_normal.substring(1, dp_normal.length);
@@ -130,8 +151,8 @@ function app_keyPressed(key, keyId) {
       return;
     }
 
-    // add key to correct keys, replace " " with "_" to make space visible
-    var correctChar = dp_normal.charAt(0) === " " ? "_" : dp_normal.charAt(0);
+    // add key to correct keys (replace " " with "␣")
+    var correctChar = key === " " ? "␣" : key;
     dp_setGreenText(dp_green + correctChar);
     // set new line content
     dp_setNormalText(line);
@@ -144,9 +165,6 @@ function app_keyPressed(key, keyId) {
     var nextKey   = app_replaceSpecialChar(line.charAt(0));
     var nextKeyId = kb_getKeyIdFromKey(nextKey);
     kb_highlightKey(nextKeyId);
-
-    // add correct keystroke to typometer
-    tm_keystroke();
 
   } else { // wrong key, add to red text
 
@@ -164,8 +182,8 @@ function app_keyPressed(key, keyId) {
 
     if(dp_red.length < 5) {
 
-      // replace " " with "_" to make space visible
-      var wrongChar = key === " " ? "_" : key;
+      // add wrong char to red text (replace whitespace)
+      var wrongChar = key === " " ? "␣" : key;
 
       dp_setRedText(dp_red + wrongChar);
     }
@@ -240,6 +258,19 @@ function app_replaceSpecialChar(key) {
 }
 
 /**
+  * checks if the entered key matches the whitespace
+  * (special) character
+  *
+  * @param string key
+  * @param string nextChar
+  * @return boolean isWhitespace
+  */
+function app_matchesWhitespace(key, nextChar) {
+
+  return (key === " " && nextChar === "␣");
+}
+
+/**
   * load first line and change app state to running
   */
 function app_startLection() {
@@ -252,7 +283,7 @@ function app_startLection() {
   var nextKeyId = kb_getKeyIdFromKey(line.charAt(0));
   kb_highlightKey(nextKeyId);
 
-  $.post("/training/nonce", function(data, status) {
+  $.post(app_trainingNonceURI, function(data, status) {
 
     if(status == "success") {
 
@@ -264,7 +295,6 @@ function app_startLection() {
       console.log("Error while retrieving nonce for lection. Status: " + status);
     }
   });
-
 }
 
 /**
@@ -304,13 +334,12 @@ function app_nextLine() {
   dp_lineSlideIn();
 }
 
-
 /**
   * upload results to server and redirect to page which shows results
   */
 function app_uploadResults() {
 
-  $.post(app_resultURI,
+  $.post(app_uploadResultURI,
   {
     nonce:      app_nonce,
     errors:     app_errorCount,
@@ -322,7 +351,7 @@ function app_uploadResults() {
     if(status == "success") {
 
       document.body.onbeforeunload = "";
-      window.location.href = "/results/show";
+      window.location.href = app_showResultURI;
 
     } else {
 
