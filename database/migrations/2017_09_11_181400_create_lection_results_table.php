@@ -17,6 +17,7 @@ class CreateLectionResultsTable extends Migration
             $table->increments('id_lection_result');
             $table->integer('id_user')->unsigned()->index();
             $table->integer('id_lection')->nullable();
+            $table->integer('id_exercise')->nullable();
             $table->float('velocity', 8, 2);                  // 8 digits in total, 2 after decimal point
             $table->integer('keystrokes')->unsigned();
             $table->integer('errors')->unsigned();
