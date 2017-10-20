@@ -37,7 +37,7 @@
           <p>@lang('training.results.avgSpeed'):</p>
         </div>
         <div class="col-xs-6 text-left">
-          <p>{{ $keystrokes - $error_amount }}</p>
+          <p>{{ $keystrokes }}</p>
           <p>{{ $error_amount }}</p>
           <p>{{ $velocity }} @lang('training.velocityUnit')</p>
         </div>
