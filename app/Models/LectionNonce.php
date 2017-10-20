@@ -5,27 +5,25 @@ namespace App\Models;
 /**
   * NOTE: this model is only used in the session (since it's only in use for
   * a short period of time and does store only temporary data)
-  * A LectionNonce gets created when the user starts a lection/training.
+  * A LectionNonce should be created when the user starts a lection/training.
   * This nonce should be passed to the javascript app
   * which sends it back when the results get uploaded (after that the nonce
   * can be deleted).
   * The nonce as well as timestamps, the user's velocity
   * and the amount of characters will be used to determine
-  * if a bot is trying to upload fake results.
+  * if a bot is trying to upload fake results or the user is trying to cheat.
   *
   * Also note that the nonce will be created first without an actual token and
-  * timestamp, but to store the character amount. When the user makes his first
-  * input, the nonce and timestamp should be assigned.
+  * timestamp, but to store the character amount and other data (such as id_lection).
+  * When the user makes his first input, the nonce and timestamp should be assigned.
   */
-
-use Illuminate\Support\Facades\Log;
 
 class LectionNonce
 {
   public $token;
   public $character_amount;
   public $timestamp;
-  public $is_lection;
+  public $data;
 
   const SESSION_KEY   = '__lection_nonce';
   const TOKEN_LENGTH  = 32;
@@ -42,11 +40,11 @@ class LectionNonce
     * @param boolean $isLection (default false): used for xp calculation (lections always 10XP)
     * @return LectionNonce $nonce
     */
-  public static function create($characterAmount, $isLection = false)
+  public static function create($characterAmount, $data = [])
   {
     $nonce                    = new LectionNonce;
     $nonce->character_amount  = $characterAmount;
-    $nonce->is_lection        = $isLection;
+    $nonce->data              = $data;
 
     session()->put(get_called_class()::SESSION_KEY, $nonce);
 
@@ -102,7 +100,7 @@ class LectionNonce
       return null;
     }
 
-    if($nonce->token !== $token) {
+    if($nonce->token !== $token) {  // token is invalid
       return null;
     }
 
@@ -126,14 +124,8 @@ class LectionNonce
     $lower_bound = $nonce->character_amount - ($nonce->character_amount * get_called_class()::ERROR_MARGIN);
     $upper_bound = $nonce->character_amount + ($nonce->character_amount * get_called_class()::ERROR_MARGIN);
 
-    Log::info('chars: ' . $characters);
-    Log::info('lower: ' . $lower_bound);
-    Log::info('upper: ' . $upper_bound);
-    Log::info('nonce: ' . $nonce->character_amount);
-
     if($characters < $lower_bound || $characters > $upper_bound) {
 
-      Log::info('failed char test');
       return null;
 
     } else {
