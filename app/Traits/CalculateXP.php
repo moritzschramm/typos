@@ -18,7 +18,7 @@ trait CalculateXP {
   {
     if($nonce) {
 
-      if($nonce->is_lection) {
+      if(isset($nonce->data['id_lection'])) {
 
         return 10;
 
