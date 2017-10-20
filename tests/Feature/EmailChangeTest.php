@@ -63,7 +63,7 @@ class EmailChangeTest extends TestCase
       $this->assertNull($user->verified);
 
       # assert mail has been sent (+ sent to correct address)
-      Mail::assertSent(VerifyAccountMail::class, function ($mail) use ($user) {
+      Mail::assertQueued(VerifyAccountMail::class, function ($mail) use ($user) {
           return $mail->hasTo($user->email);
       });
 
@@ -77,7 +77,7 @@ class EmailChangeTest extends TestCase
       $this->assertNotNull($user->verified);
 
       # assert mail has NOT been sent (+ sent to correct address)
-      Mail::assertNotSent(VerifyAccountMail::class);
+      Mail::assertNotQueued(VerifyAccountMail::class);
     }
   }
 

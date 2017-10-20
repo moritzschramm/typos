@@ -41,7 +41,7 @@ class PasswordResetTest extends TestCase
     $response->assertRedirect(LoginTest::URI);
     $response->assertSessionHas('notification');
 
-    Mail::assertSent(PasswordResetMail::class, function($mail) use ($user) {
+    Mail::assertQueued(PasswordResetMail::class, function($mail) use ($user) {
       return $mail->hasTo($user->email);
     });
 
@@ -68,7 +68,7 @@ class PasswordResetTest extends TestCase
     $response->assertRedirect(self::requestURI);
     $response->assertSessionHasErrors($errors);
 
-    Mail::assertNotSent(PasswordResetMail::class);
+    Mail::assertNotQueued(PasswordResetMail::class);
   }
   public function testFailedRequestPasswordReset()
   {

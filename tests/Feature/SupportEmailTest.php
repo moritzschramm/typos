@@ -55,7 +55,7 @@ class SupportEmailTest extends TestCase
     $response->assertSessionHas('notification-success');
 
     # assert mail was sent
-    Mail::assertSent(SupportMail::class, function ($mail) {
+    Mail::assertQueued(SupportMail::class, function ($mail) {
         return $mail->hasTo(config('mail.from.support'));
     });
   }
@@ -81,7 +81,7 @@ class SupportEmailTest extends TestCase
     $response->assertSessionHas('notification-success');
 
     # assert mail was sent
-    Mail::assertSent(SupportMail::class, function ($mail) {
+    Mail::assertQueued(SupportMail::class, function ($mail) {
         return $mail->hasTo(config('mail.from.support'));
     });
   }
@@ -107,7 +107,7 @@ class SupportEmailTest extends TestCase
     $response->assertSessionHasErrors(['email']);
 
     # assert mail was sent
-    Mail::assertNotSent(SupportMail::class);
+    Mail::assertNotQueued(SupportMail::class);
   }
 
   /**
@@ -131,6 +131,6 @@ class SupportEmailTest extends TestCase
     $response->assertSessionHasErrors(['email', 'message']);
 
     # assert mail was sent
-    Mail::assertNotSent(SupportMail::class);
+    Mail::assertNotQueued(SupportMail::class);
   }
 }

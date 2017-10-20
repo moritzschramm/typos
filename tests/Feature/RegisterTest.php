@@ -53,7 +53,7 @@ class RegisterTest extends TestCase
     $user = $user->first();
     $this->assertNull($user->verified);
 
-    Mail::assertSent(VerifyAccountMail::class, function ($mail) use ($user) {
+    Mail::assertQueued(VerifyAccountMail::class, function ($mail) use ($user) {
         return $mail->hasTo($user->email);
     });
   }
@@ -93,7 +93,7 @@ class RegisterTest extends TestCase
     $user = $user->first();
     $this->assertNotNull($user->verified);
 
-    Mail::assertNotSent(VerifyAccountMail::class);
+    Mail::assertNotQueued(VerifyAccountMail::class);
   }
 
 
@@ -185,6 +185,6 @@ class RegisterTest extends TestCase
     $response->assertRedirect(self::URI);
     $response->assertSessionHasErrors($errors);
 
-    Mail::assertNotSent(VerifyAccountMail::class);
+    Mail::assertNotQueued(VerifyAccountMail::class);
   }
 }
