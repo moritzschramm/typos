@@ -48,7 +48,7 @@ class AddExerciseTest extends TestCase
       'id_user'           => $user->id_user,
       'title'             => $title,
       'content'           => $content,
-      'character_amount'  => strlen($content),
+      'character_amount'  => mb_strlen($content),
       'is_public'         => NULL,
     ]);
   }
