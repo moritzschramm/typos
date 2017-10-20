@@ -9,8 +9,6 @@ use App\Models\LectionNonce;
 
 use DB;
 use App\Traits\CreateAppView;
-use Illuminate\Support\Facades\Log;
-
 
 class TrialController extends Controller
 {
@@ -69,10 +67,7 @@ class TrialController extends Controller
     $faker      = \Faker\Factory::create();
     $text       = $faker->realText(200);
     $words      = explode("\n", wordwrap($text, 20, "\n", true));
-    $charAmount = strlen(implode($words, ''));  // strlen($text) returns wrong result, $words has fewer chars because some \n were removed
-
-    Log::info(strlen(implode($words,'')));
-    Log::info('text:'.$text);
+    $charAmount = mb_strlen(implode($words, ''));  // mb_strlen($text) returns wrong result, $words has fewer chars because some \n were removed
 
     // store LectionNonce in session
     LectionNonce::create($charAmount);

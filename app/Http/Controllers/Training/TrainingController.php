@@ -67,7 +67,7 @@ class TrainingController extends Controller
     }
 
     // store Lection nonce in session
-    $charAmount = strlen(implode($words, ''));
+    $charAmount = mb_strlen(implode($words, ''));
     LectionNonce::create($charAmount);
 
     // return array (laravel will automatically encode it to JSON)

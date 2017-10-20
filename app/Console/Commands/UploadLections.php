@@ -155,7 +155,7 @@ You can upload specific lections with the --name=<lection_name> option (example 
           'external_id'       => $lectionJSON->id,
           'title'             => $lectionJSON->title,
           'content'           => implode($lectionJSON->content, "\n"),
-          'character_amount'  => strlen(implode($lectionJSON->content, "\n")),
+          'character_amount'  => mb_strlen(implode($lectionJSON->content, '')),
           'locale'            => $locale,
         ]);
 

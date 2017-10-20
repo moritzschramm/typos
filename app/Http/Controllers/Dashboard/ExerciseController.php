@@ -90,7 +90,7 @@ class ExerciseController extends Controller
       $exercise->external_id      = Exercise::newId();
       $exercise->title            = $request->input('title');
       $exercise->content          = $request->input('content');
-      $exercise->character_amount = strlen($request->input('content'));
+      $exercise->character_amount = mb_strlen($request->input('content'));
       $exercise->is_public        = NULL;
       $exercise->save();
 
@@ -139,7 +139,7 @@ class ExerciseController extends Controller
 
       $exercise->title            = $request->input('title');
       $exercise->content          = $request->input('content');
-      $exercise->character_amount = strlen($request->input('content'));
+      $exercise->character_amount = mb_strlen($request->input('content'));
       $exercise->is_public        = NULL;
       $exercise->update();
 
