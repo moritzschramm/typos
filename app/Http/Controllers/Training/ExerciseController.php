@@ -55,7 +55,7 @@ class ExerciseController extends Controller
       abort(403);
     }
 
-    LectionNonce::create($exercise->character_amount);
+    LectionNonce::create($exercise->character_amount, ['id_exercise' => $exercise->id_exercise]);
     $text = str_replace("\r\n", "\n", $exercise->content);
     $lines = explode("\n", wordwrap($text, 20, "\n", true));
 

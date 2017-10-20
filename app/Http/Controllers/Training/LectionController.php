@@ -56,7 +56,7 @@ class LectionController extends Controller
       abort(404);
     }
 
-    LectionNonce::create($lection->characterAmount, $isLection=true);
+    LectionNonce::create($lection->character_amount, ['id_lection' => $lection->id_lection]);
 
     return [
       'lines' => explode("\n", $lection->content),

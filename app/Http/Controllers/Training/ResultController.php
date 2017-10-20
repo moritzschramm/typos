@@ -78,6 +78,9 @@ class ResultController extends Controller
         'xp'          => $this->calculateXP($nonce),
       ]);
 
+      $result->id_lection = isset($nonce->data['id_lection']) ? $nonce->data['id_lection'] : null;
+      $result->id_exercise = isset($nonce->data['id_exercise']) ? $nonce->data['id_exercise'] : null;
+
       $result->save();
 
     } else {
