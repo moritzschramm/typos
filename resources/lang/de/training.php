@@ -18,6 +18,7 @@ return [
   'thumbFinger'         => 'Daumen',
   'velocityInfo'        => 'Durchschnittsgeschwindigkeit in Anschlägen pro Minute',
   'velocityUnit'        => 'A/min',
+  'rights'              => 'Richtige Tasten',
   'errors'              => 'Fehler',
   'errorRatio'          => 'Fehlerquote',
   'startString'         => 'Beliebige Taste drücken',

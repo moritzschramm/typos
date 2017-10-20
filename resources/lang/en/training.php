@@ -18,6 +18,7 @@ return [
   'thumbFinger'         => 'Thumb',
   'velocityInfo'        => 'Average speed measured in keystrokes per minute',
   'velocityUnit'        => 'K/min',
+  'rights'              => 'Right keys',
   'errors'              => 'Errors',
   'errorRatio'          => 'Error rate',
   'startString'         => 'Press any key',
