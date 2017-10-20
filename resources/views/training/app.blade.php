@@ -83,14 +83,17 @@
     </div>
   </div>
 
-  <div class="extraPanel">
-    <div class="extraInfo" data-toggle="tooltip" data-placement="bottom" title="@lang('training.velocityInfo')">
+  <div class="extraPanel row" style="margin-left:0;margin-right:0;">
+    <div class="col-md-3 text-center" data-toggle="tooltip" data-placement="bottom" title="@lang('training.velocityInfo')">
       <span id="velocity">0.0</span> @lang('training.velocityUnit')
     </div>
-    <div class="extraInfo">
+    <div class="col-md-3 text-center">
+      @lang('training.rights'): <span id="rightCount">0</span>
+    </div>
+    <div class="col-md-3 text-center">
       @lang('training.errors'): <span id="errorCount">0</span>
     </div>
-    <div class="extraInfo">
+    <div class="col-md-3 text-center">
       @lang('training.errorRatio'): <span id="errorRatio">0.0</span>%
     </div>
   </div>

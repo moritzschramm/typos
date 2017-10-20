@@ -7,6 +7,7 @@
   ***/
 
 var ib_velocityElement;
+var ib_rightCountElement;
 var ib_errorCountElement;
 var ib_errorRatioElement;
 
@@ -16,6 +17,7 @@ var ib_errorRatioElement;
 function ib_init(loaded) {
 
   ib_velocityElement    = $("#velocity");
+  ib_rightCountElement  = $("#rightCount");
   ib_errorCountElement  = $("#errorCount");
   ib_errorRatioElement  = $("#errorRatio");
 
@@ -28,6 +30,7 @@ function ib_init(loaded) {
 function ib_updateBar() {
 
   ib_velocityElement.html(tm_velocity.toFixed(1));
+  ib_rightCountElement.html(tm_keystrokes);
   ib_errorCountElement.html(app_errorCount);
   ib_errorRatioElement.html(( Math.min(app_errorCount / tm_keystrokes, 1) * 100.0).toFixed(1));
 }
