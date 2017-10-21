@@ -9,6 +9,7 @@ use App\Models\LectionNonce;
 
 use DB;
 use App\Traits\CreateAppView;
+use App\Models\TrialResult;
 
 class TrialController extends Controller
 {
@@ -96,6 +97,14 @@ class TrialController extends Controller
 
       $currentXP = session()->has('trial_xp') ? session('trial_xp') + 5 : 5;    // increment session xp by 5
       session(['trial_xp' => $currentXP]);
+
+      $result = new TrialResult([
+        'nickname'    => $request->input('nickname'),
+        'velocity'    => $request->input('velocity'),
+        'keystrokes'  => $request->input('keystrokes'),
+        'errors'      => $request->input('errors'),
+      ]);
+      $result->save();
 
     } else {
 
