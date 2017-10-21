@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-Statistiken
+  @lang('stats.title')
 @endsection
 
 @section('nav2')
@@ -27,13 +27,13 @@ class="active"
       <ul>
 
         <a href="{{ url('/statistics?view=velocity') }}">
-          <li class="@echoIf($view == 'velocity', 'item-active') unselectable">Geschwindigkeit</li>
+          <li class="@echoIf($view == 'velocity', 'item-active') unselectable">@lang('stats.velocity.title')</li>
         </a>
         <a href="{{ url('/statistics?view=xp') }}">
-          <li class="@echoIf($view == 'xp', 'item-active') unselectable">XP</li>
+          <li class="@echoIf($view == 'xp', 'item-active') unselectable">@lang('stats.xp.title')</li>
         </a>
         <a href="{{ url('/statistics?view=keystrokes') }}">
-          <li class="@echoIf($view == 'keystrokes', 'item-active') unselectable">Fehlerquote</li>
+          <li class="@echoIf($view == 'keystrokes', 'item-active') unselectable">@lang('stats.keystrokes.title')</li>
         </a>
 
       </ul>
@@ -44,30 +44,35 @@ class="active"
 
     @if($view == 'velocity')
 
-      <p>Der Graph zeigt die durchschnittliche Geschwindigkeit in Anschlägen pro Minute am jeweiligen Tag an.</p>
+      <p>
+        @lang('stats.velocity.description')
+      </p>
 
-      Übungen:
+      @lang('stats.exercises'):
       <select class="selectpicker">
-        <option value="limit-5">letzte 5</option>
-        <option value="limit-10">letzte 10</option>
-        <option value="all">Alle</option>
+        <option value="limit-5">@lang('stats.last') 5</option>
+        <option value="limit-10">@lang('stats.last') 10</option>
+        <option value="all">@lang('stats.all')</option>
       </select>
 
       <br><br>
 
       <canvas id="graph" width="160" height="90"></canvas>
 
-      <p>Höchste Geschwindigkeit: A/min</p>
+      <p>@lang('stats.velocity.record'):
+        <span id="highest-velocity">0.0</span>
+        @lang('stats.velocity.unit')
+      </p>
 
     @elseif($view == 'xp')
 
-      <p>Der Graph zeigt die gesammelte XP am jeweiligen Tag an.</p>
+      <p>@lang('stats.xp.description')</p>
 
-      Zeitraum:
+      @lang('stats.period'):
       <select class="selectpicker">
-        <option value="last-7">letzte Woche</option>
-        <option value="last-30">letzten 30 Tage</option>
-        <option value="all">Alle</option>
+        <option value="last-7">@lang('stats.lastWeek')</option>
+        <option value="last-30">@lang('stats.lastMonth')</option>
+        <option value="all">@lang('stats.all')</option>
       </select>
 
       <br><br>
@@ -76,13 +81,15 @@ class="active"
 
     @elseif($view == 'keystrokes')
 
-      <p>Der Graph zeigt die Anzahl der richtig getippten Zeichen (grün) und die Anzahl der falsch getippten Zeichen (rot) im Verhältnis.</p>
+      <p>@lang('stats.keystrokes.description')</p>
 
-      Zeitraum:
+      @lang('stats.period')/@lang('stats.exercises'):
       <select class="selectpicker">
-        <option value="last-7">letzte Woche</option>
-        <option value="last-30">letzten 30 Tage</option>
-        <option value="all">Alle</option>
+        <option value="last-7">@lang('stats.lastWeek')</option>
+        <option value="last-30">@lang('stats.lastMonth')</option>
+        <option value="limit-5">@lang('stats.last') 5</option>
+        <option value="limit-10">@lang('stats.last') 10</option>
+        <option value="all">@lang('stats.all')</option>
       </select>
 
       <br><br>
