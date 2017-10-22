@@ -101,6 +101,8 @@ Route::group(['namespace' => 'Training'], function() {
   Route::get('/trial',                  'TrialController@showApp');
   Route::post('/trial',                 'TrialController@getWords');
   Route::post('/trial/upload',          'TrialController@handleUpload');
+  Route::get('/trial/results',          'TrialController@showResults');
+  Route::post('/trial/publish',         'TrialController@publishResults');
 
 });
 
