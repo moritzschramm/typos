@@ -30,18 +30,30 @@
 
       <h3>XP: {{ $xp }}</h3>
 
-      <div class="row">
-        <div class="col-xs-6 text-right">
-          <p>@lang('training.results.amountCorrects'):</p>
-          <p>@lang('training.results.amountErrors'):</p>
-          <p>@lang('training.results.avgSpeed'):</p>
+      <form class="form-horizontal">
+
+        <div class="form-group" style="margin-bottom:0">
+          <label class="control-label col-sm-6">@lang('training.results.amountCorrects'):</label>
+          <div class="col-sm-6 text-left">
+            <p class="form-control-static">{{ $keystrokes }}</p>
+          </div>
         </div>
-        <div class="col-xs-6 text-left">
-          <p>{{ $keystrokes }}</p>
-          <p>{{ $error_amount }}</p>
-          <p>{{ $velocity }} @lang('training.velocityUnit')</p>
+
+        <div class="form-group" style="margin-bottom:0">
+          <label class="control-label col-sm-6">@lang('training.results.amountErrors'):</label>
+          <div class="col-sm-6 text-left">
+            <p class="form-control-static">{{ $error_amount }}</p>
+          </div>
         </div>
-      </div>
+
+        <div class="form-group" style="margin-bottom:0">
+          <label class="control-label col-sm-6">@lang('training.results.avgSpeed'):</label>
+          <div class="col-sm-6 text-left">
+            <p class="form-control-static">{{ $velocity }} @lang('training.velocityUnit')</p>
+          </div>
+        </div>
+
+      </form>
 
 
     </div>
