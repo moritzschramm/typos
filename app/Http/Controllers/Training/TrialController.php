@@ -7,13 +7,16 @@ use App\Http\Controllers\Controller;
 
 use App\Models\LectionNonce;
 
-use DB;
-use App\Traits\CreateAppView;
+use DB, Validator;
+use App\Traits\CreateAppView, App\Traits\ProfanityFilter;
 use App\Models\TrialResult;
 
 class TrialController extends Controller
 {
-  use CreateAppView;
+  use CreateAppView, ProfanityFilter;
+
+  const CONTENT_MAX_LENGTH  = 250;
+  const LINE_MAX_LENGTH     = 20;
 
   /**
     * show app view
@@ -22,9 +25,37 @@ class TrialController extends Controller
     */
   public function showApp()
   {
+    session()->forget('notification-success');    // delete 'result published' message
     session()->flash('notification', 'info.beta');
 
     return $this->createAppView('/trial', session('app_locale'), ['trial' => true]);
+  }
+
+  /**
+    * returns custom results view;
+    * shows table of published TrialResults as well as user's current results
+    *
+    * @return view
+    */
+  public function showResults()
+  {
+    // in case page gets reloaded, reflash the session storage
+    session()->reflash();
+
+    if( ! session()->has('velocity', 'error_amount', 'keystrokes', 'score')) {
+
+      return abort(404);
+    }
+
+    return response()->view('training.trialResults', [
+      'velocity'      => session('velocity'),
+      'error_amount'  => session('error_amount'),
+      'keystrokes'    => session('keystrokes'),
+      'score'         => session('score'),
+      'cheated'       => session('cheated'),
+      'results'       => TrialResult::bestOfLast24h(),
+    ],
+    session('cheated') ? 418 : 200);  // set status code
   }
 
   /**
@@ -34,30 +65,6 @@ class TrialController extends Controller
     */
   public function getWords()
   {
-    /*$locale = session('app_locale');
-    $table  = 'words_' . $locale;
-
-    $number_of_rows = DB::table($table)->select(DB::raw('COUNT(*) as count'))->first()->count;
-
-    // create a list of 10 random positions
-    $position_list = [];
-
-    $word_amount = 10;
-    for($i = 0; $i < $word_amount; $i++) {
-
-      $position_list[] = rand(1, $number_of_rows);
-    }
-
-    // get 10 random words from database
-    $query = 'SELECT word FROM ' . $table . ' WHERE id IN (' . implode(',', $position_list) . ') LIMIT ' . $word_amount;
-    $words_raw = DB::select($query);
-    $words = [];
-
-    foreach($words_raw as $word_raw) {
-
-      $words[] = $word_raw->word;
-    }*/
-
     // $locale = session('app_locale');
     // switch($locale) {
     //   case 'de': $locale = 'de_DE'; break;
@@ -66,8 +73,8 @@ class TrialController extends Controller
     // }
 
     $faker      = \Faker\Factory::create();
-    $text       = $faker->realText(200);
-    $words      = explode("\n", wordwrap($text, 20, "\n", true));
+    $text       = $faker->realText(self::CONTENT_MAX_LENGTH);
+    $words      = explode("\n", wordwrap($text, self::LINE_MAX_LENGTH, "\n", true));
     $charAmount = mb_strlen(implode($words, ''));  // mb_strlen($text) returns wrong result, $words has fewer chars because some \n were removed
 
     // store LectionNonce in session
@@ -77,7 +84,7 @@ class TrialController extends Controller
     [
       'meta' => [
         'uploadResultURI'     => '/trial/upload',   // overwrite default upload URI
-        'showResultURI'       => '/results/show',
+        'showResultURI'       => '/trial/results',
       ],
       'lines' => $words,
     ];
@@ -91,31 +98,97 @@ class TrialController extends Controller
     */
   public function handleUpload(Request $request)
   {
-    $currentXP = 0;
+    $velocity   = $request->input('velocity');
+    $keystrokes = $request->input('keystrokes');
+    $errors     = $request->input('errors');
+    $score      = TrialResult::calculateScore($velocity, $keystrokes, $errors);
 
     if(LectionNonce::validate($request->input('nonce'), $request->input('velocity'))) {
 
-      $currentXP = session()->has('trial_xp') ? session('trial_xp') + 5 : 5;    // increment session xp by 5
-      session(['trial_xp' => $currentXP]);
-
       $result = new TrialResult([
-        'nickname'    => $request->input('nickname'),
-        'velocity'    => $request->input('velocity'),
-        'keystrokes'  => $request->input('keystrokes'),
-        'errors'      => $request->input('errors'),
+        'velocity'    => $velocity,
+        'keystrokes'  => $keystrokes,
+        'errors'      => $errors,
+        'score'       => $score,
+        'is_public'   => false,
       ]);
       $result->save();
+
+      session()->flash('trial_result_id', $result->id_trial_result);
+      session()->flash('is_public',       $result->is_public);
 
     } else {
 
       session()->flash('cheated', true);
+      session()->flash('is_public', true);
     }
 
-    session()->flash('velocity',      $request->input('velocity'));
-    session()->flash('error_amount',  $request->input('errors'));
-    session()->flash('keystrokes',    $request->input('keystrokes'));
-    session()->flash('xp',            $currentXP);
+    session()->flash('velocity',      $velocity);
+    session()->flash('keystrokes',    $keystrokes);
+    session()->flash('error_amount',  $errors);
+    session()->flash('score',         $score);
 
     return response('', 200);
+  }
+
+  /**
+    * publish TrialResult (that is currently in session) with given nickname
+    *
+    * @return redirect (back)
+    */
+  public function publishResults(Request $request)
+  {
+    session()->reflash();
+
+    if( ! session()->has('trial_result_id')) {
+
+      abort(404);
+    }
+
+    $validator = Validator::make($request->all(), [
+      'nickname' => 'required|alpha_dash|max:30',
+    ], [
+      'required'    => 'errors.required',
+      'alpha_dash'  => 'errors.alpha_dash',
+      'max'         => 'errors.max',
+    ]);
+
+    $validator->after(function($validator) use ($request) {
+
+      if(session('cheated')) {
+
+        $validator->errors()->add('nickname', 'training.results.cheated');
+
+      } else if($this->isProfane($request->input('nickname'))) {
+
+        $validator->errors()->add('nickname', 'errors.profanity');
+      }
+    });
+
+    if($validator->fails()) {
+
+      return back()->withInput()->withErrors($validator);
+
+    } else {
+
+      $id = session('trial_result_id');
+      $result = TrialResult::where('id_trial_result', $id)->first();
+
+      if(is_null($result)) {
+
+        abort(404);
+      }
+
+      $result->nickname   = $request->input('nickname');
+      $result->is_public  = true;
+      $result->update();
+
+      session()->flash('is_public', true);
+      session()->put(['nickname' => $result->nickname]);
+
+      session()->forget('errors');         // clear previous errors
+
+      return back()->with('notification-success', 'training.results.published');
+    }
   }
 }
