@@ -19,7 +19,8 @@ class CreateTrialResultsTable extends Migration
             $table->float('velocity', 8, 2);                  // 8 digits in total, 2 after decimal point
             $table->integer('keystrokes')->unsigned();
             $table->integer('errors')->unsigned();
-            $table->boolean('is_public')->default(1);
+            $table->integer('score')->unsigned();
+            $table->boolean('is_public')->default(0);
             $table->timestamps();
         });
     }
