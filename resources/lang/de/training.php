@@ -31,7 +31,14 @@ return [
   ],
 
   'results' => [
-    'title'             => 'Aufgabe abgeschlossen',
+    'title'             => 'Deine Ergebnisse',
+    'ranking'           => 'Rangliste',
+    'publish'           => 'Veröffentlichen',
+    'nickname'          => 'Nickname',
+    'score'             => 'Punkte',
+    'place'             => 'Platz',
+    'published'         => 'Ergebnisse veröffentlicht.',
+    'noData'            => 'Aktuell gibt es noch keinen Highscore',
     'heading'           => 'Aufgabe erfolgreich beendet!',
     'amountCorrects'    => 'Anzahl korrekt getippter Zeichen',
     'amountErrors'      => 'Anzahl der Fehler',

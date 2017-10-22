@@ -24,5 +24,6 @@ return [
   'wrongPassword'         => 'Wrong password',
   'alpha_dash'            => 'Please enter only characters (A-Z), numbers and _ as well as -',
   'captchaError'          => 'Captcha verfication failed. Please reload the page and try again.',
+  'profanity'             => 'Please do not enter abusive words.',
 
 ];
