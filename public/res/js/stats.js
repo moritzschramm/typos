@@ -8,9 +8,11 @@ Chart.defaults.global.legend.display = false;
 Chart.defaults.global.defaultFontFamily = "'Montserrat', 'Arial', 'sans-serif'";
 
 var DATE_FORMAT = "YYYY-MM-DD";
-var DATE_MAX = "3000-01-01";
-var DATE_MIN = "1970-01-01";
-var ctx = document.getElementById("graph").getContext("2d");
+var DATE_MAX    = "3000-01-01";
+var DATE_MIN    = "1970-01-01";
+var statsURI    = "/stats/";
+var graphId     = "graph";
+var ctx         = document.getElementById(graphId).getContext("2d");
 var view;
 var chart;
 
@@ -20,52 +22,74 @@ $(document).ready(function() {
   $(".selectpicker").on("change", selectpickerChanged);
 });
 
+/**
+  * called when the selectpicker changes
+  * creates/updates chart
+  *
+  * @return void
+  */
 function selectpickerChanged() {
 
   var query = $(".selectpicker").selectpicker("val").split("-");
 
-  var key   = query[0];
-  var value = query[1];
+  var selector  = query[0];
+  if(query.length === 2) var value = query[1];
 
-  switch(key) {
+  switch(selector) {
 
     case "limit":
 
-      refreshChart(value, {
-        limit: value
+      updateChart({
+        limit:    value,
+        selector: selector,
       });
       break;
 
     case "last":
 
       // get date of today in format 'YYYY-MM-DD' and date of today - 'value' days
-      refreshChart(value, {
-        from: moment().subtract(value, 'days').format(DATE_FORMAT),
-        to:   moment().format(DATE_FORMAT)
+      updateChart({
+        from:     moment().subtract(value, 'days').format(DATE_FORMAT),
+        to:       moment().format(DATE_FORMAT),
+        days:     value,
+        selector: selector,
       });
       break;
 
     case "all":
 
-      refreshChart(-1, {
-        from: DATE_MIN,
-        to:   DATE_MAX
+      updateChart({
+        from:     DATE_MIN,
+        to:       DATE_MAX,
+        selector: selector,
+        // no limit set as parameter => server sets no limit
       });
       break;
-  }
+    }
 }
 
-function refreshChart(days, parameters) {
+/**
+  * retrieves data from server and creates/updates chart
+  *
+  * @param JSON parameters
+  * @return void
+  */
+function updateChart(parameters) {
 
-  $.post("/stats/"+view, parameters, function(data, status) {
+  console.log(parameters);
+
+  $.post(statsURI + view, parameters, function(data, status) {
 
     if(status == "success") {
 
       console.log(data);
 
-      data = prepareData(data, parameters, days);
+      data = prepareData(parameters, data);
 
-      if(chart == null) {   // create new chart
+      console.log(data);
+
+
+      if(chart == null) {
 
         chart = new Chart(ctx, {
           type: 'line',
@@ -84,14 +108,13 @@ function refreshChart(days, parameters) {
           }
         });
 
-      } else {              // update existing chart
+      } else {
 
-        chart.data.labels = data.lables;
+        // update charts
+        chart.data.labels   = data.labels;
         chart.data.datasets = data.datasets;
         chart.update();
       }
-
-      console.log(data);
 
     } else {
 
@@ -100,72 +123,140 @@ function refreshChart(days, parameters) {
   });
 }
 
-function prepareData(rawData, parameters, days) {
+/**
+  * prepares data (creates labels and datasets)
+  *
+  * @param JSON parameters
+  * @param JSON rawData
+  * @return JSON (prepared) data
+  */
+function prepareData(parameters, rawData) {
 
-  var labels = extractLabels(rawData, parameters, days);
+  var labels = extractLabels(parameters, rawData);
 
-  console.log(labels);
-
-  data = {
+  var data = {
     labels: labels,
     datasets: []
   };
 
-  if(typeof rawData.keys == "undefined") {
-
-    data.datasets.push(initDatatset(""));
-
-  } else {
+  var keys = [];
+  // init dataset objects
+  if(is_set(rawData.keys)) { // create named datasets
 
     for(var i = 0; i < rawData.keys.length; i++) {
 
-      data.datasets.push(initDatatset(rawData.keys[i]));
+      keys.push(rawData.keys[i]);
+      data.datasets.push(initDataset(rawData.keys[i]));
     }
+
+  } else {  // create one anonymous dataset
+
+    keys.push("value");
+    data.datasets.push(initDataset("value"));
   }
 
-  for(var key in rawData.data) {
+  if(rawData.data.length == 0) return data; // no data needs to be added
 
-    if(typeof rawData.data[key] == "object") {
+  // add data
+  var dataIndex = 0;
+  var flag = false;
+  for(var i = 0; i < labels.length; i++) {
 
-      for(var i = 0; i < rawData.keys.length; i++) {
+    for(var k = 0; k < keys.length; k++) {
 
-        data.datasets[i].data.push(rawData.data[key][rawData.keys[i]]);
+      var key = keys[k];
+
+      if(dataIndex < rawData.data.length && labels[i] == rawData.data[dataIndex].date) {
+
+        data.datasets[k].data.push(rawData.data[dataIndex][key]);
+        flag = true;
+
+      } else {
+
+        data.datasets[k].data.push(0);
       }
+    }
 
-    } else if(typeof rawData.data[key] == "number") {
-
-      data.datasets[0].data.push(rawData.data[key]);
-
+    if(flag) {
+      dataIndex++;
+      flag = false;
     }
   }
 
   return data;
 }
 
-function extractLabels(rawData, parameters, days) {
+/**
+  * extract labels from data; "fill" missing dates if necessary
+  *
+  * @param JSON parameters
+  * @param JSON rawData
+  * @return array labels
+  */
+function extractLabels(parameters, rawData) {
 
-  var lowerBound = parameters.from;
-  var start = moment(lowerBound);
+  var labels = [];
 
-  if(days === -1) {
+  switch(parameters.selector) {
 
-    start = moment(lowestDate);
-    end = moment(highestDate);
-    days = end - start;
-  }
+    case "limit":   // use labels from data
 
-  var labels = [start.format(DATE_FORMAT)];
+      for(var i = 0; i < rawData.data.length; i++) {
 
-  for(var i = 0; i < days; i++) {
+        labels.push(rawData.data[i].date);
+      }
+      break;
 
-    labels.push(start.add(1, 'days').format(DATE_FORMAT));
+    case "last":    // fill missing gaps
+
+      var start  = moment(parameters.from);
+      var end    = moment(parameters.to);
+
+      while(start.format(DATE_FORMAT) !== end.format(DATE_FORMAT)) {
+
+        labels.push(start.add(1, 'days').format(DATE_FORMAT));
+      }
+      break;
+
+    case "all":     // start at min date of data and fill gaps
+
+      if(rawData.data.length === 0) return [];
+
+      if(is_set(rawData.limit)) {
+
+        for(var i = 0; i < rawData.data.length; i++) {
+
+          labels.push(rawData.data[i].date);
+        }
+
+      } else {
+
+        var start   = moment(rawData.data[0].date);
+        var end     = moment();
+        labels.push(start.format(DATE_FORMAT));
+
+        while(start.format(DATE_FORMAT) !== end.format(DATE_FORMAT)) {
+
+          labels.push(start.add(1, 'days').format(DATE_FORMAT));
+        }
+
+      }
+
+      break;
   }
 
   return labels;
 }
 
-function initDatatset(label) {
+/**
+  * returns empty dataset template
+  *
+  * @param string label
+  * @return object dataset
+  */
+function initDataset(label) {
 
+  // switch(view):
   return {
     label: label,
     data: [],
@@ -174,4 +265,15 @@ function initDatatset(label) {
     borderColor: 'rgba(139, 195, 74, 1)',
     borderWidth: 1
   };
+}
+
+/**
+  * helper function to check if a property is set
+  *
+  * @param property
+  * @return boolean
+  */
+function is_set(property) {
+
+  return (typeof property !== "undefined");
 }
