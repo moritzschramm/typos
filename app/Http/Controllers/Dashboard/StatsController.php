@@ -47,7 +47,8 @@ class StatsController extends Controller
     $id_user = Auth::user()->id_user;
 
     return [
-      'data' => LectionResult::getVelocity($id_user, $limit),
+      'limit' => $limit,
+      'data'  => LectionResult::getVelocity($id_user, $limit),
     ];
   }
 
@@ -105,8 +106,9 @@ class StatsController extends Controller
       $limit = $request->input('limit');
 
       return [
-        'keys' => ['keystrokes', 'errors'],
-        'data' => LectionResult::getKeystrokesByLection($id_user, $limit),
+        'keys'  => ['keystrokes', 'errors'],
+        'limit' => $limit,
+        'data'  => LectionResult::getKeystrokesByLection($id_user, $limit),
       ];
     }
   }
