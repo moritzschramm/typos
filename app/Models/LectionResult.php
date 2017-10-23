@@ -19,6 +19,14 @@ class LectionResult extends Model
     return $this->belongsTo(User::class, 'id_user', 'id_user');
   }
 
+  /**
+    * returns array of cumulative keystrokes on a day between $from and $to
+    *
+    * @param integer $id_user
+    * @param string $from
+    * @param string $to
+    * @return array $results (key: date, value: array(keystrokes, errors))
+    */
   public static function getKeystrokesByDate($id_user, $from, $to)
   {
     $from = "'$from'";
@@ -34,7 +42,8 @@ class LectionResult extends Model
 
     foreach($results as $result) {
 
-      $data[$result->date] = [
+      $data[] = [
+        'date'        => $result->date,
         'keystrokes'  => $result->keystrokes,
         'errors'      => $result->errors,
       ];
@@ -49,7 +58,7 @@ class LectionResult extends Model
     *
     * @param integer $id_user
     * @param integer $limit (optional)
-    * @return array $results (key: datetime, value: velocity)
+    * @return array $results (key: datetime, value: array(keystrokes, errors))
     */
   public static function getKeystrokesByLection($id_user, $limit = NULL)
   {
@@ -59,15 +68,16 @@ class LectionResult extends Model
 
     if( ! is_null($limit)) $query = $query->limit($limit);
 
-    $results = $query->get();
+    $results = $query->get()->sortBy('created_at');
 
     $data = [];
 
     foreach($results as $result) {
 
-      $data[$result->created_at->format('Y-m-d H:i:s')] = [
+      $data[] = [
         'keystrokes'  => $result->keystrokes,
         'errors'      => $result->errors,
+        'date'        => $result->created_at->format('Y-m-d H:i:s')
       ];
     }
 
@@ -90,13 +100,16 @@ class LectionResult extends Model
 
     if( ! is_null($limit)) $query = $query->limit($limit);
 
-    $results = $query->get();
+    $results = $query->get()->sortBy('created_at');
 
     $data = [];
 
     foreach($results as $result) {
 
-      $data[$result->created_at->format('Y-m-d H:i:s')] = $result->velocity;
+      $data[] = [
+        'date'  => $result->created_at->format('Y-m-d H:i:s'),
+        'value' => $result->velocity,
+      ];
     }
 
     return $data;
@@ -125,7 +138,10 @@ class LectionResult extends Model
 
     foreach($results as $result) {
 
-      $data[$result->date] = $result->xp;
+      $data[] = [
+        'date'  => $result->date,
+        'value' => $result->xp,
+      ];
     }
 
     return $data;
