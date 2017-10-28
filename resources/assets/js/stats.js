@@ -14,12 +14,16 @@ var statsURI    = "/stats/";
 var graphId     = "graph";
 var ctx         = document.getElementById(graphId).getContext("2d");
 var view;
+var lang = {};  // stores translations, init in stats view
 var chart;
+var no_selectpicker = false;
 
 $(document).ready(function() {
 
-  selectpickerChanged();
-  $(".selectpicker").on("change", selectpickerChanged);
+  if(! no_selectpicker) {
+    selectpickerChanged();
+    $(".selectpicker").on("change", selectpickerChanged);
+  }
 });
 
 /**
@@ -41,7 +45,7 @@ function selectpickerChanged() {
 
       updateChart({
         limit:    value,
-        selector: selector,
+        selector: selector
       });
       break;
 
@@ -52,7 +56,7 @@ function selectpickerChanged() {
         from:     moment().subtract(value, 'days').format(DATE_FORMAT),
         to:       moment().format(DATE_FORMAT),
         days:     value,
-        selector: selector,
+        selector: selector
       });
       break;
 
@@ -61,7 +65,7 @@ function selectpickerChanged() {
       updateChart({
         from:     DATE_MIN,
         to:       DATE_MAX,
-        selector: selector,
+        selector: selector
         // no limit set as parameter => server sets no limit
       });
       break;
@@ -76,18 +80,11 @@ function selectpickerChanged() {
   */
 function updateChart(parameters) {
 
-  console.log(parameters);
-
   $.post(statsURI + view, parameters, function(data, status) {
 
     if(status == "success") {
 
-      console.log(data);
-
       data = prepareData(parameters, data);
-
-      console.log(data);
-
 
       if(chart == null) {
 
@@ -256,15 +253,37 @@ function extractLabels(parameters, rawData) {
   */
 function initDataset(label) {
 
-  // switch(view):
-  return {
-    label: label,
+  var dataset = {
+    label: label == "value" ? lang[view] : lang[label],
     data: [],
     lineTension: 0.3,
-    backgroundColor: 'rgba(139, 195, 74, 0.3)',
-    borderColor: 'rgba(139, 195, 74, 1)',
+    backgroundColor: 'rgba(0, 200, 83, 0.3)',
+    borderColor: 'rgba(0, 200, 83, 1)',
     borderWidth: 1
   };
+
+  switch(view) {
+
+    case 'velocity':
+      dataset.backgroundColor = 'rgba(3, 169, 244, 0.3)';
+      dataset.borderColor = 'rgba(3, 169, 244, 1)';
+      break;
+
+    case 'xp':
+      dataset.backgroundColor = 'rgba(244, 67, 54, 0.3)';
+      dataset.borderColor = 'rgba(244, 67, 54, 1)';
+      break;
+
+    case 'keystrokes':
+
+      if(label === 'errors') {
+        dataset.backgroundColor = 'rgba(244, 67, 54, 0.3)';
+        dataset.borderColor = 'rgba(244, 67, 54, 1)';
+      } // else 'keystrokes' => use default colors (green)
+      break;
+
+  }
+  return dataset;
 }
 
 /**
