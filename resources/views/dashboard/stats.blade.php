@@ -114,8 +114,12 @@ class="active"
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
-<script src="/res/js/stats.js"></script>
+<script src="/res/js/stats.min.js"></script>
 <script>
 view = "{{ $view }}";
+lang.velocity   = "@lang('stats.velocity.title')";
+lang.xp         = "@lang('stats.xp.title')";
+lang.keystrokes = "@lang('stats.keystrokes.title')";
+lang.errors     = "@lang('training.errors')";
 </script>
 @endsection

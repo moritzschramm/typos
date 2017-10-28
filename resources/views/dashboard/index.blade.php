@@ -169,12 +169,25 @@ function deleteExercise(e, id) {
 @endsection
 
 @section('footer')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+<script src="/res/js/stats.min.js"></script>
 <script>
 var xp = {{ $xp }};
 var goal = {{ $xp_goal }};
+view = "xp";
+lang.xp = "@lang('stats.xp.title')";
+no_selectpicker = true;
 
 $(document).ready(function() {
+
+  // show last 7 days
+  updateChart({
+    from:     moment().subtract(7, 'days').format(DATE_FORMAT),
+    to:       moment().format(DATE_FORMAT),
+    days:     7,
+    selector: "last"
+  });
 
   // chart
   var ctx = document.getElementById("xp-graph");
