@@ -50,6 +50,7 @@
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-left">
           <li @yield('nav1')><a href="{{ url('/') }}">@lang('layout.home')</a></li>
+          <li @yield('nav2')><a href="{{ url('/trial') }}">@lang('home.splash.button')</a></li>
           <li @yield('nav3')><a href="{{ url('/support') }}">@lang('layout.support')</a></li>
           <li id="github-link"><a href="https://github.com/moritzschramm/typos" target="_blank">GitHub</a></li>
         </ul>
