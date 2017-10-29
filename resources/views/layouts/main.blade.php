@@ -3,7 +3,7 @@
 <head>
   <title>@yield('title') - Typos</title>
   <meta charset="utf-8">
-  @include('layouts.favicon-meta')
+  @include('layouts.head-meta')
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link href='https://fonts.googleapis.com/css?family=Arvo|Montserrat|Raleway|Lato|Open+Sans:400,600' rel='stylesheet' type='text/css'>
