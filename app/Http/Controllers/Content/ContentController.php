@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Content;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use Auth;
+
 class ContentController extends Controller
 {
   /**
@@ -53,6 +55,19 @@ class ContentController extends Controller
     */
   public function help()
   {
-    return view('public.help');
+    if(Auth::check()) {
+
+      $keyboardLayout = Auth::user()->preferences->keyboard;
+
+    } else {
+
+      switch(session('app_locale')) {
+
+        case 'de':  $keyboardLayout = 'de-de'; break;
+        default:    $keyboardLayout = 'en-us'; break;
+      }
+    }
+
+    return view('public.help', ['keyboardLayout' => $keyboardLayout]);
   }
 }
