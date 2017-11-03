@@ -40,6 +40,47 @@ class DeleteDataTest extends TestCase
   }
 
   /**
+    * asserts if user has been deleted
+    * asserts Auth and Database
+    *
+    * @param boolean $deleted
+    * @param User $user
+    * @return void
+    */
+  protected function assertUserDeleted($deleted, $user)
+  {
+    if($deleted) {
+
+      $this->assertFalse(Auth::check());
+
+      $this->assertDatabaseMissing('users', [
+        'username' => $user->username,
+      ]);
+      $this->assertDatabaseMissing('lection_results', [
+        'id_user' => $user->id_user,
+      ]);
+      $this->assertDatabaseMissing('exercises', [
+        'id_user' => $user->id_user,
+      ]);
+      $this->assertDatabaseMissing('user_preferences', [
+        'id_user' => $user->id_user,
+      ]);
+
+    } else {
+
+      $this->assertTrue(Auth::check());
+
+      $this->assertDatabaseHas('users', [
+        'username' => $user->username,
+      ]);
+      $this->assertDatabaseHas('user_preferences', [
+        'id_user' => $user->id_user,
+      ]);
+
+    }
+  }
+
+  /**
    * test deleting user account
    *
    */
@@ -56,11 +97,7 @@ class DeleteDataTest extends TestCase
     $response->assertRedirect('/');
     $response->assertSessionHas('notification-success');
 
-    $this->assertFalse(Auth::check());
-
-    $this->assertDatabaseMissing('users', [
-      'username' => $user->username
-    ]);
+    $this->assertUserDeleted(true, $user);
   }
 
   /**
@@ -80,11 +117,7 @@ class DeleteDataTest extends TestCase
     $response->assertRedirect(self::URI_PREFERENCES . self::URI_PARAMS);
     $response->assertSessionHasErrors(['password'], null, 'account');
 
-    $this->assertTrue(Auth::check());
-
-    $this->assertDatabaseHas('users', [
-      'username' => $user->username
-    ]);
+    $this->assertUserDeleted(false, $user);
   }
 
   /**
@@ -104,10 +137,6 @@ class DeleteDataTest extends TestCase
     $response->assertRedirect(self::URI_PREFERENCES . self::URI_PARAMS);
     $response->assertSessionHasErrors(['password'], null, 'account');
 
-    $this->assertTrue(Auth::check());
-
-    $this->assertDatabaseHas('users', [
-      'username' => $user->username
-    ]);
+    $this->assertUserDeleted(false, $user);
   }
 }
