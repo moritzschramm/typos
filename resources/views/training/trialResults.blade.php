@@ -57,8 +57,12 @@
         <div class="form-group">
           <label class="control-label col-sm-6">@lang('training.results.nickname'):</label>
           <div class="col-sm-3 text-left">
-            <input type="text" class="form-control" name="nickname" value="{{ session('nickname') }}"
-                  id="nickname" placeholder="@lang('training.results.nickname')">
+            @php
+            $nickname = Auth::check() ? Auth::user()->username : session('nickname');
+            @endphp
+            <input type="text" class="form-control" name="nickname" value="{{ $nickname }}"
+                  id="nickname" placeholder="@lang('training.results.nickname')"
+                  @echoIf(Auth::check(), 'disabled="disabled"')>
           </div>
         </div>
         @endunless
