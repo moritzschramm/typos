@@ -7,7 +7,7 @@
 return [
 
   'splash' => [
-    'text'    => 'Learn touch typing fast and easily.',
+    'text'    => 'Learn touch typing quickly and easily.',
     'button'  => 'Try it out',
   ],
 
