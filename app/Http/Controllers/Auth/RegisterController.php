@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\User, App\Models\UserPreference;
-use App\Traits\CreateUserToken, App\Traits\PasswordCheck;
+use App\Traits\CreateUserToken, App\Traits\PasswordCheck, App\Traits\ProfanityFilter;
 use Auth, Mail, Validator;
 use App\Mail\VerifyAccountMail;
 
 class RegisterController extends Controller
 {
-  use CreateUserToken, PasswordCheck;
+  use CreateUserToken, PasswordCheck, ProfanityFilter;
 
   /**
     * Middlewares:
@@ -72,6 +72,12 @@ class RegisterController extends Controller
           $validator->errors()->add('captcha', 'errors.captchaError');
           return;
         }
+      }
+
+      if($this->isProfane($request->input('username'))) {
+
+        $validator->errors()->add('username', 'errors.profanity');
+        return;
       }
 
       $password = $request->input('password');
