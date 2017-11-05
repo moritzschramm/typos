@@ -7,9 +7,10 @@ use App\Http\Controllers\Controller;
 
 use App\Models\LectionNonce;
 
-use DB, Validator;
+use DB, Validator, Auth;
 use App\Traits\CreateAppView, App\Traits\ProfanityFilter;
 use App\Models\TrialResult;
+use App\Models\LectionResult;
 
 class TrialController extends Controller
 {
@@ -28,7 +29,9 @@ class TrialController extends Controller
     session()->forget('notification-success');    // delete 'result published' message
     session()->flash('notification', 'info.beta');
 
-    return $this->createAppView('/trial', session('app_locale'), ['trial' => true]);
+    return $this->createAppView('/trial',
+                                Auth::check() ? Auth::user() : session('app_locale'),
+                                ['trial' => true]);
   }
 
   /**
@@ -114,6 +117,18 @@ class TrialController extends Controller
       ]);
       $result->save();
 
+      if(Auth::check()) {
+
+        $result = new LectionResult([
+          'id_user'     => Auth::user()->id_user,
+          'velocity'    => $velocity,
+          'keystrokes'  => $keystrokes,
+          'errors'      => $errors,
+          'xp'          => 0,
+        ]);
+        $result->save();
+      }
+
       session()->flash('trial_result_id', $result->id_trial_result);
       session()->flash('is_public',       $result->is_public);
 
@@ -179,8 +194,8 @@ class TrialController extends Controller
         abort(404);
       }
 
-      $result->nickname   = $request->input('nickname');
-      $result->is_public  = true;
+      $result->nickname  = Auth::check() ? Auth::user()->username : $request->input('nickname');
+      $result->is_public = true;
       $result->update();
 
       session()->flash('is_public', true);
