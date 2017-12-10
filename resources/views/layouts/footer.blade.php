@@ -1,6 +1,5 @@
 <footer>
   <div class="container">
-    <div class="text-center" style="font-size: 16px; margin: 20px 0px;">Typos &copy; <?= date("Y") ?></div>
     <div class="row">
       <div class="col-md-2 col-md-offset-3 text-center">
         <p class="footer-heading"><strong>@lang('layout.shortcuts')</strong></p>
@@ -26,6 +25,10 @@
         </ul>
       </div>
       <div class="col-md-3"></div>
+    </div>
+    <div class="text-center" style="font-size: 16px; margin: 50px 0px;">
+      Typos &copy; {{ date("Y") }}<br>
+      Build {{ build_number() }}
     </div>
   </div>
 </footer>

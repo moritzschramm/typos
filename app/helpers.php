@@ -54,3 +54,13 @@ function uuidv4()
         bin2hex(random_bytes(6))
     ]);
 }
+
+/**
+  * Retrieve hash of current commit
+  * @return string hash
+  */
+function build_number() {
+
+  $build = `git rev-parse --short HEAD`;
+  return $build ? $build : '';
+}
