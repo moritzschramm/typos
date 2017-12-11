@@ -1,8 +1,5 @@
 language: php
 
-env:
-  - secure: "HmpNf1qc8IOpV/dWZpfUAXm5qE9POx55EtaqAdtKCO0LJvAEqQuvE13TC7f0AhV+rhGWc6VrcoqCUpvFz010S5dgLA5q60QTQ5rsjI9scnU+fn43gTx95WU81B51gm4T9IzrM7pMH9xTYM/3EmIlLAj1uFei+ERM2m/5A4g7w96cbLDSpz0PHNskKJbSfiPUf0+HMbyKmpPc/qZK+hRZ04RRm5b48scIfZeottD8aEaQkMe4X8xGDKPz1ASY5TYM2S6UEHdWAG2EpsjIFE9P1bT6qEFgUzjhvV1W862kap+quQrUHqt7Gz44lK7P+aTCArnwKLAwEvMfRrjaxDIvMVGkz+viH8GlWus6U1Cb3w7VGxjUgsISd3NLDar/kQzihqnxmxPa6GAlf4ruiV+lbEWh7A9f32kRXLGLOaTvyV8AoVqLCuQhGfkNocJU7ZxppsJvwAcvAlAptRn1hDWBUwW0w/0OGtv3m82UR/txgQOOKqrUPKg9WgmDe8QooQLu82oGRUGXJ0rL+vqzmfHqfexnTj49clN+w996T3KpRiXlDme3rNlLEsyhOXCE0bVqCXEj5Vxn6mPsz0W2oWllJc1iQlbnCyskrj0YEk9iwD0PY4f4KIgwwApHcFYVdoXTMJbgs7HWZ8S79fXZSj5wA0np7aAHIMJbitnOAfZy6uE="
-
 php:
   - 7.0
 
@@ -18,7 +15,7 @@ after_failure:
   - cat storage/logs/laravel.log
 
 after_success:
-  - "curl -H 'Content-Type: application/json;' -X POST -d '{\"api-key\": $DEPLOY_KEY, \"branch\": $TRAVIS_BRANCH}' https://testing.typos.space/api/git/deploy"
+  - "curl -H 'Content-Type: application/json;' -X POST -d '{\"api-key\": "$DEPLOY_KEY", \"branch\": "$TRAVIS_BRANCH"}' https://testing.typos.space/api/git/deploy"
 
 before_install:
   - mysql -e 'CREATE DATABASE homestead;'
