@@ -15,7 +15,7 @@ after_failure:
   - cat storage/logs/laravel.log
 
 after_success:
-  - "curl -H 'Content-Type: application/json;' -X POST -d '{\"api-key\": \"$DEPLOY_KEY\", \"branch\": \"$TRAVIS_BRANCH\"}' https://testing.typos.space/api/git/deploy"
+  - "curl -H 'Content-Type: application/json;' -X POST -d \"{\\\"api-key\\\": \\\"$DEPLOY_KEY\\\", \\\"branch\\\": \\\"$TRAVIS_BRANCH\\\"}\" https://testing.typos.space/api/git/deploy"
 
 before_install:
   - mysql -e 'CREATE DATABASE homestead;'
