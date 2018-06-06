@@ -9,32 +9,55 @@ return [
   'contact' => '<h3>Contact information:</h3>
   support@typos.space',
 
-  'content' => '<p>Contact information:</p>
-  <p>support@typos.space</p>
-  <p><br><strong>Collection of general data</strong></p>
-  <p>When you access our website, information of a general nature is collected automatically. This information (server log files) includes, for example, the type of web browser, the operating system used, the domain name of your Internet service provider, and the like. This is exclusively information that does not allow any conclusions to be drawn about your person. This information is technically necessary in order to properly deliver the requested content from websites and are absolutely necessary when using the Internet. Anonymous information of this kind is statistically evaluated by us to optimize our Internet presence and the technology behind it.<br></p>
-  <p><strong>Registration on our website</strong></p>
-  <p>When registering for the use of our personalized services, some personal data are collected (username and e-mail address). If you are registered with us, you can access content and services that we only offer to registered users. In addition, logged-in users have the option of changing or deleting the data specified at registration at any time. Naturally, we also provide you with information about the personal data stored by you at any time. We will gladly correct or delete these at your request, as far as no statutory storage obligations are contrary. To contact us, please use the contact details given at the end of this data protection declaration.<br></p>
-  <p>In order to protect the security of your data during transmission, we use the latest state-of-the-art encryption methods (eg SSL) via HTTPS.</p>
-  <p><b>Contact form</b></p>
-  <p>If you contact us by e-mail or contact form, the information you provide will be stored for the purpose of processing the inquiry as well as possible connection questions.<br></p>
-  <p><b>Deletion or blocking of the data</b></p>
-  <p>We adhere to the principles of data avoidance and data parsimony. We therefore save your personal data only as long as this is necessary to achieve the purposes stated here, or as provided by the various storage periods provided by the legislator. After the respective purpose or the expiry of these deadlines, the corresponding data are routinely blocked or deleted in accordance with legal requirements.<br></p>
-  <p><strong>Cookies</strong></p>
-  <p>Like many other websites, we also use "cookies". Cookies are small text files that are transferred to your hard disk by a web page server. In this way, we automatically receive certain data such as, e.g. IP address, browser used, operating system via your computer and your connection to the Internet.</p>
-  <p>Cookies can not be used to start programs or to transfer viruses to a computer. On the basis of the information contained in cookies, we can make navigation easier and correct the display of our websites.</p>
-  <p>In no event will the data collected by us be passed on to third parties or linked to personal data without your consent.</p>
-  <p>Of course you can also visit our website without cookies. Internet browsers are regularly set up to accept cookies. You can deactivate the use of cookies at any time via the settings of your browser. Please use the help functions of your internet browser to find out how to change these settings. Please note that some features of our website may not work if you disable the use of cookies.</p>
-  <p><strong>Your rights to information, rectification, blocking, deletion and objection</strong></p>
-  <p>You have the right to receive information about your personal data stored by us at any time. Likewise, you have the right to rectification, blocking or, apart from the required data storage for business processing, the deletion of your personal data. Please contact our data protection officer. The contact details can be found at the bottom.</p>
-  <p>In order to ensure that data can be blocked at any time, this data must be kept in a lock file for control purposes. You may also request the deletion of the data if there is no legal obligation to archive. If such an obligation exists, we will block your data on request.</p>
-  <p>You may make changes or revoke a consent by means of appropriate notification to us with effect for the future.</p>
-
-  <p><strong>Change of our privacy policy</strong></p>
-  <p>We reserve the right to change this privacy policy on an occasional basis in order to always comply with current legal requirements or to implement changes to our data protection services, For example, when new services are introduced. Your new visit will be subject to the new Privacy Policy.</p>
-
-  <p><strong>Questions to the Data Protection Supervisor</strong></p>
-  <p>If you have any questions regarding the privacy policy, please write us an e-mail or contact our data protection officer directly:</p>
-  <p>Contact information:</p>
-  <p>support@typos.space</p>',
+  'content' => '<p>Verantwortliche Stelle im Sinne der Datenschutzgesetze, insbesondere der EU-Datenschutzgrundverordnung (DSGVO), ist:</p>
+<p>asdf</p>
+<h2>Ihre Betroffenenrechte</h2>
+<p>Unter den angegebenen Kontaktdaten unseres Datenschutzbeauftragten können Sie jederzeit folgende Rechte ausüben:</p>
+<ul>
+<li>Auskunft über Ihre bei uns gespeicherten Daten und deren Verarbeitung,</li>
+<li>Berichtigung unrichtiger personenbezogener Daten,</li>
+<li>Löschung Ihrer bei uns gespeicherten Daten,</li>
+<li>Einschränkung der Datenverarbeitung, sofern wir Ihre Daten aufgrund gesetzlicher Pflichten noch nicht löschen dürfen,</li>
+<li>Widerspruch gegen die Verarbeitung Ihrer Daten bei uns und</li>
+<li>Datenübertragbarkeit, sofern Sie in die Datenverarbeitung eingewilligt haben oder einen Vertrag mit uns abgeschlossen haben.</li>
+</ul>
+<p>Sofern Sie uns eine Einwilligung erteilt haben, können Sie diese jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+<p>Sie können sich jederzeit mit einer Beschwerde an die für Sie zuständige Aufsichtsbehörde wenden. Ihre zuständige Aufsichtsbehörde richtet sich nach dem Bundesland Ihres Wohnsitzes, Ihrer Arbeit oder der mutmaßlichen Verletzung. Eine Liste der Aufsichtsbehörden (für den nichtöffentlichen Bereich) mit Anschrift finden Sie unter: <a href="https://www.bfdi.bund.de/DE/Infothek/Anschriften_Links/anschriften_links-node.html" target="_blank" rel="noopener">https://www.bfdi.bund.de/DE/Infothek/Anschriften_Links/anschriften_links-node.html</a>.</p>
+<h2>Zwecke der Datenverarbeitung durch die verantwortliche Stelle und Dritte</h2>
+<p>Wir verarbeiten Ihre personenbezogenen Daten nur zu den in dieser Datenschutzerklärung genannten Zwecken. Eine Übermittlung Ihrer persönlichen Daten an Dritte zu anderen als den genannten Zwecken findet nicht statt. Wir geben Ihre persönlichen Daten nur an Dritte weiter, wenn:</p>
+<ul>
+<li>Sie Ihre ausdrückliche Einwilligung dazu erteilt haben,</li>
+<li>die Verarbeitung zur Abwicklung eines Vertrags mit Ihnen erforderlich ist,</li>
+<li>die Verarbeitung zur Erfüllung einer rechtlichen Verpflichtung erforderlich ist,</li>
+</ul>
+<p>die Verarbeitung zur Wahrung berechtigter Interessen erforderlich ist und kein Grund zur Annahme besteht, dass Sie ein überwiegendes schutzwürdiges Interesse an der Nichtweitergabe Ihrer Daten haben.</p>
+<h2>Löschung bzw. Sperrung der Daten</h2>
+<p>Wir halten uns an die Grundsätze der Datenvermeidung und Datensparsamkeit. Wir speichern Ihre personenbezogenen Daten daher nur so lange, wie dies zur Erreichung der hier genannten Zwecke erforderlich ist oder wie es die vom Gesetzgeber vorgesehenen vielfältigen Speicherfristen vorsehen. Nach Fortfall des jeweiligen Zweckes bzw. Ablauf dieser Fristen werden die entsprechenden Daten routinemäßig und entsprechend den gesetzlichen Vorschriften gesperrt oder gelöscht.</p>
+<h2>Erfassung allgemeiner Informationen beim Besuch unserer Website</h2>
+<p>Wenn Sie auf unsere Website zugreifen, werden automatisch mittels eines Cookies Informationen allgemeiner Natur erfasst. Diese Informationen (Server-Logfiles) beinhalten etwa die Art des Webbrowsers, das verwendete Betriebssystem, den Domainnamen Ihres Internet-Service-Providers und ähnliches. Hierbei handelt es sich ausschließlich um Informationen, welche keine Rückschlüsse auf Ihre Person zulassen.</p>
+<p>Diese Informationen sind technisch notwendig, um von Ihnen angeforderte Inhalte von Webseiten korrekt auszuliefern und fallen bei Nutzung des Internets zwingend an. Sie werden insbesondere zu folgenden Zwecken verarbeitet:</p>
+<ul>
+<li>Sicherstellung eines problemlosen Verbindungsaufbaus der Website,</li>
+<li>Sicherstellung einer reibungslosen Nutzung unserer Website,</li>
+<li>Auswertung der Systemsicherheit und -stabilität sowie</li>
+<li>zu weiteren administrativen Zwecken.</li>
+</ul>
+<p>Die Verarbeitung Ihrer personenbezogenen Daten basiert auf unserem berechtigten Interesse aus den vorgenannten Zwecken zur Datenerhebung. Wir verwenden Ihre Daten nicht, um Rückschlüsse auf Ihre Person zu ziehen. Empfänger der Daten sind nur die verantwortliche Stelle und ggf. Auftragsverarbeiter.</p>
+<p>Anonyme Informationen dieser Art werden von uns ggfs. statistisch ausgewertet, um unseren Internetauftritt und die dahinterstehende Technik zu optimieren.</p>
+<h2>Cookies</h2>
+<p>Wie viele andere Webseiten verwenden wir auch so genannte „Cookies“. Cookies sind kleine Textdateien, die von einem Websiteserver auf Ihre Festplatte übertragen werden. Hierdurch erhalten wir automatisch bestimmte Daten wie z. B. IP-Adresse, verwendeter Browser, Betriebssystem und Ihre Verbindung zum Internet.</p>
+<p>Cookies können nicht verwendet werden, um Programme zu starten oder Viren auf einen Computer zu übertragen. Anhand der in Cookies enthaltenen Informationen können wir Ihnen die Navigation erleichtern und die korrekte Anzeige unserer Webseiten ermöglichen.</p>
+<p>In keinem Fall werden die von uns erfassten Daten an Dritte weitergegeben oder ohne Ihre Einwilligung eine Verknüpfung mit personenbezogenen Daten hergestellt.</p>
+<p>Natürlich können Sie unsere Website grundsätzlich auch ohne Cookies betrachten. Internet-Browser sind regelmäßig so eingestellt, dass sie Cookies akzeptieren. Im Allgemeinen können Sie die Verwendung von Cookies jederzeit über die Einstellungen Ihres Browsers deaktivieren. Bitte verwenden Sie die Hilfefunktionen Ihres Internetbrowsers, um zu erfahren, wie Sie diese Einstellungen ändern können. Bitte beachten Sie, dass einzelne Funktionen unserer Website möglicherweise nicht funktionieren, wenn Sie die Verwendung von Cookies deaktiviert haben.</p>
+<h2>SSL-Verschlüsselung</h2>
+<p>Um die Sicherheit Ihrer Daten bei der Übertragung zu schützen, verwenden wir dem aktuellen Stand der Technik entsprechende Verschlüsselungsverfahren (z. B. SSL) über HTTPS.</p>
+<h2>Kontaktformular</h2>
+<p>Treten Sie bzgl. Fragen jeglicher Art per E-Mail oder Kontaktformular mit uns in Kontakt, erteilen Sie uns zum Zwecke der Kontaktaufnahme Ihre freiwillige Einwilligung. Hierfür ist die Angabe einer validen E-Mail-Adresse erforderlich. Diese dient der Zuordnung der Anfrage und der anschließenden Beantwortung derselben. Die Angabe weiterer Daten ist optional. Die von Ihnen gemachten Angaben werden zum Zwecke der Bearbeitung der Anfrage sowie für mögliche Anschlussfragen gespeichert. Nach Erledigung der von Ihnen gestellten Anfrage werden personenbezogene Daten automatisch gelöscht.</p>
+<h2>Verwendung von Scriptbibliotheken (Google Webfonts)</h2>
+<p>Um unsere Inhalte browserübergreifend korrekt und grafisch ansprechend darzustellen, verwenden wir auf dieser Website Scriptbibliotheken und Schriftbibliotheken wie z. B. Google Webfonts (<a href="http://www.google.com/webfonts/" target="_blank" rel="noopener">https://www.google.com/webfonts/</a>). Google Webfonts werden zur Vermeidung mehrfachen Ladens in den Cache Ihres Browsers übertragen. Falls der Browser die Google Webfonts nicht unterstützt oder den Zugriff unterbindet, werden Inhalte in einer Standardschrift angezeigt.</p>
+<p>Der Aufruf von Scriptbibliotheken oder Schriftbibliotheken löst automatisch eine Verbindung zum Betreiber der Bibliothek aus. Dabei ist es theoretisch möglich – aktuell allerdings auch unklar ob und ggf. zu welchen Zwecken – dass Betreiber entsprechender Bibliotheken Daten erheben.</p>
+<p>Die Datenschutzrichtlinie des Bibliothekbetreibers Google finden Sie hier: <a href="https://www.google.com/policies/privacy/" target="_blank" rel="noopener">https://www.google.com/policies/privacy/</a></p>
+<h2><strong>Änderung unserer Datenschutzbestimmungen</strong></h2>
+<p>Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht oder um Änderungen unserer Leistungen in der Datenschutzerklärung umzusetzen, z.B. bei der Einführung neuer Services. Für Ihren erneuten Besuch gilt dann die neue Datenschutzerklärung.</p>
+',
 ];
